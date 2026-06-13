@@ -1,0 +1,10 @@
+// Date & Time Module
+
+fn now() -> string:
+    return datetime_now()
+
+fn format(fmt: string) -> string:
+    return datetime_format(fmt)
+
+fn sleep(ms: int):
+    sleep_ms(ms)

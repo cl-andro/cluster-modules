@@ -1,0 +1,10 @@
+// Regular Expression Module
+
+fn match(str: string, pattern: string) -> string:
+    return text_regex_extract(str, pattern)
+
+fn test(str: string, pattern: string) -> bool:
+    result := text_regex_extract(str, pattern)
+    if result == "":
+        return false
+    return true

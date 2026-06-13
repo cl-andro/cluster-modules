@@ -1,0 +1,19 @@
+// OS & System Module
+
+fn run(command: string) -> string:
+    return os_run(command)
+
+fn sleep(seconds: int):
+    sleep(seconds)
+
+fn sleep_ms(milliseconds: int):
+    sleep_ms(milliseconds)
+
+fn exit(code: int):
+    sys_exit(code)
+
+fn arg(index: int) -> string:
+    return sys_arg(index)
+
+fn env(key: string) -> string:
+    return env_get(key)

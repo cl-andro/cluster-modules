@@ -1,6 +1,6 @@
 name: "cl-http"
 version: "0.1.0"
 description: "HTTP client and server for cluster-lang"
-license: "MIT"
+license: "Commercial Contro and non copy license"
 author: "Cluster Authors"
 dependencies: ["cl-json@0.1.0"]

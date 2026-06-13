@@ -1,0 +1,4 @@
+// Cryptography Module
+
+fn hash(input: string) -> string:
+    return crypto_hash(input)

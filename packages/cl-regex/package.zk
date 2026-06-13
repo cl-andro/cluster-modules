@@ -1,6 +1,6 @@
-name: "cl-json"
+name: "cl-regex"
 version: "0.1.0"
-description: "JSON parsing and generation for cluster-lang"
+description: "Regular expression utilities for cluster-lang"
 license: "Commercial Contro and non copy license"
 author: "Cluster Authors"
 dependencies: []

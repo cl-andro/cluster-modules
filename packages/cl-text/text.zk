@@ -1,0 +1,28 @@
+// Text/String Utilities Module
+
+fn split(str: string, delimiter: string) -> [string]:
+    return text_split(str, delimiter)
+
+fn replace(str: string, from: string, to: string) -> string:
+    return text_replace(str, from, to)
+
+fn lower(str: string) -> string:
+    return text_lower(str)
+
+fn upper(str: string) -> string:
+    return text_upper(str)
+
+fn contains(str: string, target: string) -> bool:
+    return string_contains(str, target)
+
+fn starts_with(str: string, target: string) -> bool:
+    return string_starts_with(str, target)
+
+fn trim(str: string) -> string:
+    return string_trim(str)
+
+fn format(str: string, args: [string]) -> string:
+    return text_format(str, args)
+
+fn length(str: string) -> int:
+    return string_length(str)

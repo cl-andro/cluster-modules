@@ -10,14 +10,56 @@
       "latest": "0.1.0",
       "path": "packages/cl-http",
       "main": "http.zk",
-      "license": "MIT"
+      "license": "Commercial Contro and non copy license"
     },
     "cl-json": {
       "description": "JSON parsing and generation",
       "latest": "0.1.0",
       "path": "packages/cl-json",
       "main": "json.zk",
-      "license": "MIT"
+      "license": "Commercial Contro and non copy license"
+    },
+    "cl-text": {
+      "description": "String manipulation utilities (split, replace, lower, upper, etc.)",
+      "latest": "0.1.0",
+      "path": "packages/cl-text",
+      "main": "text.zk",
+      "license": "Commercial Contro and non copy license"
+    },
+    "cl-fs": {
+      "description": "File system operations (read, write, exists, delete)",
+      "latest": "0.1.0",
+      "path": "packages/cl-fs",
+      "main": "fs.zk",
+      "license": "Commercial Contro and non copy license"
+    },
+    "cl-os": {
+      "description": "OS and system utilities (run, sleep, exit, env)",
+      "latest": "0.1.0",
+      "path": "packages/cl-os",
+      "main": "os.zk",
+      "license": "Commercial Contro and non copy license"
+    },
+    "cl-datetime": {
+      "description": "Date and time utilities (now, format)",
+      "latest": "0.1.0",
+      "path": "packages/cl-datetime",
+      "main": "datetime.zk",
+      "license": "Commercial Contro and non copy license"
+    },
+    "cl-regex": {
+      "description": "Regular expression utilities (match, test)",
+      "latest": "0.1.0",
+      "path": "packages/cl-regex",
+      "main": "regex.zk",
+      "license": "Commercial Contro and non copy license"
+    },
+    "cl-crypto": {
+      "description": "Cryptography utilities (SHA-256 hash)",
+      "latest": "0.1.0",
+      "path": "packages/cl-crypto",
+      "main": "crypto.zk",
+      "license": "Commercial Contro and non copy license"
     }
   }
 }
