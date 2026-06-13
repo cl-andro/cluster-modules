@@ -1,0 +1,6 @@
+name: "cl-json"
+version: "0.1.0"
+description: "JSON parsing and generation for cluster-lang"
+license: "MIT"
+author: "Cluster Authors"
+dependencies: []

@@ -1,0 +1,21 @@
+{
+  "registry": {
+    "name": "cluster-modules",
+    "url": "https://github.com/cl-andro/cluster-modules",
+    "version": "1"
+  },
+  "packages": {
+    "cl-http": {
+      "description": "HTTP client and server",
+      "latest": "0.1.0",
+      "path": "packages/cl-http",
+      "license": "MIT"
+    },
+    "cl-json": {
+      "description": "JSON parsing and generation",
+      "latest": "0.1.0",
+      "path": "packages/cl-json",
+      "license": "MIT"
+    }
+  }
+}

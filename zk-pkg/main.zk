@@ -1,0 +1,120 @@
+# zk-pkg — Cluster Package Manager CLI
+# Usage: zk-pkg <command> [args]
+
+REGISTRY_URL := "https://raw.githubusercontent.com/cl-andro/cluster-modules/main/index.json"
+CACHE_DIR := ".zk_cache"
+
+fn usage():
+    put "Usage: zk-pkg <command> [args]"
+    put ""
+    put "Commands:"
+    put "  install <package>[@version]    Install a package"
+    put "  search <query>                 Search packages"
+    put "  list                            List installed packages"
+    put "  update                          Update all packages"
+    put "  info <package>                 Show package info"
+    put "  help                            Show this help"
+
+fn fetch_registry() -> string:
+    put "--> Fetching registry..."
+    response := http_get(REGISTRY_URL, [])
+    return json_parse(response)
+
+fn cmd_install(args: [string]):
+    if args.size() == 0:
+        put "Usage: zk-pkg install <package>[@version]"
+        return
+
+    pkg_spec := args[0]
+    pkg_name := pkg_spec
+    pkg_version := "latest"
+
+    # Parse name@version
+    at_pos := text_find(pkg_spec, "@")
+    if at_pos > 0:
+        pkg_name = text_substring(pkg_spec, 0, at_pos)
+        pkg_version = text_substring(pkg_spec, at_pos + 1, text_length(pkg_spec))
+
+    put "--> Installing " + pkg_name + " (" + pkg_version + ")..."
+
+    registry := fetch_registry()
+    pkg_info := json_get(registry, pkg_name)
+
+    if pkg_info == "":
+        put "Error: Package '" + pkg_name + "' not found"
+        return
+
+    pkg_url := "https://raw.githubusercontent.com/cl-andro/cluster-modules/main/packages/" + pkg_name + "/main.zk"
+    put "--> Downloading from " + pkg_url
+
+    source := http_get(pkg_url, [])
+    if source == "":
+        put "Error: Failed to download package source"
+        return
+
+    # Ensure cache directory exists
+    os_run("mkdir -p " + CACHE_DIR)
+
+    # Cache the module
+    cache_path := CACHE_DIR + "/" + pkg_name + ".zk"
+    file_write(cache_path, source)
+    put "--> Installed " + pkg_name + " to " + cache_path
+
+fn cmd_search(args: [string]):
+    if args.size() == 0:
+        put "Usage: zk-pkg search <query>"
+        return
+
+    query := args[0]
+    registry := fetch_registry()
+    put "Searching for '" + query + "'..."
+
+    # For now, just list all and filter
+    put "(search filtering coming soon — here's all packages:)"
+
+    # Parse and display registry contents
+    put registry
+
+fn cmd_list(args: [string]):
+    put "Installed packages:"
+    os_run("ls -la " + CACHE_DIR + " 2>/dev/null || echo '(none)')
+
+fn cmd_info(args: [string]):
+    if args.size() == 0:
+        put "Usage: zk-pkg info <package>"
+        return
+
+    pkg_name := args[0]
+    registry := fetch_registry()
+    pkg_info := json_get(registry, pkg_name)
+
+    if pkg_info == "":
+        put "Error: Package '" + pkg_name + "' not found"
+        return
+
+    put pkg_name + ":"
+    put "  " + pkg_info
+
+fn main():
+    args := sys_args
+    if args.size() == 0:
+        usage()
+        return
+
+    cmd := args[0]
+
+    if cmd == "install":
+        cmd_install(text_rest(args, 1))
+    elif cmd == "search":
+        cmd_search(text_rest(args, 1))
+    elif cmd == "list":
+        cmd_list(text_rest(args, 1))
+    elif cmd == "info":
+        cmd_info(text_rest(args, 1))
+    elif cmd == "update":
+        put "Update command coming soon"
+    elif cmd == "help" or cmd == "--help" or cmd == "-h":
+        usage()
+    else:
+        put "Unknown command: " + cmd
+        usage()

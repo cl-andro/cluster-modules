@@ -1,0 +1,6 @@
+name: "zk-pkg"
+version: "0.1.0"
+description: "Cluster language package manager CLI"
+license: "MIT"
+author: "Cluster Authors"
+dependencies: ["cl-http@0.1.0", "cl-json@0.1.0"]
