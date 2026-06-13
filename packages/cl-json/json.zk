@@ -1,5 +1,5 @@
-# JSON Module
-# Wraps the native json_parse/json_get functions
+// JSON Module
+// Wraps the native json_parse/json_get functions
 
 fn parse(text: string) -> string:
     return json_parse(text)
