@@ -9,12 +9,14 @@
       "description": "HTTP client and server",
       "latest": "0.1.0",
       "path": "packages/cl-http",
+      "main": "http.zk",
       "license": "MIT"
     },
     "cl-json": {
       "description": "JSON parsing and generation",
       "latest": "0.1.0",
       "path": "packages/cl-json",
+      "main": "json.zk",
       "license": "MIT"
     }
   }
