@@ -1,10 +1,10 @@
-# zk-pkg — Cluster Package Manager CLI
-# Usage: zk-pkg <command> [args]
+// zk-pkg — Cluster Package Manager CLI
+// Usage: zk-pkg <command> [args]
 
 REGISTRY_URL := "https://raw.githubusercontent.com/cl-andro/cluster-modules/main/index.json"
 CACHE_DIR := ".zk_cache"
 
-fn usage():
+fn show_usage():
     put "Usage: zk-pkg <command> [args]"
     put ""
     put "Commands:"
@@ -15,13 +15,18 @@ fn usage():
     put "  info <package>                 Show package info"
     put "  help                            Show this help"
 
-fn fetch_registry() -> string:
+fn fetch_registry_raw() -> string:
     put "--> Fetching registry..."
-    response := http_get(REGISTRY_URL, [])
-    return json_parse(response)
+    return http_get(REGISTRY_URL)
 
-fn cmd_install(args: [string]):
-    if args.size() == 0:
+fn split_at(s: string, delim: string, pos: int) -> string:
+    parts := text_split(s, delim)
+    if list_size(parts) > pos:
+        return parts[pos]
+    return ""
+
+fn cmd_install(args):
+    if list_size(args) == 0:
         put "Usage: zk-pkg install <package>[@version]"
         return
 
@@ -29,76 +34,67 @@ fn cmd_install(args: [string]):
     pkg_name := pkg_spec
     pkg_version := "latest"
 
-    # Parse name@version
-    at_pos := text_find(pkg_spec, "@")
-    if at_pos > 0:
-        pkg_name = text_substring(pkg_spec, 0, at_pos)
-        pkg_version = text_substring(pkg_spec, at_pos + 1, text_length(pkg_spec))
+    at_part := split_at(pkg_spec, "@", 0)
+    if at_part != "" and at_part != pkg_spec:
+        pkg_name = at_part
+        pkg_version = split_at(pkg_spec, "@", 1)
 
     put "--> Installing " + pkg_name + " (" + pkg_version + ")..."
 
-    registry := fetch_registry()
-    pkg_info := json_get(registry, pkg_name)
+    registry_json := fetch_registry_raw()
+    pkg_entry := json_get(registry_json, pkg_name)
 
-    if pkg_info == "":
+    if pkg_entry == "" or string_contains(pkg_entry, "Error"):
         put "Error: Package '" + pkg_name + "' not found"
         return
 
     pkg_url := "https://raw.githubusercontent.com/cl-andro/cluster-modules/main/packages/" + pkg_name + "/main.zk"
     put "--> Downloading from " + pkg_url
 
-    source := http_get(pkg_url, [])
+    source := http_get(pkg_url)
     if source == "":
         put "Error: Failed to download package source"
         return
 
-    # Ensure cache directory exists
     os_run("mkdir -p " + CACHE_DIR)
-
-    # Cache the module
     cache_path := CACHE_DIR + "/" + pkg_name + ".zk"
     file_write(cache_path, source)
     put "--> Installed " + pkg_name + " to " + cache_path
 
-fn cmd_search(args: [string]):
-    if args.size() == 0:
+fn cmd_search(args):
+    if list_size(args) == 0:
         put "Usage: zk-pkg search <query>"
         return
 
     query := args[0]
-    registry := fetch_registry()
+    registry_json := fetch_registry_raw()
     put "Searching for '" + query + "'..."
+    put registry_json
 
-    # For now, just list all and filter
-    put "(search filtering coming soon — here's all packages:)"
-
-    # Parse and display registry contents
-    put registry
-
-fn cmd_list(args: [string]):
+fn cmd_list(args):
     put "Installed packages:"
-    os_run("ls -la " + CACHE_DIR + " 2>/dev/null || echo '(none)')
+    os_run("ls -la " + CACHE_DIR + " 2>/dev/null || echo '(none)'")
 
-fn cmd_info(args: [string]):
-    if args.size() == 0:
+fn cmd_info(args):
+    if list_size(args) == 0:
         put "Usage: zk-pkg info <package>"
         return
 
     pkg_name := args[0]
-    registry := fetch_registry()
-    pkg_info := json_get(registry, pkg_name)
+    registry_json := fetch_registry_raw()
+    pkg_entry := json_get(registry_json, pkg_name)
 
-    if pkg_info == "":
+    if pkg_entry == "" or string_contains(pkg_entry, "Error"):
         put "Error: Package '" + pkg_name + "' not found"
         return
 
     put pkg_name + ":"
-    put "  " + pkg_info
+    put "  " + pkg_entry
 
 fn main():
     args := sys_args
-    if args.size() == 0:
-        usage()
+    if list_size(args) == 0:
+        show_usage()
         return
 
     cmd := args[0]
@@ -114,7 +110,7 @@ fn main():
     elif cmd == "update":
         put "Update command coming soon"
     elif cmd == "help" or cmd == "--help" or cmd == "-h":
-        usage()
+        show_usage()
     else:
         put "Unknown command: " + cmd
-        usage()
+        show_usage()
