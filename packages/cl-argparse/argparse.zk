@@ -1,0 +1,45 @@
+// cl-argparse: Command-line Argument Parser
+// Parses --flags, --name=value, and positional arguments
+
+model ArgParser
+    args := list()
+    flags := map_new()
+    options := map_new()
+    positional := list()
+
+fn init()
+    parser := ArgParser{}
+    parser.args := sys_args
+    parser.flags := map_new()
+    parser.options := map_new()
+    parser.positional := list()
+    i := 0
+    while i < list_size(parser.args)
+        arg := parser.args[i]
+        if string_starts_with(arg, "--")
+            eq_parts := text_split(arg, "=")
+            if list_size(eq_parts) == 2
+                name := text_replace(eq_parts[0], "--", "")
+                value := eq_parts[1]
+                map_set(parser.options, name, value)
+            else
+                name := text_replace(arg, "--", "")
+                map_set(parser.flags, name, 1)
+        else
+            if i > 0
+                list_push(parser.positional, arg)
+        i := i + 1
+    return parser
+
+fn has_flag(parser, name)
+    return map_has(parser.flags, name)
+
+fn get_option(parser, name)
+    if map_has(parser.options, name)
+        return map_get(parser.options, name)
+    return ""
+
+fn get_positional(parser, index)
+    if index < list_size(parser.positional)
+        return parser.positional[index]
+    return ""

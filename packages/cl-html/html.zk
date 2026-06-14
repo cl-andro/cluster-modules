@@ -1,0 +1,60 @@
+// HTML Templating Module
+// Pure string manipulation for HTML generation and escaping
+
+fn escape(text: string) -> string:
+    result := text_replace(text, "&", "&amp;")
+    result := text_replace(result, "<", "&lt;")
+    result := text_replace(result, ">", "&gt;")
+    result := text_replace(result, "\"", "&quot;")
+    result := text_replace(result, "'", "&#39;")
+    return result
+
+fn render(template: string, vars) -> string:
+    keys := map_keys(vars)
+    result := template
+    i := 0
+    while i < list_size(keys):
+        key := keys[i]
+        value := map_get(vars, key)
+        placeholder := "{" + key + "}"
+        result := text_replace(result, placeholder, value)
+        i := i + 1
+    return result
+
+fn table(data, headers: [string]) -> string:
+    result := "<table>\n<tr>"
+    i := 0
+    while i < list_size(headers):
+        result := result + "<th>" + escape(headers[i]) + "</th>"
+        i := i + 1
+    result := result + "</tr>\n"
+    row_idx := 0
+    while row_idx < list_size(data):
+        row := data[row_idx]
+        result := result + "<tr>"
+        col_idx := 0
+        while col_idx < list_size(row):
+            result := result + "<td>" + escape(row[col_idx]) + "</td>"
+            col_idx := col_idx + 1
+        result := result + "</tr>\n"
+        row_idx := row_idx + 1
+    result := result + "</table>"
+    return result
+
+fn list(items: [string], ordered: bool) -> string:
+    tag_name := "ul"
+    if ordered:
+        tag_name := "ol"
+    result := "<" + tag_name + ">\n"
+    i := 0
+    while i < list_size(items):
+        result := result + "<li>" + escape(items[i]) + "</li>\n"
+        i := i + 1
+    result := result + "</" + tag_name + ">"
+    return result
+
+fn tag(name: string, content: string) -> string:
+    return "<" + name + ">" + content + "</" + name + ">"
+
+fn tag(name: string, content: string, attrs: string) -> string:
+    return "<" + name + " " + attrs + ">" + content + "</" + name + ">"

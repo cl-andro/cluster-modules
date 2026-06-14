@@ -1,6 +1,6 @@
-name: "cl-fs"
-version: "0.1.0"
-description: "File system operations for cluster-lang"
+name: "cl-db"
+version: "0.2.0"
+description: "Database engine (.clt) and SQLite bridge"
 license: "Commercial Control and non copy license"
 author: "Cluster Authors"
 dependencies: []

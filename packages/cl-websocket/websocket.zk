@@ -1,0 +1,168 @@
+// WebSocket Client Module
+// Wraps raw TCP sockets via cpp_inject for WebSocket communication
+
+cpp_inject("#include <netdb.h>")
+cpp_inject("#include <cstring>")
+
+cpp_inject("static int ws_sock = -1;")
+cpp_inject("static string ws_host = \"\";")
+cpp_inject("static int ws_port = 80;")
+
+fn connect(url)
+    cpp_inject("""
+        if (ws_sock >= 0) close(ws_sock);
+        ws_sock = -1;
+
+        string u = url;
+        string host;
+        string path = "/";
+        int port = 80;
+
+        size_t proto = u.find("://");
+        if (proto != string::npos) u = u.substr(proto + 3);
+
+        size_t slash = u.find("/");
+        if (slash != string::npos) {
+            path = u.substr(slash);
+            u = u.substr(0, slash);
+        }
+
+        size_t colon = u.find(":");
+        if (colon != string::npos) {
+            port = stoi(u.substr(colon + 1));
+            host = u.substr(0, colon);
+        } else {
+            host = u;
+        }
+
+        ws_host = host;
+        ws_port = port;
+
+        int sock = socket(AF_INET, SOCK_STREAM, 0);
+        if (sock < 0) return "Error: socket creation failed";
+
+        struct hostent* he = gethostbyname(host.c_str());
+        if (!he) { close(sock); return "Error: DNS lookup failed"; }
+
+        struct sockaddr_in addr;
+        memset(&addr, 0, sizeof(addr));
+        addr.sin_family = AF_INET;
+        addr.sin_port = htons(port);
+        memcpy(&addr.sin_addr, he->h_addr_list[0], he->h_length);
+
+        if (connect(sock, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
+            close(sock);
+            return "Error: connect failed";
+        }
+
+        string key = "dGhlIHNhbXBsZSBub25jZQ==";
+        string req = "GET " + path + " HTTP/1.1\r\n";
+        req += "Host: " + host;
+        if (port != 80) req += ":" + to_string(port);
+        req += "\r\nUpgrade: websocket\r\nConnection: Upgrade\r\n";
+        req += "Sec-WebSocket-Key: " + key + "\r\n";
+        req += "Sec-WebSocket-Version: 13\r\n\r\n";
+
+        send(sock, req.c_str(), req.length(), 0);
+
+        char buf[4096];
+        int n = read(sock, buf, sizeof(buf) - 1);
+        if (n < 0) { close(sock); return "Error: handshake failed"; }
+        buf[n] = 0;
+        string resp(buf);
+
+        if (resp.find("101") == string::npos) {
+            close(sock);
+            return "Error: handshake failed";
+        }
+
+        ws_sock = sock;
+        return "Connected";
+    """)
+
+fn send(data)
+    cpp_inject("""
+        if (ws_sock < 0) return "Error: not connected";
+
+        size_t len = data.length();
+        unsigned char header[10];
+        size_t hdr_len;
+
+        header[0] = 0x81;
+        if (len < 126) {
+            header[1] = 0x80 | len;
+            hdr_len = 2;
+        } else if (len < 65536) {
+            header[1] = 0x80 | 126;
+            header[2] = (len >> 8) & 0xFF;
+            header[3] = len & 0xFF;
+            hdr_len = 4;
+        } else {
+            header[1] = 0x80 | 127;
+            for (int i = 0; i < 8; i++)
+                header[2 + i] = (len >> (56 - i * 8)) & 0xFF;
+            hdr_len = 10;
+        }
+
+        unsigned char mask[4] = {0x12, 0x34, 0x56, 0x78};
+        for (int i = 0; i < 4; i++)
+            header[hdr_len - 4 + i] = mask[i];
+
+        send(ws_sock, header, hdr_len, 0);
+
+        for (size_t i = 0; i < len; i++) {
+            unsigned char masked = data[i] ^ mask[i % 4];
+            send(ws_sock, &masked, 1, 0);
+        }
+
+        return "Sent";
+    """)
+
+fn receive()
+    cpp_inject("""
+        if (ws_sock < 0) return "Error: not connected";
+
+        unsigned char header[2];
+        int n = read(ws_sock, header, 2);
+        if (n < 2) return "Error: connection closed";
+
+        size_t len = header[1] & 0x7F;
+        size_t ext_len = 0;
+
+        if (len == 126) ext_len = 2;
+        else if (len == 127) ext_len = 8;
+
+        size_t payload_len = len;
+        if (ext_len > 0) {
+            unsigned char ext[8];
+            read(ws_sock, ext, ext_len);
+            payload_len = 0;
+            for (size_t i = 0; i < ext_len; i++)
+                payload_len = (payload_len << 8) | ext[i];
+        }
+
+        unsigned char mask_key[4] = {0};
+        bool masked = header[1] & 0x80;
+        if (masked) read(ws_sock, mask_key, 4);
+
+        string result(payload_len, 0);
+        read(ws_sock, &result[0], payload_len);
+
+        if (masked) {
+            for (size_t i = 0; i < payload_len; i++)
+                result[i] ^= mask_key[i % 4];
+        }
+
+        return result;
+    """)
+
+fn close()
+    cpp_inject("""
+        if (ws_sock >= 0) {
+            unsigned char frame[2] = {0x88, 0x00};
+            send(ws_sock, frame, 2, 0);
+            close(ws_sock);
+            ws_sock = -1;
+        }
+        return "Closed";
+    """)

@@ -1,6 +1,6 @@
-name: "cl-fs"
+name: "cl-units"
 version: "0.1.0"
-description: "File system operations for cluster-lang"
+description: "Unit conversion (length, temperature, mass, time)"
 license: "Commercial Control and non copy license"
 author: "Cluster Authors"
 dependencies: []

@@ -1,0 +1,61 @@
+cpp_inject("#include <random>")
+cpp_inject("#include <algorithm>")
+cpp_inject("#include <ctime>")
+
+cpp_inject("static std::mt19937 _rng(std::time(0));")
+
+fn seed(value)
+    cpp_inject("_rng.seed(value);")
+
+fn int(min, max)
+    result := 0
+    cpp_inject("""
+        std::uniform_int_distribution<int> dist(min, max);
+        result = dist(_rng);
+    """)
+    return result
+
+fn float(min, max)
+    result := 0.0
+    cpp_inject("""
+        std::uniform_real_distribution<double> dist(min, max);
+        result = dist(_rng);
+    """)
+    return result
+
+fn choice(list)
+    n := list_size(list)
+    if n == 0
+        return ""
+    idx := int(0, n - 1)
+    return list[idx]
+
+fn shuffle(list)
+    result := list()
+    cpp_inject("result = list;")
+    n := list_size(result)
+    i := n - 1
+    while i > 0
+        j := int(0, i)
+        tmp := result[i]
+        result[i] := result[j]
+        result[j] := tmp
+        i := i - 1
+    return result
+
+fn weighted(weights)
+    total := 0.0
+    n := list_size(weights)
+    i := 0
+    while i < n
+        total := total + weights[i]
+        i := i + 1
+    r := float(0.0, total)
+    cumulative := 0.0
+    i := 0
+    while i < n
+        cumulative := cumulative + weights[i]
+        if r <= cumulative
+            return i
+        i := i + 1
+    return n - 1

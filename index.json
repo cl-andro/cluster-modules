@@ -2,7 +2,7 @@
   "registry": {
     "name": "cluster-modules",
     "url": "https://github.com/cl-andro/cluster-modules",
-    "version": "1"
+    "version": "2"
   },
   "packages": {
     "cl-http": {
@@ -10,56 +10,238 @@
       "latest": "0.1.0",
       "path": "packages/cl-http",
       "main": "http.zk",
-      "license": "Commercial Contro and non copy license"
+      "license": "Commercial Control and non copy license"
     },
     "cl-json": {
       "description": "JSON parsing and generation",
       "latest": "0.1.0",
       "path": "packages/cl-json",
       "main": "json.zk",
-      "license": "Commercial Contro and non copy license"
+      "license": "Commercial Control and non copy license"
     },
     "cl-text": {
       "description": "String manipulation utilities (split, replace, lower, upper, etc.)",
       "latest": "0.1.0",
       "path": "packages/cl-text",
       "main": "text.zk",
-      "license": "Commercial Contro and non copy license"
+      "license": "Commercial Control and non copy license"
     },
     "cl-fs": {
       "description": "File system operations (read, write, exists, delete)",
       "latest": "0.1.0",
       "path": "packages/cl-fs",
       "main": "fs.zk",
-      "license": "Commercial Contro and non copy license"
+      "license": "Commercial Control and non copy license"
     },
     "cl-os": {
       "description": "OS and system utilities (run, sleep, exit, env)",
       "latest": "0.1.0",
       "path": "packages/cl-os",
       "main": "os.zk",
-      "license": "Commercial Contro and non copy license"
+      "license": "Commercial Control and non copy license"
     },
     "cl-datetime": {
       "description": "Date and time utilities (now, format)",
       "latest": "0.1.0",
       "path": "packages/cl-datetime",
       "main": "datetime.zk",
-      "license": "Commercial Contro and non copy license"
+      "license": "Commercial Control and non copy license"
     },
     "cl-regex": {
       "description": "Regular expression utilities (match, test)",
       "latest": "0.1.0",
       "path": "packages/cl-regex",
       "main": "regex.zk",
-      "license": "Commercial Contro and non copy license"
+      "license": "Commercial Control and non copy license"
     },
     "cl-crypto": {
       "description": "Cryptography utilities (SHA-256 hash)",
       "latest": "0.1.0",
       "path": "packages/cl-crypto",
       "main": "crypto.zk",
-      "license": "Commercial Contro and non copy license"
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-db": {
+      "description": "Database engine (.clt) and SQLite bridge",
+      "latest": "0.2.0",
+      "path": "packages/cl-db",
+      "main": "db.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-csv": {
+      "description": "CSV parser (read, write, DictReader, DictWriter)",
+      "latest": "0.1.0",
+      "path": "packages/cl-csv",
+      "main": "csv.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-ai": {
+      "description": "Ollama bridge for local AI inference",
+      "latest": "0.1.0",
+      "path": "packages/cl-ai",
+      "main": "ai.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-math": {
+      "description": "Math functions (sin, cos, tan, log, ceil, floor, round)",
+      "latest": "0.1.0",
+      "path": "packages/cl-math",
+      "main": "math.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-test": {
+      "description": "Testing framework with describe/test/assert",
+      "latest": "0.1.0",
+      "path": "packages/cl-test",
+      "main": "test.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-argparse": {
+      "description": "Command-line argument parser",
+      "latest": "0.1.0",
+      "path": "packages/cl-argparse",
+      "main": "argparse.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-log": {
+      "description": "Structured logging framework with levels and file output",
+      "latest": "0.1.0",
+      "path": "packages/cl-log",
+      "main": "log.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-config": {
+      "description": "Configuration file reader (JSON/INI)",
+      "latest": "0.1.0",
+      "path": "packages/cl-config",
+      "main": "config.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-websocket": {
+      "description": "WebSocket client (wraps C++ socket engine)",
+      "latest": "0.1.0",
+      "path": "packages/cl-websocket",
+      "main": "websocket.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-smtp": {
+      "description": "SMTP email sending via TCP socket",
+      "latest": "0.1.0",
+      "path": "packages/cl-smtp",
+      "main": "smtp.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-html": {
+      "description": "HTML templating engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-html",
+      "main": "html.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-yaml": {
+      "description": "Minimal YAML parser",
+      "latest": "0.1.0",
+      "path": "packages/cl-yaml",
+      "main": "yaml.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-base64": {
+      "description": "Base64 encoding and decoding",
+      "latest": "0.1.0",
+      "path": "packages/cl-base64",
+      "main": "base64.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-uuid": {
+      "description": "UUID v4 generation",
+      "latest": "0.1.0",
+      "path": "packages/cl-uuid",
+      "main": "uuid.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-zip": {
+      "description": "GZip file compression (wraps zlib)",
+      "latest": "0.1.0",
+      "path": "packages/cl-zip",
+      "main": "zip.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-xml": {
+      "description": "Minimal XML parser",
+      "latest": "0.1.0",
+      "path": "packages/cl-xml",
+      "main": "xml.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-toml": {
+      "description": "TOML config file parser",
+      "latest": "0.1.0",
+      "path": "packages/cl-toml",
+      "main": "toml.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-stats": {
+      "description": "Statistics library (mean, median, stddev, percentile)",
+      "latest": "0.1.0",
+      "path": "packages/cl-stats",
+      "main": "stats.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-random": {
+      "description": "Random number utilities (range, shuffle, weighted)",
+      "latest": "0.1.0",
+      "path": "packages/cl-random",
+      "main": "random.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-units": {
+      "description": "Unit conversion (length, temperature, mass, time)",
+      "latest": "0.1.0",
+      "path": "packages/cl-units",
+      "main": "units.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-progress": {
+      "description": "Terminal progress bars and spinners",
+      "latest": "0.1.0",
+      "path": "packages/cl-progress",
+      "main": "progress.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-ansi": {
+      "description": "ANSI terminal colors and styles",
+      "latest": "0.1.0",
+      "path": "packages/cl-ansi",
+      "main": "ansi.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-semver": {
+      "description": "Semantic versioning parser and comparison",
+      "latest": "0.1.0",
+      "path": "packages/cl-semver",
+      "main": "semver.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-graph": {
+      "description": "Graph data structure with BFS/DFS/shortest path",
+      "latest": "0.1.0",
+      "path": "packages/cl-graph",
+      "main": "graph.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-cache": {
+      "description": "LRU and TTL cache",
+      "latest": "0.1.0",
+      "path": "packages/cl-cache",
+      "main": "cache.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-bloom": {
+      "description": "Bloom filter (probabilistic set membership)",
+      "latest": "0.1.0",
+      "path": "packages/cl-bloom",
+      "main": "bloom.zk",
+      "license": "Commercial Control and non copy license"
     }
   }
 }

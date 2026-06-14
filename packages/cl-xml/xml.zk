@@ -1,0 +1,47 @@
+// Minimal XML Parser Module
+// Simple flat string extraction using text_ functions
+
+fn parse(text: string) -> string:
+    return text
+
+fn get_tag(xml: string, tag_name: string) -> string:
+    open_tag := "<" + tag_name + ">"
+    close_tag := "</" + tag_name + ">"
+    parts := text_split(xml, open_tag)
+    if list_size(parts) < 2:
+        return ""
+    after_open := parts[1]
+    parts := text_split(after_open, close_tag)
+    return parts[0]
+
+fn get_attr(xml: string, tag_name: string, attr_name: string) -> string:
+    tag_start := "<" + tag_name
+    parts := text_split(xml, tag_start)
+    if list_size(parts) < 2:
+        return ""
+    tag_body := parts[1]
+    search := attr_name + "=\""
+    attr_parts := text_split(tag_body, search)
+    if list_size(attr_parts) < 2:
+        return ""
+    after_attr := attr_parts[1]
+    val_parts := text_split(after_attr, "\"")
+    return val_parts[0]
+
+fn get_all(xml: string, tag_name: string):
+    results := list()
+    open_tag := "<" + tag_name + ">"
+    close_tag := "</" + tag_name + ">"
+    buffer := xml
+    while string_contains(buffer, open_tag):
+        parts := text_split(buffer, open_tag)
+        if list_size(parts) < 2:
+            break
+        after_open := parts[1]
+        parts := text_split(after_open, close_tag)
+        list_push(results, parts[0])
+        if list_size(parts) > 1:
+            buffer := parts[1]
+        else:
+            break
+    return results

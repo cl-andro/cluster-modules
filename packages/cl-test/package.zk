@@ -1,6 +1,6 @@
-name: "cl-fs"
+name: "cl-test"
 version: "0.1.0"
-description: "File system operations for cluster-lang"
+description: "Testing framework with describe/test/assert"
 license: "Commercial Control and non copy license"
 author: "Cluster Authors"
 dependencies: []

@@ -1,0 +1,232 @@
+cpp_inject("#include <string>")
+cpp_inject("#include <vector>")
+cpp_inject("#include <queue>")
+cpp_inject("#include <algorithm>")
+cpp_inject("#include <climits>")
+cpp_inject("#include <sstream>")
+
+model Graph
+    nodes := list()
+    edges := list()
+
+fn add_node(g, name)
+    list_push(g.nodes, name)
+
+fn add_edge(g, from, to, weight)
+    edge_str := ""
+    cpp_inject("edge_str = from + \":\" + to + \":\" + std::to_string(weight);")
+    list_push(g.edges, edge_str)
+
+fn find_index(g, name)
+    i := 0
+    n := list_size(g.nodes)
+    while i < n
+        if g.nodes[i] == name
+            return i
+        i := i + 1
+    return -1
+
+fn bfs(g, start, target)
+    n := list_size(g.nodes)
+    visited := list()
+    prev := list()
+    i := 0
+    while i < n
+        list_push(visited, 0)
+        list_push(prev, -1)
+        i := i + 1
+    start_idx := find_index(g, start)
+    if start_idx == -1
+        return list()
+    target_idx := find_index(g, target)
+    if target_idx == -1
+        return list()
+    q := list()
+    list_push(q, start_idx)
+    visited[start_idx] := 1
+    while list_size(q) > 0
+        cur := q[0]
+        cpp_inject("q.erase(q.begin());")
+        if cur == target_idx
+            path := list()
+            at := target_idx
+            while at != -1
+                list_push(path, g.nodes[at])
+                at := prev[at]
+            cpp_inject("std::reverse(path.begin(), path.end());")
+            return path
+        i := 0
+        while i < list_size(g.edges)
+            edge := g.edges[i]
+            from_idx := -1
+            to_idx := -1
+            cpp_inject("""
+                std::string e = edge;
+                size_t c1 = e.find(':');
+                size_t c2 = e.find(':', c1 + 1);
+                std::string f = e.substr(0, c1);
+                std::string t = e.substr(c1 + 1, c2 - c1 - 1);
+                for (int k = 0; k < (int)g.nodes.size(); k++) {
+                    if ((std::string)g.nodes[k] == f) from_idx = k;
+                    if ((std::string)g.nodes[k] == t) to_idx = k;
+                }
+            """)
+            if from_idx == cur and visited[to_idx] == 0
+                visited[to_idx] := 1
+                prev[to_idx] := cur
+                list_push(q, to_idx)
+            i := i + 1
+    return list()
+
+fn dfs(g, start, target)
+    n := list_size(g.nodes)
+    visited := list()
+    i := 0
+    while i < n
+        list_push(visited, 0)
+        i := i + 1
+    start_idx := find_index(g, start)
+    if start_idx == -1
+        return list()
+    target_idx := find_index(g, target)
+    if target_idx == -1
+        return list()
+    stack := list()
+    path := list()
+    list_push(stack, start_idx)
+    while list_size(stack) > 0
+        cpp_inject("int cur = (int)stack.back(); stack.pop_back();")
+        if visited[cur] == 0
+            visited[cur] := 1
+            list_push(path, g.nodes[cur])
+            if cur == target_idx
+                return path
+            i := 0
+            while i < list_size(g.edges)
+                edge := g.edges[i]
+                from_idx := -1
+                to_idx := -1
+                cpp_inject("""
+                    std::string e = edge;
+                    size_t c1 = e.find(':');
+                    size_t c2 = e.find(':', c1 + 1);
+                    std::string f = e.substr(0, c1);
+                    std::string t = e.substr(c1 + 1, c2 - c1 - 1);
+                    for (int k = 0; k < (int)g.nodes.size(); k++) {
+                        if ((std::string)g.nodes[k] == f) from_idx = k;
+                        if ((std::string)g.nodes[k] == t) to_idx = k;
+                    }
+                """)
+                if from_idx == cur and visited[to_idx] == 0
+                    list_push(stack, to_idx)
+                i := i + 1
+    return list()
+
+fn shortest_path(g, start, end)
+    n := list_size(g.nodes)
+    dist := list()
+    prev := list()
+    visited := list()
+    i := 0
+    while i < n
+        cpp_inject("dist.push_back(INT_MAX);")
+        list_push(prev, -1)
+        list_push(visited, 0)
+        i := i + 1
+    start_idx := find_index(g, start)
+    if start_idx == -1
+        return list()
+    end_idx := find_index(g, end)
+    if end_idx == -1
+        return list()
+    dist[start_idx] := 0
+    count := 0
+    while count < n
+        u := -1
+        min_dist := 0
+        cpp_inject("min_dist = INT_MAX;")
+        i := 0
+        while i < n
+            if visited[i] == 0 and dist[i] < min_dist
+                min_dist := dist[i]
+                u := i
+            i := i + 1
+        if u == -1
+            break
+        visited[u] := 1
+        i := 0
+        while i < list_size(g.edges)
+            edge := g.edges[i]
+            from_idx := -1
+            to_idx := -1
+            w := 0.0
+            cpp_inject("""
+                std::string e = edge;
+                size_t c1 = e.find(':');
+                size_t c2 = e.find(':', c1 + 1);
+                std::string f = e.substr(0, c1);
+                std::string t = e.substr(c1 + 1, c2 - c1 - 1);
+                w = std::stod(e.substr(c2 + 1));
+                for (int k = 0; k < (int)g.nodes.size(); k++) {
+                    if ((std::string)g.nodes[k] == f) from_idx = k;
+                    if ((std::string)g.nodes[k] == t) to_idx = k;
+                }
+            """)
+            if from_idx == u and visited[to_idx] == 0 and dist[u] + w < dist[to_idx]
+                dist[to_idx] := dist[u] + w
+                prev[to_idx] := u
+            i := i + 1
+        count := count + 1
+    path := list()
+    at := end_idx
+    if prev[at] == -1 and at != start_idx
+        return list()
+    while at != -1
+        list_push(path, g.nodes[at])
+        at := prev[at]
+    cpp_inject("std::reverse(path.begin(), path.end());")
+    return path
+
+fn has_cycle(g)
+    n := list_size(g.nodes)
+    visited := list()
+    rec_stack := list()
+    i := 0
+    while i < n
+        list_push(visited, 0)
+        list_push(rec_stack, 0)
+        i := i + 1
+    i := 0
+    while i < n
+        cpp_inject("""
+            if (!visited[i]) {
+                std::stack<int> s;
+                s.push(i);
+                std::vector<int> state(n, 0);
+                state[i] = 1;
+                while (!s.empty()) {
+                    int cur = s.top();
+                    if (state[cur] == 2) { s.pop(); continue; }
+                    bool found = false;
+                    for (int k = 0; k < (int)g.edges.size(); k++) {
+                        std::string e = (std::string)g.edges[k];
+                        size_t c1 = e.find(':');
+                        size_t c2 = e.find(':', c1 + 1);
+                        std::string f = e.substr(0, c1);
+                        std::string t = e.substr(c1 + 1, c2 - c1 - 1);
+                        int fi = -1, ti = -1;
+                        for (int x = 0; x < (int)g.nodes.size(); x++) {
+                            if ((std::string)g.nodes[x] == f) fi = x;
+                            if ((std::string)g.nodes[x] == t) ti = x;
+                        }
+                        if (fi == cur) {
+                            if (state[ti] == 1) { return true; }
+                            if (state[ti] == 0) { state[ti] = 1; s.push(ti); found = true; break; }
+                        }
+                    }
+                    if (!found) { state[cur] = 2; s.pop(); }
+                }
+            }
+        """)
+        i := i + 1
+    return 0

@@ -1,0 +1,6 @@
+name: "cl-config"
+version: "0.1.0"
+description: "Configuration file reader (JSON/INI)"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+dependencies: ["cl-json@0.1.0", "cl-fs@0.1.0"]

@@ -1,0 +1,53 @@
+fn m_to_km(m)
+    return m / 1000.0
+
+fn km_to_m(km)
+    return km * 1000.0
+
+fn m_to_ft(m)
+    return m * 3.28084
+
+fn ft_to_m(ft)
+    return ft / 3.28084
+
+fn km_to_mi(km)
+    return km * 0.621371
+
+fn mi_to_km(mi)
+    return mi / 0.621371
+
+fn c_to_f(c)
+    return c * 9.0 / 5.0 + 32.0
+
+fn f_to_c(f)
+    return (f - 32.0) * 5.0 / 9.0
+
+fn c_to_k(c)
+    return c + 273.15
+
+fn k_to_c(k)
+    return k - 273.15
+
+fn kg_to_lb(kg)
+    return kg * 2.20462
+
+fn lb_to_kg(lb)
+    return lb / 2.20462
+
+fn kg_to_g(kg)
+    return kg * 1000.0
+
+fn g_to_kg(g)
+    return g / 1000.0
+
+fn h_to_min(h)
+    return h * 60.0
+
+fn min_to_s(min)
+    return min * 60.0
+
+fn day_to_h(day)
+    return day * 24.0
+
+fn h_to_day(h)
+    return h / 24.0

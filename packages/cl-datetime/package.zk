@@ -1,6 +1,6 @@
 name: "cl-datetime"
 version: "0.1.0"
 description: "Date and time utilities for cluster-lang"
-license: "Commercial Contro and non copy license"
+license: "Commercial Control and non copy license"
 author: "Cluster Authors"
 dependencies: []

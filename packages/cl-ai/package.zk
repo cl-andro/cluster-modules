@@ -1,6 +1,6 @@
-name: "cl-fs"
+name: "cl-ai"
 version: "0.1.0"
-description: "File system operations for cluster-lang"
+description: "Ollama bridge for local AI inference"
 license: "Commercial Control and non copy license"
 author: "Cluster Authors"
 dependencies: []

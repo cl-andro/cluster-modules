@@ -1,0 +1,6 @@
+name: "cl-smtp"
+version: "0.1.0"
+description: "SMTP email sending via TCP socket"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+dependencies: ["cl-base64@0.1.0"]

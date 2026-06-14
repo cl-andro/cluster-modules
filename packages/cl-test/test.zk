@@ -1,0 +1,37 @@
+// cl-test: Testing Framework
+// Provides describe/test blocks and assertion functions
+
+pass_count := 0
+fail_count := 0
+
+fn describe(name, body)
+    put "=== " + name + " ==="
+    body()
+
+fn test(name, body)
+    try
+        body()
+        pass_count := pass_count + 1
+        put "  PASS: " + name
+    catch
+        fail_count := fail_count + 1
+        put "  FAIL: " + name
+        msg := error_message()
+        if msg != ""
+            put "    " + msg
+
+fn assert_eq(actual, expected)
+    if actual != expected
+        cpp_inject("throw std::runtime_error(\"assert_eq failed\");")
+
+fn assert_true(cond)
+    if cond == 0
+        cpp_inject("throw std::runtime_error(\"assert_true failed\");")
+
+fn assert_false(cond)
+    if cond != 0
+        cpp_inject("throw std::runtime_error(\"assert_false failed\");")
+
+fn assert_contains(str, substr)
+    if string_contains(str, substr) == 0
+        cpp_inject("throw std::runtime_error(\"assert_contains failed\");")

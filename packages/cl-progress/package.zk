@@ -1,0 +1,6 @@
+name: "cl-progress"
+version: "0.1.0"
+description: "Terminal progress bars and spinners"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+dependencies: ["cl-ansi@0.1.0"]

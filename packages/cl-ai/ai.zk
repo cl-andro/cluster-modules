@@ -1,0 +1,11 @@
+// cl-ai: AI Module
+// Wraps the native Ollama bridge functions
+
+fn ask(prompt: string):
+    return ai_ask(prompt)
+
+fn local(prompt: string, model: string):
+    return ai_local(prompt, model)
+
+fn embed(text: string):
+    return ai_embed(text)

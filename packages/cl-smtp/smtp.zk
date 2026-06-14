@@ -1,0 +1,105 @@
+// SMTP Email Sender Module
+// Uses raw TCP sockets via cpp_inject for SMTP protocol
+// Base64 encoding handled inline for auth credentials
+
+cpp_inject("#include <netdb.h>")
+cpp_inject("#include <cstring>")
+
+fn send(host, port, user, pass, from_addr, to_addr, subject, body)
+    cpp_inject("""
+        int sock = socket(AF_INET, SOCK_STREAM, 0);
+        if (sock < 0) return "Error: socket creation failed";
+
+        struct hostent* he = gethostbyname(host.c_str());
+        if (!he) { close(sock); return "Error: DNS lookup failed"; }
+
+        struct sockaddr_in addr;
+        memset(&addr, 0, sizeof(addr));
+        addr.sin_family = AF_INET;
+        addr.sin_port = htons(port);
+        memcpy(&addr.sin_addr, he->h_addr_list[0], he->h_length);
+
+        if (connect(sock, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
+            close(sock);
+            return "Error: connect failed";
+        }
+
+        auto recv = [&]() -> string {
+            char buf[4096];
+            int n = read(sock, buf, sizeof(buf) - 1);
+            if (n > 0) { buf[n] = 0; return string(buf); }
+            return "";
+        };
+
+        auto smtp_cmd = [&](const string& cmd) -> string {
+            send(sock, cmd.c_str(), cmd.length(), 0);
+            return recv();
+        };
+
+        auto b64enc = [](const string& raw) -> string {
+            const char b64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+            string out;
+            for (size_t i = 0; i < raw.length(); i += 3) {
+                unsigned char b0 = raw[i];
+                unsigned char b1 = (i + 1 < raw.length()) ? raw[i + 1] : 0;
+                unsigned char b2 = (i + 2 < raw.length()) ? raw[i + 2] : 0;
+                out += b64[b0 >> 2];
+                out += b64[((b0 & 3) << 4) | (b1 >> 4)];
+                out += (i + 1 < raw.length()) ? b64[((b1 & 15) << 2) | (b2 >> 6)] : '=';
+                out += (i + 2 < raw.length()) ? b64[b2 & 63] : '=';
+            }
+            return out;
+        };
+
+        string resp;
+
+        // Read banner
+        resp = recv();
+        if (resp.length() < 3 || resp.substr(0, 3) != "220") {
+            close(sock); return "Error: " + resp;
+        }
+
+        // EHLO
+        resp = smtp_cmd("EHLO localhost\r\n");
+        if (resp.substr(0, 3) != "250") { close(sock); return "Error: " + resp; }
+
+        // AUTH LOGIN
+        resp = smtp_cmd("AUTH LOGIN\r\n");
+        if (resp.substr(0, 3) != "334") { close(sock); return "Error: " + resp; }
+
+        // Base64 user
+        resp = smtp_cmd(b64enc(user) + "\r\n");
+        if (resp.substr(0, 3) != "334") { close(sock); return "Error: " + resp; }
+
+        // Base64 pass
+        resp = smtp_cmd(b64enc(pass) + "\r\n");
+        if (resp.substr(0, 3) != "235") { close(sock); return "Error: " + resp; }
+
+        // MAIL FROM
+        resp = smtp_cmd("MAIL FROM:<" + from_addr + ">\r\n");
+        if (resp.substr(0, 3) != "250") { close(sock); return "Error: " + resp; }
+
+        // RCPT TO
+        resp = smtp_cmd("RCPT TO:<" + to_addr + ">\r\n");
+        if (resp.substr(0, 3) != "250") { close(sock); return "Error: " + resp; }
+
+        // DATA
+        resp = smtp_cmd("DATA\r\n");
+        if (resp.substr(0, 3) != "354") { close(sock); return "Error: " + resp; }
+
+        // Build and send email body
+        string email = "From: " + from_addr + "\r\n";
+        email += "To: " + to_addr + "\r\n";
+        email += "Subject: " + subject + "\r\n";
+        email += "MIME-Version: 1.0\r\n";
+        email += "Content-Type: text/plain; charset=UTF-8\r\n";
+        email += "\r\n" + body + "\r\n.\r\n";
+
+        resp = smtp_cmd(email);
+        if (resp.substr(0, 3) != "250") { close(sock); return "Error: " + resp; }
+
+        // QUIT
+        smtp_cmd("QUIT\r\n");
+        close(sock);
+        return "Email sent successfully";
+    """)

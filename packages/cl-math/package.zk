@@ -1,6 +1,6 @@
-name: "cl-fs"
+name: "cl-math"
 version: "0.1.0"
-description: "File system operations for cluster-lang"
+description: "Math functions (sin, cos, tan, log, ceil, floor, round)"
 license: "Commercial Control and non copy license"
 author: "Cluster Authors"
 dependencies: []

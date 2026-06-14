@@ -1,0 +1,6 @@
+name: "cl-zip"
+version: "0.1.0"
+description: "GZip file compression (wraps zlib via cpp_inject)"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+dependencies: ["cl-fs@0.1.0"]

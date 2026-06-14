@@ -1,0 +1,6 @@
+name: "cl-websocket"
+version: "0.1.0"
+description: "WebSocket client (wraps C++ socket engine)"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+dependencies: ["cl-crypto@0.1.0"]

@@ -1,0 +1,19 @@
+// UUID v4 Generation Module
+
+fn v4() -> string:
+    result := ""
+    hex := "0123456789abcdef"
+    i := 0
+    while i < 36:
+        if i == 8 or i == 13 or i == 18 or i == 23:
+            result := result + "-"
+        elif i == 14:
+            result := result + "4"
+        elif i == 19:
+            r := random_num(8, 11)
+            result := result + hex[r]
+        else:
+            r := random_num(0, 15)
+            result := result + hex[r]
+        i := i + 1
+    return result

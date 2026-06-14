@@ -1,0 +1,84 @@
+cpp_inject("#include <vector>")
+cpp_inject("#include <algorithm>")
+cpp_inject("#include <cmath>")
+cpp_inject("#include <cstdlib>")
+
+fn sum(data)
+    total := 0.0
+    i := 0
+    n := list_size(data)
+    while i < n
+        val := data[i]
+        total := total + val
+        i := i + 1
+    return total
+
+fn mean(data)
+    n := list_size(data)
+    if n == 0
+        return 0.0
+    return sum(data) / n
+
+fn min(data)
+    n := list_size(data)
+    if n == 0
+        return 0.0
+    result := data[0]
+    i := 1
+    while i < n
+        if data[i] < result
+            result := data[i]
+        i := i + 1
+    return result
+
+fn max(data)
+    n := list_size(data)
+    if n == 0
+        return 0.0
+    result := data[0]
+    i := 1
+    while i < n
+        if data[i] > result
+            result := data[i]
+        i := i + 1
+    return result
+
+fn median(data)
+    sorted := list()
+    cpp_inject("sorted = data;")
+    vec_sort(sorted)
+    n := list_size(sorted)
+    if n == 0
+        return 0.0
+    if n % 2 == 1
+        return sorted[n / 2]
+    return (sorted[n / 2 - 1] + sorted[n / 2]) / 2.0
+
+fn stddev(data)
+    m := mean(data)
+    n := list_size(data)
+    if n == 0
+        return 0.0
+    total := 0.0
+    i := 0
+    while i < n
+        diff := data[i] - m
+        total := total + diff * diff
+        i := i + 1
+    cpp_inject("return std::sqrt(total / n);")
+
+fn percentile(data, pct)
+    sorted := list()
+    cpp_inject("sorted = data;")
+    vec_sort(sorted)
+    n := list_size(sorted)
+    if n == 0
+        return 0.0
+    rank := (pct / 100.0) * (n - 1)
+    lower := 0
+    cpp_inject("lower = (int)rank;")
+    upper := lower + 1
+    if upper >= n
+        return sorted[n - 1]
+    frac := rank - lower
+    return sorted[lower] + frac * (sorted[upper] - sorted[lower])

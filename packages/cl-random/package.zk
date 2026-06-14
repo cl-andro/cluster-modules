@@ -1,6 +1,6 @@
-name: "cl-fs"
+name: "cl-random"
 version: "0.1.0"
-description: "File system operations for cluster-lang"
+description: "Random number utilities (range, shuffle, weighted)"
 license: "Commercial Control and non copy license"
 author: "Cluster Authors"
 dependencies: []

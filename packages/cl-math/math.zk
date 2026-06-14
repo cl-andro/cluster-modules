@@ -1,0 +1,32 @@
+// cl-math: Math Module
+// Wraps built-in math functions and <cmath> wrappers
+
+fn power(base, exp):
+    return math_power(base, exp)
+
+fn sqrt(x):
+    return math_sqrt(x)
+
+fn abs(x):
+    return math_abs(x)
+
+fn sin(x):
+    return math_sin(x)
+
+fn cos(x):
+    return math_cos(x)
+
+fn tan(x):
+    return math_tan(x)
+
+fn log(x):
+    return math_log(x)
+
+fn ceil(x):
+    return math_ceil(x)
+
+fn floor(x):
+    return math_floor(x)
+
+fn round(x):
+    return math_round(x)

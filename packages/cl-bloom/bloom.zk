@@ -1,0 +1,55 @@
+cpp_inject("#include <string>")
+cpp_inject("#include <vector>")
+cpp_inject("#include <cstring>")
+cpp_inject("#include <cstdlib>")
+
+model BloomFilter
+    bits := list()
+    size := 0
+    num_hashes := 0
+
+cpp_inject("""
+    static unsigned int hash_bloom(const std::string &s, int seed) {
+        unsigned int h = seed;
+        for (char c : s) {
+            h = h * 31 + (unsigned char)c;
+        }
+        return h;
+    }
+""")
+
+fn init(size, num_hashes)
+    bf := BloomFilter{}
+    bf.size := size
+    bf.num_hashes := num_hashes
+    bf.bits := list()
+    i := 0
+    while i < size
+        list_push(bf.bits, 0)
+        i := i + 1
+    return bf
+
+fn add(bf, item)
+    i := 0
+    while i < bf.num_hashes
+        h := 0
+        cpp_inject("h = hash_bloom(item, i * 31 + 7) % bf.size;")
+        bf.bits[h] := 1
+        i := i + 1
+
+fn has(bf, item)
+    i := 0
+    while i < bf.num_hashes
+        h := 0
+        cpp_inject("h = hash_bloom(item, i * 31 + 7) % bf.size;")
+        if bf.bits[h] == 0
+            return 0
+        i := i + 1
+    return 1
+
+fn clear(bf)
+    i := 0
+    while i < bf.size
+        bf.bits[i] := 0
+        i := i + 1
+    return bf

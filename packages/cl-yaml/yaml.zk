@@ -1,0 +1,135 @@
+// Minimal YAML Parser Module
+// Parses simple flat YAML into string maps
+// Handles key: value, comments (#), and quoted strings
+
+cpp_inject("#include <sstream>")
+
+fn parse(text: string):
+    cpp_inject("""
+        unordered_map<string, string> result;
+        istringstream stream(text);
+        string line;
+
+        while (getline(stream, line)) {
+            // Trim leading whitespace
+            size_t start = line.find_first_not_of(" \\t");
+            if (start == string::npos) continue;
+            line = line.substr(start);
+
+            // Skip empty lines and comments
+            if (line.empty() || line[0] == '#') continue;
+
+            // Find first colon (not inside quotes)
+            size_t colon = string::npos;
+            bool in_sq = false, in_dq = false;
+            for (size_t i = 0; i < line.length(); i++) {
+                char c = line[i];
+                if (c == '\'' && !in_dq) in_sq = !in_sq;
+                else if (c == '"' && !in_sq) in_dq = !in_dq;
+                else if (c == ':' && !in_sq && !in_dq) {
+                    colon = i;
+                    break;
+                }
+            }
+            if (colon == string::npos) continue;
+
+            // Extract key
+            string key = line.substr(0, colon);
+            size_t ke = key.find_last_not_of(" \\t");
+            if (ke != string::npos) key = key.substr(0, ke + 1);
+
+            // Extract value
+            string value = line.substr(colon + 1);
+            start = value.find_first_not_of(" \\t");
+            if (start != string::npos) value = value.substr(start);
+
+            // Strip inline comment (respecting quotes)
+            size_t hash = string::npos;
+            in_sq = false; in_dq = false;
+            for (size_t i = 0; i < value.length(); i++) {
+                char c = value[i];
+                if (c == '\'' && !in_dq) in_sq = !in_sq;
+                else if (c == '"' && !in_sq) in_dq = !in_dq;
+                else if (c == '#' && !in_sq && !in_dq) { hash = i; break; }
+            }
+            if (hash != string::npos)
+                value = value.substr(0, hash);
+
+            // Trim value
+            size_t ve = value.find_last_not_of(" \\t");
+            if (ve != string::npos) value = value.substr(0, ve + 1);
+
+            // Strip surrounding quotes
+            if (value.length() >= 2) {
+                if ((value[0] == '"' && value[value.length() - 1] == '"') ||
+                    (value[0] == '\'' && value[value.length() - 1] == '\'')) {
+                    value = value.substr(1, value.length() - 2);
+                }
+            }
+
+            result[key] = value;
+        }
+        return result;
+    """)
+
+fn load(path: string):
+    cpp_inject("""
+        ifstream file(path);
+        if (!file.is_open()) {
+            unordered_map<string, string> empty;
+            return empty;
+        }
+        string text((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+        // Now parse it using the same logic as parse()
+        istringstream stream(text);
+        unordered_map<string, string> result;
+        string line;
+        while (getline(stream, line)) {
+            size_t start = line.find_first_not_of(" \\t");
+            if (start == string::npos) continue;
+            line = line.substr(start);
+            if (line.empty() || line[0] == '#') continue;
+            size_t colon = string::npos;
+            bool in_sq = false, in_dq = false;
+            for (size_t i = 0; i < line.length(); i++) {
+                char c = line[i];
+                if (c == '\'' && !in_dq) in_sq = !in_sq;
+                else if (c == '"' && !in_sq) in_dq = !in_dq;
+                else if (c == ':' && !in_sq && !in_dq) { colon = i; break; }
+            }
+            if (colon == string::npos) continue;
+            string key = line.substr(0, colon);
+            size_t ke = key.find_last_not_of(" \\t");
+            if (ke != string::npos) key = key.substr(0, ke + 1);
+            string value = line.substr(colon + 1);
+            start = value.find_first_not_of(" \\t");
+            if (start != string::npos) value = value.substr(start);
+            size_t hash = string::npos;
+            in_sq = false; in_dq = false;
+            for (size_t i = 0; i < value.length(); i++) {
+                char c = value[i];
+                if (c == '\'' && !in_dq) in_sq = !in_sq;
+                else if (c == '"' && !in_sq) in_dq = !in_dq;
+                else if (c == '#' && !in_sq && !in_dq) { hash = i; break; }
+            }
+            if (hash != string::npos) value = value.substr(0, hash);
+            size_t ve = value.find_last_not_of(" \\t");
+            if (ve != string::npos) value = value.substr(0, ve + 1);
+            if (value.length() >= 2) {
+                if ((value[0] == '"' && value[value.length() - 1] == '"') ||
+                    (value[0] == '\'' && value[value.length() - 1] == '\'')) {
+                    value = value.substr(1, value.length() - 2);
+                }
+            }
+            result[key] = value;
+        }
+        return result;
+    """)
+
+fn get(data, key: string) -> string:
+    if map_has(data, key):
+        return map_get(data, key)
+    return ""
+
+fn has(data, key: string) -> bool:
+    return map_has(data, key)

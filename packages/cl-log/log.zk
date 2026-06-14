@@ -1,0 +1,47 @@
+// cl-log: Structured Logging Framework
+// Provides leveled logging with optional file output
+
+enum LogLevel
+    DEBUG
+    INFO
+    WARN
+    ERROR
+
+model Logger
+    level := LogLevel.INFO
+    log_file := ""
+    use_file := 0
+
+fn init(level)
+    logger := Logger{}
+    logger.level := level
+    logger.log_file := ""
+    logger.use_file := 0
+    return logger
+
+fn log_msg(logger, lvl, msg)
+    now := datetime_format("%Y-%m-%d %H:%M:%S")
+    line := "[" + now + "] [" + lvl + "] " + msg
+    put line
+    if logger.use_file != 0
+        file_append(logger.log_file, line + "\n")
+
+fn debug(logger, msg)
+    if logger.level <= LogLevel.DEBUG
+        log_msg(logger, "DEBUG", msg)
+
+fn info(logger, msg)
+    if logger.level <= LogLevel.INFO
+        log_msg(logger, "INFO", msg)
+
+fn warn(logger, msg)
+    if logger.level <= LogLevel.WARN
+        log_msg(logger, "WARN", msg)
+
+fn error(logger, msg)
+    if logger.level <= LogLevel.ERROR
+        log_msg(logger, "ERROR", msg)
+
+fn set_file(logger, path)
+    logger.log_file := path
+    logger.use_file := 1

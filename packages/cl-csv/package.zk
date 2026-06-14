@@ -1,6 +1,6 @@
-name: "cl-fs"
+name: "cl-csv"
 version: "0.1.0"
-description: "File system operations for cluster-lang"
+description: "CSV parser (read, write, DictReader, DictWriter)"
 license: "Commercial Control and non copy license"
 author: "Cluster Authors"
 dependencies: []

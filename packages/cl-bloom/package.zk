@@ -1,0 +1,6 @@
+name: "cl-bloom"
+version: "0.1.0"
+description: "Bloom filter (probabilistic set membership)"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+dependencies: ["cl-crypto@0.1.0"]

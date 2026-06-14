@@ -1,6 +1,6 @@
 name: "cl-crypto"
 version: "0.1.0"
 description: "Cryptography utilities for cluster-lang"
-license: "Commercial Contro and non copy license"
+license: "Commercial Control and non copy license"
 author: "Cluster Authors"
 dependencies: []

@@ -1,0 +1,49 @@
+cpp_inject("#include <string>")
+cpp_inject("#include <iostream>")
+cpp_inject("#include <chrono>")
+
+model ProgressBar
+    total := 0
+    current := 0
+    width := 40
+    label := ""
+
+model Spinner
+    frames := list("|", "/", "-", "\\")
+    index := 0
+
+fn init(total, label)
+    bar := ProgressBar{}
+    bar.total := total
+    bar.label := label
+    bar.current := 0
+    bar.width := 40
+    return bar
+
+fn update(bar, step)
+    bar.current := bar.current + step
+    pct := (bar.current * 100) / bar.total
+    filled := (bar.current * bar.width) / bar.total
+    pbar := ""
+    i := 0
+    while i < bar.width
+        if i < filled
+            pbar := pbar + "#"
+        else
+            pbar := pbar + "."
+        i := i + 1
+    cpp_inject("std::cout << \"\\r\" << bar.label << \" [\" << pbar << \"] \" << pct << \"%\" << std::flush;")
+
+fn finish(bar)
+    bar.current := bar.total
+    pbar := ""
+    i := 0
+    while i < bar.width
+        pbar := pbar + "#"
+        i := i + 1
+    cpp_inject("std::cout << \"\\r\" << bar.label << \" [\" << pbar << \"] 100%\" << std::endl;")
+
+fn spin(spinner, label)
+    frame := spinner.frames[spinner.index]
+    spinner.index := (spinner.index + 1) % list_size(spinner.frames)
+    cpp_inject("std::cout << \"\\r\" << frame << \" \" << label << std::flush;")

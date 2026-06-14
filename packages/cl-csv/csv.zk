@@ -1,0 +1,8 @@
+// cl-csv: CSV Module
+// Wraps the native CSV parsing functions
+
+fn read(filename: string):
+    return data_read_csv(filename)
+
+fn read_all(filename: string):
+    return data_read_csv(filename)

@@ -1,0 +1,14 @@
+// cl-db: Database Module
+// Wraps the native .clt database engine and SQLite
+
+fn connect(file: string, user: string, pass: string):
+    return clt_connect(file, user, pass)
+
+fn query(db_name: string, query_text: string):
+    return db_query(db_name, query_text)
+
+fn run(db_name: string, query_text: string):
+    return db_run(db_name, query_text)
+
+fn sql(query_text: string):
+    return sql_query(query_text)

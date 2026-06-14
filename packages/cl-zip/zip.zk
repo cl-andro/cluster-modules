@@ -1,0 +1,38 @@
+// GZip Compression Module (wraps zlib via cpp_inject)
+
+fn compress(path: string, output: string):
+    cpp_inject "gzFile gz = gzopen(output.c_str(), \"wb\");"
+    cpp_inject "if (!gz) return;"
+    cpp_inject "std::ifstream f(path, std::ios::binary);"
+    cpp_inject "if (!f.is_open()) { gzclose(gz); return; }"
+    cpp_inject "char buf[8192];"
+    cpp_inject "int n;"
+    cpp_inject "while ((n = f.readsome(buf, sizeof(buf))) > 0) gzwrite(gz, buf, n);"
+    cpp_inject "gzclose(gz);"
+
+fn decompress(path: string, output: string):
+    cpp_inject "gzFile gz = gzopen(path.c_str(), \"rb\");"
+    cpp_inject "if (!gz) return;"
+    cpp_inject "std::ofstream f(output, std::ios::binary);"
+    cpp_inject "if (!f.is_open()) { gzclose(gz); return; }"
+    cpp_inject "char buf[8192];"
+    cpp_inject "int n;"
+    cpp_inject "while ((n = gzread(gz, buf, sizeof(buf))) > 0) f.write(buf, n);"
+    cpp_inject "gzclose(gz);"
+
+fn compress_data(data: string) -> string:
+    result := ""
+    cpp_inject "uLong srcLen = data.size();"
+    cpp_inject "uLong destLen = compressBound(srcLen);"
+    cpp_inject "std::vector<Bytef> dest(destLen);"
+    cpp_inject "if (compress(dest.data(), &destLen, (const Bytef*)data.c_str(), srcLen) == Z_OK) result.assign((const char*)dest.data(), destLen);"
+    return result
+
+fn decompress_data(data: string) -> string:
+    result := ""
+    cpp_inject "uLong srcLen = data.size();"
+    cpp_inject "uLong destLen = srcLen * 4 + 16;"
+    cpp_inject "std::vector<Bytef> dest(destLen);"
+    cpp_inject "uLong actualLen = destLen;"
+    cpp_inject "if (uncompress(dest.data(), &actualLen, (const Bytef*)data.c_str(), srcLen) == Z_OK) result.assign((const char*)dest.data(), actualLen);"
+    return result

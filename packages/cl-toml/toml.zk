@@ -1,0 +1,60 @@
+// TOML Config Parser Module
+// Converts TOML to flat newline-separated key=value string
+
+fn parse(text: string) -> string:
+    result := ""
+    section := ""
+    lines := text_split(text, "\n")
+    i := 0
+    while i < list_size(lines):
+        line := string_trim(lines[i])
+        if line == "":
+            i := i + 1
+            continue
+        if string_starts_with(line, "#"):
+            i := i + 1
+            continue
+        if string_starts_with(line, "["):
+            section := string_trim(text_replace(line, "[", ""))
+            section := string_trim(text_replace(section, "]", ""))
+            section := section + "."
+            i := i + 1
+            continue
+        eq_parts := text_split(line, "=")
+        if list_size(eq_parts) >= 2:
+            key := string_trim(eq_parts[0])
+            val := string_trim(eq_parts[1])
+            val := string_trim(text_replace(val, "\"", ""))
+            if result != "":
+                result := result + "\n"
+            result := result + section + key + "=" + val
+        i := i + 1
+    return result
+
+fn load(path: string) -> string:
+    content := file_read(path)
+    return parse(content)
+
+fn get(toml_data: string, key: string) -> string:
+    lines := text_split(toml_data, "\n")
+    i := 0
+    while i < list_size(lines):
+        line := lines[i]
+        if string_starts_with(line, key + "="):
+            eq_parts := text_split(line, "=")
+            if list_size(eq_parts) >= 2:
+                return eq_parts[1]
+        i := i + 1
+    return ""
+
+fn get_int(toml_data: string, key: string) -> int:
+    val := get(toml_data, key)
+    if val == "":
+        return 0
+    return to_number(val)
+
+fn get_bool(toml_data: string, key: string) -> bool:
+    val := get(toml_data, key)
+    if val == "true":
+        return true
+    return false
