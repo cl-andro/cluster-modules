@@ -160,10 +160,17 @@
       "license": "Commercial Control and non copy license"
     },
     "cl-zip": {
-      "description": "GZip file compression (wraps zlib)",
+      "description": "GZip file compression (wraps zlib via cpp_inject)",
       "latest": "0.1.0",
       "path": "packages/cl-zip",
       "main": "zip.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-numpy": {
+      "description": "Eigen-based linear algebra (auto-downloads Eigen headers)",
+      "latest": "0.1.0",
+      "path": "packages/cl-numpy",
+      "main": "numpy.zk",
       "license": "Commercial Control and non copy license"
     },
     "cl-xml": {
@@ -241,6 +248,34 @@
       "latest": "0.1.0",
       "path": "packages/cl-bloom",
       "main": "bloom.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-pathlib": {
+      "description": "Path manipulation (join, dirname, basename, stem, suffix, absolute)",
+      "latest": "0.1.0",
+      "path": "packages/cl-pathlib",
+      "main": "pathlib.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-shutil": {
+      "description": "File operations: copy, move, rename, mkdir, rmtree, is_dir, size",
+      "latest": "0.1.0",
+      "path": "packages/cl-shutil",
+      "main": "shutil.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-socket": {
+      "description": "Raw TCP socket communication (connect, send, recv, listen, accept)",
+      "latest": "0.1.0",
+      "path": "packages/cl-socket",
+      "main": "socket.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-subprocess": {
+      "description": "Run commands with output capture, pipe support, env control",
+      "latest": "0.1.0",
+      "path": "packages/cl-subprocess",
+      "main": "subprocess.zk",
       "license": "Commercial Control and non copy license"
     }
   }

@@ -1,0 +1,37 @@
+// Path manipulation module (wraps <filesystem>)
+cpp_inject "#include <filesystem>"
+
+fn join(a: string, b: string) -> string:
+    return path_join(a, b)
+
+fn join3(a: string, b: string, c: string) -> string:
+    result := ""
+    cpp_inject "result = (std::filesystem::path(a) / std::filesystem::path(b) / std::filesystem::path(c)).string();"
+    return result
+
+fn dirname(p: string) -> string:
+    return path_dirname(p)
+
+fn basename(p: string) -> string:
+    return path_basename(p)
+
+fn stem(p: string) -> string:
+    result := ""
+    cpp_inject "result = std::filesystem::path(p).stem().string();"
+    return result
+
+fn suffix(p: string) -> string:
+    result := ""
+    cpp_inject "result = std::filesystem::path(p).extension().string();"
+    return result
+
+fn parent(p: string) -> string:
+    return path_dirname(p)
+
+fn absolute(p: string) -> string:
+    result := ""
+    cpp_inject "result = std::filesystem::absolute(std::filesystem::path(p)).string();"
+    return result
+
+fn exists(p: string) -> bool:
+    return file_exists(p)

@@ -3,7 +3,7 @@
 fn exists(path: string) -> bool:
     return file_exists(path)
 
-fn delete(path: string) -> bool:
+fn remove(path: string) -> bool:
     return file_delete(path)
 
 fn read(path: string) -> string:
@@ -12,5 +12,5 @@ fn read(path: string) -> string:
 fn write(path: string, content: string):
     file_write(path, content)
 
-fn read_lines(path: string) -> [string]:
+fn read_lines(path: string) -> auto:
     return file_read_lines(path)

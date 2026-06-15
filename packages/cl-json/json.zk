@@ -1,17 +1,13 @@
 // JSON Module
-// Wraps the native json_parse/json_get functions
 
 fn parse(text: string) -> string:
     return json_parse(text)
 
-fn get(data: string, key: string) -> string:
-    return json_get(data, key)
+fn get_item(d: string, key: string) -> string:
+    return json_get(d, key)
 
 fn stringify(obj: string) -> string:
-    # Use built-in to_text for simple types
     return to_text(obj)
 
-fn pretty(data: string) -> string:
-    # Re-parse and format with indentation
-    # (implementation depends on runtime support)
-    return data
+fn pretty(d: string) -> string:
+    return d

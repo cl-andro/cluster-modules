@@ -1,0 +1,7 @@
+name: "cl-numpy"
+version: "0.1.0"
+description: "Eigen-based linear algebra for Cluster (cl-numpy)"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+cpp_requires:
+  - "eigen3"

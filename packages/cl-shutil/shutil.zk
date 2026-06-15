@@ -1,0 +1,62 @@
+// File operations module (wraps <filesystem>)
+cpp_inject "#include <filesystem>"
+
+fn copy(src: string, dst: string) -> bool:
+    result := false
+    unsafe:
+        cpp_inject "try { std::filesystem::copy(src, dst, std::filesystem::copy_options::overwrite_existing); result = true; } catch (...) { result = false; }"
+    return result
+
+fn copy_tree(src: string, dst: string) -> bool:
+    result := false
+    unsafe:
+        cpp_inject "try { std::filesystem::copy(src, dst, std::filesystem::copy_options::recursive | std::filesystem::copy_options::overwrite_existing); result = true; } catch (...) { result = false; }"
+    return result
+
+fn move(src: string, dst: string) -> bool:
+    result := false
+    unsafe:
+        cpp_inject "try { std::filesystem::rename(src, dst); result = true; } catch (...) { result = false; }"
+    return result
+
+fn rename(old: string, new_name: string) -> bool:
+    result := false
+    unsafe:
+        cpp_inject "try { std::filesystem::rename(old, new_name); result = true; } catch (...) { result = false; }"
+    return result
+
+fn mkdir(path: string) -> bool:
+    result := false
+    unsafe:
+        cpp_inject "try { result = std::filesystem::create_directory(std::filesystem::path(path)); } catch (...) { result = false; }"
+    return result
+
+fn mkdirs(path: string) -> bool:
+    result := false
+    unsafe:
+        cpp_inject "try { result = std::filesystem::create_directories(std::filesystem::path(path)); } catch (...) { result = false; }"
+    return result
+
+fn rmtree(path: string) -> bool:
+    result := false
+    unsafe:
+        cpp_inject "try { result = std::filesystem::remove_all(std::filesystem::path(path)); } catch (...) { result = false; }"
+    return result
+
+fn size(path: string) -> int:
+    result := 0
+    unsafe:
+        cpp_inject "try { result = (int)std::filesystem::file_size(std::filesystem::path(path)); } catch (...) { result = -1; }"
+    return result
+
+fn is_dir(path: string) -> bool:
+    result := false
+    unsafe:
+        cpp_inject "result = std::filesystem::is_directory(std::filesystem::path(path));"
+    return result
+
+fn is_file(path: string) -> bool:
+    result := false
+    unsafe:
+        cpp_inject "result = std::filesystem::is_regular_file(std::filesystem::path(path));"
+    return result

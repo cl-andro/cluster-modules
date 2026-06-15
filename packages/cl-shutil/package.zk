@@ -1,0 +1,6 @@
+name: "cl-shutil"
+version: "0.1.0"
+description: "File operations: copy, move, rename, mkdir, rmtree, which"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+dependencies: []

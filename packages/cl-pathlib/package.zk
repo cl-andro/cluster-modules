@@ -1,0 +1,6 @@
+name: "cl-pathlib"
+version: "0.1.0"
+description: "Path manipulation (join, dirname, basename, stem, suffix, absolute, parent)"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+dependencies: []

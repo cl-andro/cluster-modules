@@ -1,0 +1,28 @@
+// cl-numpy: Eigen-based linear algebra for Cluster
+cpp_inject "#include <Eigen/Dense>"
+cpp_inject "#include <sstream>"
+
+fn random_matrix(rows: string, cols: string) -> string:
+    cpp_inject "std::string __r;"
+    unsafe:
+        cpp_inject "int r = std::stoi(rows);"
+        cpp_inject "int c = std::stoi(cols);"
+        cpp_inject "Eigen::MatrixXd m = Eigen::MatrixXd::Random(r, c);"
+        cpp_inject "std::stringstream ss;"
+        cpp_inject "ss << m;"
+        cpp_inject "__r = ss.str();"
+    return __r
+
+fn matrix_multiply(a_rows: string, a_cols: string, b_cols: string) -> string:
+    cpp_inject "std::string __r;"
+    unsafe:
+        cpp_inject "int ar = std::stoi(a_rows);"
+        cpp_inject "int ac = std::stoi(a_cols);"
+        cpp_inject "int bc = std::stoi(b_cols);"
+        cpp_inject "Eigen::MatrixXd a = Eigen::MatrixXd::Random(ar, ac);"
+        cpp_inject "Eigen::MatrixXd b = Eigen::MatrixXd::Random(ac, bc);"
+        cpp_inject "Eigen::MatrixXd c = a * b;"
+        cpp_inject "std::stringstream ss;"
+        cpp_inject "ss << c;"
+        cpp_inject "__r = ss.str();"
+    return __r

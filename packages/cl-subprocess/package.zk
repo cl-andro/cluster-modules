@@ -1,0 +1,6 @@
+name: "cl-subprocess"
+version: "0.1.0"
+description: "Run commands with output capture, pipe support, env control"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+dependencies: []

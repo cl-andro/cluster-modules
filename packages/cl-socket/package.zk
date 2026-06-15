@@ -1,0 +1,6 @@
+name: "cl-socket"
+version: "0.1.0"
+description: "Raw TCP/UDP socket communication"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+dependencies: []

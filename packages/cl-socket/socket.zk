@@ -1,0 +1,65 @@
+// Raw TCP socket module (wraps POSIX sockets)
+cpp_inject "#include <sys/socket.h>"
+cpp_inject "#include <netinet/in.h>"
+cpp_inject "#include <netdb.h>"
+cpp_inject "#include <unistd.h>"
+cpp_inject "#include <cstring>"
+
+fn tcp_connect(host: string, port: int) -> int:
+    sock := -1
+    unsafe:
+        cpp_inject "int s = socket(AF_INET, SOCK_STREAM, 0);"
+        cpp_inject "if (s < 0) { sock = -1; } else {"
+        cpp_inject "    struct hostent* server = gethostbyname(host.c_str());"
+        cpp_inject "    if (!server) { close(s); sock = -2; } else {"
+        cpp_inject "        struct sockaddr_in addr;"
+        cpp_inject "        memset(&addr, 0, sizeof(addr));"
+        cpp_inject "        addr.sin_family = AF_INET;"
+        cpp_inject "        memcpy(&addr.sin_addr.s_addr, server->h_addr, server->h_length);"
+        cpp_inject "        addr.sin_port = htons(port);"
+        cpp_inject "        if (connect(s, (struct sockaddr*)&addr, sizeof(addr)) < 0) { close(s); sock = -3; }"
+        cpp_inject "        else { sock = s; }"
+        cpp_inject "    }"
+        cpp_inject "}"
+    return sock
+
+fn tcp_send(sock: int, data: string) -> int:
+    sent := -1
+    unsafe:
+        cpp_inject "sent = (int)send(sock, data.c_str(), data.size(), 0);"
+    return sent
+
+fn tcp_recv(sock: int, max_size: int) -> string:
+    result := ""
+    unsafe:
+        cpp_inject "char buf[4096];"
+        cpp_inject "int n = (int)recv(sock, buf, std::min(max_size, 4096), 0);"
+        cpp_inject "if (n > 0) result.assign(buf, n);"
+    return result
+
+fn tcp_close(sock: int):
+    unsafe:
+        cpp_inject "close(sock);"
+
+fn tcp_listen(port: int) -> int:
+    sock := -1
+    unsafe:
+        cpp_inject "int s = socket(AF_INET, SOCK_STREAM, 0);"
+        cpp_inject "if (s < 0) { sock = -1; } else {"
+        cpp_inject "    struct sockaddr_in addr;"
+        cpp_inject "    memset(&addr, 0, sizeof(addr));"
+        cpp_inject "    addr.sin_family = AF_INET;"
+        cpp_inject "    addr.sin_addr.s_addr = INADDR_ANY;"
+        cpp_inject "    addr.sin_port = htons(port);"
+        cpp_inject "    if (bind(s, (struct sockaddr*)&addr, sizeof(addr)) < 0) { close(s); sock = -2; }"
+        cpp_inject "    else if (listen(s, 5) < 0) { close(s); sock = -3; }"
+        cpp_inject "    else { sock = s; }"
+        cpp_inject "}"
+    return sock
+
+fn tcp_accept(server_sock: int) -> int:
+    client := -1
+    unsafe:
+        cpp_inject "struct sockaddr_in addr; socklen_t len = sizeof(addr);"
+        cpp_inject "client = (int)accept(server_sock, (struct sockaddr*)&addr, &len);"
+    return client
