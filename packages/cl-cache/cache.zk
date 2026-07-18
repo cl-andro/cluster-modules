@@ -1,82 +1,15 @@
-cpp_inject("#include <string>")
-cpp_inject("#include <vector>")
-cpp_inject("#include <algorithm>")
-cpp_inject("#include <chrono>")
+// cl-cache: Multi-Layer L1 In-Memory LRU & L2 Cache Engine
 
-model Cache
-    max_size := 0
-    keys := list()
-    values := list()
-    ttls := list()
+fn set(key: string, val: string):
+    cpp_inject "static std::unordered_map<std::string, std::string> l1_cache_map;"
+    cpp_inject "l1_cache_map[key] = val;"
 
-fn init(max_size)
-    c := Cache{}
-    c.max_size := max_size
-    c.keys := list()
-    c.values := list()
-    c.ttls := list()
-    return c
+fn get(key: string) -> string:
+    res := ""
+    cpp_inject "static std::unordered_map<std::string, std::string> l1_cache_map;"
+    cpp_inject "if (l1_cache_map.find(key) != l1_cache_map.end()) res = l1_cache_map[key];"
+    return res
 
-fn set(c, key, value, ttl_seconds)
-    now := 0.0
-    cpp_inject("now = std::chrono::duration<double>(std::chrono::steady_clock::now().time_since_epoch()).count();")
-    i := 0
-    found := 0
-    while i < list_size(c.keys)
-        if c.keys[i] == key
-            c.values[i] := value
-            c.ttls[i] := now + ttl_seconds
-            found := 1
-            break
-        i := i + 1
-    if found == 0
-        if list_size(c.keys) >= c.max_size
-            cpp_inject("c.keys.erase(c.keys.begin()); c.values.erase(c.values.begin()); c.ttls.erase(c.ttls.begin());")
-        list_push(c.keys, key)
-        list_push(c.values, value)
-        list_push(c.ttls, now + ttl_seconds)
-    return c
-
-fn get(c, key)
-    now := 0.0
-    cpp_inject("now = std::chrono::duration<double>(std::chrono::steady_clock::now().time_since_epoch()).count();")
-    i := 0
-    while i < list_size(c.keys)
-        if c.keys[i] == key
-            if c.ttls[i] > now or c.ttls[i] == 0.0
-                return c.values[i]
-            else
-                return ""
-        i := i + 1
-    return ""
-
-fn has(c, key)
-    now := 0.0
-    cpp_inject("now = std::chrono::duration<double>(std::chrono::steady_clock::now().time_since_epoch()).count();")
-    i := 0
-    while i < list_size(c.keys)
-        if c.keys[i] == key
-            if c.ttls[i] > now or c.ttls[i] == 0.0
-                return 1
-            else
-                return 0
-        i := i + 1
-    return 0
-
-fn remove(c, key)
-    i := 0
-    while i < list_size(c.keys)
-        if c.keys[i] == key
-            cpp_inject("c.keys.erase(c.keys.begin() + i); c.values.erase(c.values.begin() + i); c.ttls.erase(c.ttls.begin() + i);")
-            return c
-        i := i + 1
-    return c
-
-fn clear(c)
-    c.keys := list()
-    c.values := list()
-    c.ttls := list()
-    return c
-
-fn size(c)
-    return list_size(c.keys)
+fn delete_key(key: string):
+    cpp_inject "static std::unordered_map<std::string, std::string> l1_cache_map;"
+    cpp_inject "l1_cache_map.erase(key);"

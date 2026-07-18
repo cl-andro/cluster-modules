@@ -1,0 +1,12 @@
+// cl-sse: Server-Sent Events (SSE) HTTP Streaming Engine
+
+fn format_event(event_name: string, data_json: string) -> string:
+    res := "event: " + event_name + "\ndata: " + data_json + "\n\n"
+    return res
+
+fn sse_headers():
+    cpp_inject "std::vector<std::string> h;"
+    cpp_inject "h.push_back(\"Content-Type: text/event-stream\");"
+    cpp_inject "h.push_back(\"Cache-Control: no-cache\");"
+    cpp_inject "h.push_back(\"Connection: keep-alive\");"
+    return h

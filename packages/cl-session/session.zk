@@ -1,0 +1,18 @@
+// cl-session: Encrypted Cookie & Session State Manager Engine
+import cl-uuid as uuid
+
+fn create_session(user_id: string) -> string:
+    sid := uuid::v4()
+    cpp_inject "static std::unordered_map<std::string, std::string> sessions_map;"
+    cpp_inject "sessions_map[sid] = user_id;"
+    return sid
+
+fn get_session_user(sid: string) -> string:
+    uid := ""
+    cpp_inject "static std::unordered_map<std::string, std::string> sessions_map;"
+    cpp_inject "if (sessions_map.find(sid) != sessions_map.end()) uid = sessions_map[sid];"
+    return uid
+
+fn destroy_session(sid: string):
+    cpp_inject "static std::unordered_map<std::string, std::string> sessions_map;"
+    cpp_inject "sessions_map.erase(sid);"

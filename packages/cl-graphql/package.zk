@@ -1,0 +1,6 @@
+// cl-graphql Package Manifest
+name := "cl-graphql"
+version := "0.1.0"
+description := "GraphQL Query Parser & Schema Execution Engine"
+main := "graphql.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,9 @@
+// cl-graphql: GraphQL Query Parser & Schema Execution Engine
+import cl-json as json
+
+fn format_graphql_response(data_json: string, errors_json: string) -> string:
+    res := "{\"data\":" + data_json
+    if errors_json != "":
+        res = res + ",\"errors\":" + errors_json
+    res = res + "}"
+    return res

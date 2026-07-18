@@ -1,0 +1,18 @@
+// cl-tokenizers: BPE & WordPiece Tokenizer Module
+
+fn encode(input_text: string):
+    cpp_inject "std::vector<std::string> tokens;"
+    cpp_inject "std::string s = input_text;"
+    cpp_inject "std::string current;"
+    cpp_inject "for (char c : s) { if (std::isspace(c)) { if (!current.empty()) { tokens.push_back(current); current.clear(); } } else { current += c; } }"
+    cpp_inject "if (!current.empty()) tokens.push_back(current);"
+    return tokens
+
+fn count_tokens(input_text: string) -> int:
+    toks := encode(input_text)
+    return len(toks)
+
+fn decode(tokens) -> string:
+    cpp_inject "std::string res;"
+    cpp_inject "for (size_t i = 0; i < tokens.size(); ++i) { res += tokens[i]; if (i + 1 < tokens.size()) res += \" \"; }"
+    return res

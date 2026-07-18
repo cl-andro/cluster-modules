@@ -1,0 +1,6 @@
+// cl-tokenizers Package Manifest
+name := "cl-tokenizers"
+version := "0.1.0"
+description := "Fast BPE / WordPiece Tokenizer & Vocabulary Matcher for LLMs"
+main := "tokenizers.zk"
+license := "Commercial Control and non copy license"

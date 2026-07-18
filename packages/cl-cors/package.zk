@@ -1,0 +1,6 @@
+// cl-cors Package Manifest
+name := "cl-cors"
+version := "0.1.0"
+description := "Cross-Origin Resource Sharing (CORS) Middleware & Preflight Engine"
+main := "cors.zk"
+license := "Commercial Control and non copy license"

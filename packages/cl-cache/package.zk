@@ -1,6 +1,6 @@
-name: "cl-cache"
-version: "0.1.0"
-description: "LRU and TTL cache"
-license: "Commercial Control and non copy license"
-author: "Cluster Authors"
-dependencies: ["cl-datetime@0.1.0"]
+// cl-cache Package Manifest
+name := "cl-cache"
+version := "0.1.0"
+description := "Multi-Layer L1 In-Memory LRU & L2 Cache Engine"
+main := "cache.zk"
+license := "Commercial Control and non copy license"

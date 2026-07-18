@@ -1,0 +1,6 @@
+// cl-grpc: gRPC / Protobuf RPC Connector Engine
+import cl-http as http
+
+fn call_rpc(endpoint: string, service_method: string, payload_json: string) -> string:
+    url := endpoint + "/" + service_method
+    return http::post_json(url, payload_json)

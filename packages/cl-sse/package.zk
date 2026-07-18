@@ -1,0 +1,6 @@
+// cl-sse Package Manifest
+name := "cl-sse"
+version := "0.1.0"
+description := "Server-Sent Events (SSE) Real-Time HTTP Streaming Engine"
+main := "sse.zk"
+license := "Commercial Control and non copy license"

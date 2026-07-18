@@ -1,0 +1,6 @@
+// cl-session Package Manifest
+name := "cl-session"
+version := "0.1.0"
+description := "Encrypted Cookie & High-Speed Session State Manager"
+main := "session.zk"
+license := "Commercial Control and non copy license"

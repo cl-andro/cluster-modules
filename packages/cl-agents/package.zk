@@ -1,0 +1,6 @@
+// cl-agents Package Manifest
+name := "cl-agents"
+version := "0.1.0"
+description := "Autonomous Multi-Agent Task Orchestration & Memory Framework"
+main := "agents.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,6 @@
+// cl-rag Package Manifest
+name := "cl-rag"
+version := "0.1.0"
+description := "Retrieval-Augmented Generation (RAG) Document Chunker & Context Engine"
+main := "rag.zk"
+license := "Commercial Control and non copy license"

@@ -396,6 +396,76 @@
       "path": "packages/cl-metrics",
       "main": "metrics.zk",
       "license": "Commercial Control and non copy license"
+    },
+    "cl-tokenizers": {
+      "description": "Fast BPE / WordPiece Tokenizer & Vocabulary Matcher for LLMs",
+      "latest": "0.1.0",
+      "path": "packages/cl-tokenizers",
+      "main": "tokenizers.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-rag": {
+      "description": "Retrieval-Augmented Generation (RAG) Document Chunker & Context Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-rag",
+      "main": "rag.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-agents": {
+      "description": "Autonomous Multi-Agent Task Orchestration & Memory Framework",
+      "latest": "0.1.0",
+      "path": "packages/cl-agents",
+      "main": "agents.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-cors": {
+      "description": "Cross-Origin Resource Sharing (CORS) Middleware & Preflight Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-cors",
+      "main": "cors.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-session": {
+      "description": "Encrypted Cookie & High-Speed Session State Manager",
+      "latest": "0.1.0",
+      "path": "packages/cl-session",
+      "main": "session.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-sse": {
+      "description": "Server-Sent Events (SSE) Real-Time HTTP Streaming Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-sse",
+      "main": "sse.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-graphql": {
+      "description": "GraphQL Query Parser & Schema Execution Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-graphql",
+      "main": "graphql.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-oauth": {
+      "description": "OAuth2 / OpenID Connect (OIDC) Authentication Flow Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-oauth",
+      "main": "oauth.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-grpc": {
+      "description": "gRPC / Protobuf High-Speed Microservice RPC Connector",
+      "latest": "0.1.0",
+      "path": "packages/cl-grpc",
+      "main": "grpc.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-cache": {
+      "description": "Multi-Layer L1 In-Memory LRU & L2 Cache Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-cache",
+      "main": "cache.zk",
+      "license": "Commercial Control and non copy license"
     }
   }
 }

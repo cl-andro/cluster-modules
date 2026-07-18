@@ -1,0 +1,13 @@
+// cl-rag: Retrieval-Augmented Generation Document Chunker & Context Engine
+import cl-prompt as prompt
+
+fn chunk_document(doc_text: string, chunk_size: int):
+    cpp_inject "std::vector<std::string> chunks;"
+    cpp_inject "std::string txt = doc_text;"
+    cpp_inject "int csz = std::max(10, (int)chunk_size);"
+    cpp_inject "for (size_t i = 0; i < txt.size(); i += csz) { chunks.push_back(txt.substr(i, csz)); }"
+    return chunks
+
+fn build_rag_prompt(user_query: string, retrieved_chunks) -> string:
+    context := "Retrieved Context Data"
+    return prompt::build_system_prompt("RAG Assistant", context, user_query)

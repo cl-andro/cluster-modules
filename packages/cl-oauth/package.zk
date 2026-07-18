@@ -1,0 +1,6 @@
+// cl-oauth Package Manifest
+name := "cl-oauth"
+version := "0.1.0"
+description := "OAuth2 / OpenID Connect (OIDC) Authentication Flow Engine"
+main := "oauth.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,5 @@
+// cl-oauth: OAuth2 / OpenID Connect (OIDC) Authentication Flow Engine
+
+fn get_authorization_url(auth_endpoint: string, client_id: string, redirect_uri: string, scope: string, state: string) -> string:
+    url := auth_endpoint + "?response_type=code&client_id=" + client_id + "&redirect_uri=" + redirect_uri + "&scope=" + scope + "&state=" + state
+    return url

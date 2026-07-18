@@ -1,0 +1,6 @@
+// cl-grpc Package Manifest
+name := "cl-grpc"
+version := "0.1.0"
+description := "gRPC / Protobuf High-Speed Microservice RPC Connector"
+main := "grpc.zk"
+license := "Commercial Control and non copy license"

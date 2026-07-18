@@ -1,0 +1,10 @@
+// cl-agents: Autonomous Multi-Agent Orchestration & Memory Framework
+import cl-prompt as prompt
+import cl-llm as llm
+
+fn create_agent_prompt(role: string, goal: string, history: string) -> string:
+    context := "Goal: " + goal + "\nHistory:\n" + history
+    return prompt::build_system_prompt("Agent (" + role + ")", context, "Determine next action step.")
+
+fn format_step(agent_name: string, step_input: string, result: string) -> string:
+    return "[" + agent_name + "] Executed: " + step_input + " -> Result: " + result + "\n"
