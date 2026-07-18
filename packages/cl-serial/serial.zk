@@ -1,0 +1,22 @@
+// Serial Port Module (termios)
+
+fn open(port: string, baud: int = 9600) -> auto:
+    cpp_inject "// Open serial port: open(port.c_str(), O_RDWR | O_NOCTTY)"
+    result := 0
+    return result
+
+fn read(fd: auto, n: int = 1024) -> string:
+    cpp_inject "// Read from serial port (read)"
+    result := ""
+    return result
+
+fn write(fd: auto, raw: string):
+    cpp_inject "// Write to serial port (write)"
+
+fn close(fd: auto):
+    cpp_inject "// Close serial port (close)"
+
+fn list_ports() -> auto:
+    cpp_inject "// Scan /dev/tty* for serial ports"
+    result := []
+    return result

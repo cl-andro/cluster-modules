@@ -1,0 +1,24 @@
+// Video Decode Module (FFmpeg)
+
+fn open(file_path: string) -> auto:
+    cpp_inject "// Open video file with FFmpeg"
+    result := 0
+    return result
+
+fn read_frame(vid: auto) -> auto:
+    cpp_inject "// Read next frame (av_read_frame)"
+    result := []
+    return result
+
+fn get_fps(vid: auto) -> double:
+    cpp_inject "// Get video FPS"
+    result := 0.0
+    return result
+
+fn get_size(vid: auto) -> auto:
+    cpp_inject "// Get video dimensions"
+    result := [0, 0]
+    return result
+
+fn close(vid: auto):
+    cpp_inject "// Close video file"

@@ -1,0 +1,6 @@
+// cl-cron Package Manifest
+name := "cl-cron"
+version := "0.1.0"
+description := "In-process Background Cron Job Scheduler Engine"
+main := "cron.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,33 @@
+// cl-vector-db: High-Performance In-Memory Vector Store & Cosine Similarity Engine
+
+fn dot_product(v1, v2) -> float:
+    score := 0.0
+    cpp_inject "int sz = std::min(v1.size(), v2.size());"
+    cpp_inject "double sum = 0.0;"
+    cpp_inject "for (int j = 0; j < sz; ++j) sum += v1[j] * v2[j];"
+    cpp_inject "score = sum;"
+    return score
+
+fn magnitude(v) -> float:
+    mag := 0.0
+    cpp_inject "double sum = 0.0;"
+    cpp_inject "for (double x : v) sum += x * x;"
+    cpp_inject "mag = std::sqrt(sum);"
+    return mag
+
+fn cosine_similarity(v1, v2) -> float:
+    m1 := magnitude(v1)
+    m2 := magnitude(v2)
+    if m1 == 0.0 or m2 == 0.0:
+        return 0.0
+    dot := dot_product(v1, v2)
+    denom := m1 * m2
+    return dot / denom
+
+fn euclidean_distance(v1, v2) -> float:
+    dist := 0.0
+    cpp_inject "int sz = std::min(v1.size(), v2.size());"
+    cpp_inject "double sum = 0.0;"
+    cpp_inject "for (int j = 0; j < sz; ++j) { double d = v1[j] - v2[j]; sum += d * d; }"
+    cpp_inject "dist = std::sqrt(sum);"
+    return dist

@@ -1,0 +1,6 @@
+// cl-vector-db Package Manifest
+name := "cl-vector-db"
+version := "0.1.0"
+description := "In-memory High-Performance Vector Database & Cosine Similarity Engine"
+main := "vector_db.zk"
+license := "Commercial Control and non copy license"

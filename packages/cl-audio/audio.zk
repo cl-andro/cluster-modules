@@ -1,0 +1,18 @@
+// Audio I/O Module (PortAudio)
+
+fn list_devices() -> auto:
+    cpp_inject "// List audio devices"
+    result := []
+    return result
+
+fn play(file_path: string):
+    cpp_inject "// Play audio file via PortAudio"
+    cpp_inject "// Pa_Initialize(); Pa_OpenDefaultStream(...);"
+
+fn record(duration: double, sample_rate: int = 44100) -> auto:
+    cpp_inject "// Record audio via PortAudio"
+    result := []
+    return result
+
+fn save(data: auto, file_path: string):
+    cpp_inject "// Save audio data to WAV file"

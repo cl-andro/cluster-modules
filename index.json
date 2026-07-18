@@ -277,6 +277,125 @@
       "path": "packages/cl-subprocess",
       "main": "subprocess.zk",
       "license": "Commercial Control and non copy license"
+    },
+    "cl-gui": {
+      "description": "GUI toolkit (FLTK-backed)",
+      "latest": "0.1.0",
+      "path": "packages/cl-gui",
+      "main": "gui.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-audio": {
+      "description": "Audio I/O (PortAudio-backed)",
+      "latest": "0.1.0",
+      "path": "packages/cl-audio",
+      "main": "audio.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-video": {
+      "description": "Video decoding (FFmpeg-backed)",
+      "latest": "0.1.0",
+      "path": "packages/cl-video",
+      "main": "video.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-serial": {
+      "description": "Serial port communication (termios)",
+      "latest": "0.1.0",
+      "path": "packages/cl-serial",
+      "main": "serial.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-bluetooth": {
+      "description": "Bluetooth communication (BlueZ)",
+      "latest": "0.1.0",
+      "path": "packages/cl-bluetooth",
+      "main": "bluetooth.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-usb": {
+      "description": "USB device access (libusb)",
+      "latest": "0.1.0",
+      "path": "packages/cl-usb",
+      "main": "usb.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-sensors": {
+      "description": "Platform sensor access (accelerometer, gyroscope, GPS)",
+      "latest": "0.1.0",
+      "path": "packages/cl-sensors",
+      "main": "sensors.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-llm": {
+      "description": "Unified local & cloud LLM API (Ollama, OpenAI, Gemini, Anthropic)",
+      "latest": "0.1.0",
+      "path": "packages/cl-llm",
+      "main": "llm.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-vector-db": {
+      "description": "In-memory High-Performance Vector Database & Cosine Similarity Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-vector-db",
+      "main": "vector_db.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-prompt": {
+      "description": "AI Prompt Templating & Safety Guardrails Module",
+      "latest": "0.1.0",
+      "path": "packages/cl-prompt",
+      "main": "prompt.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-jwt": {
+      "description": "JSON Web Token (JWT) Sign & Verify Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-jwt",
+      "main": "jwt.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-redis": {
+      "description": "Redis Protocol (RESP) High-Speed Client",
+      "latest": "0.1.0",
+      "path": "packages/cl-redis",
+      "main": "redis.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-rate-limit": {
+      "description": "Token Bucket & Sliding Window Rate Limiter Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-rate-limit",
+      "main": "rate_limit.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-argon2": {
+      "description": "Argon2id Secure Password Hashing & Key Derivation Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-argon2",
+      "main": "argon2.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-tui": {
+      "description": "Rich Terminal User Interface (TUI) & Layout Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-tui",
+      "main": "tui.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-cron": {
+      "description": "In-process Background Cron Job Scheduler Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-cron",
+      "main": "cron.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-metrics": {
+      "description": "Prometheus Metrics Exporter Engine (Counter, Gauge, Histogram)",
+      "latest": "0.1.0",
+      "path": "packages/cl-metrics",
+      "main": "metrics.zk",
+      "license": "Commercial Control and non copy license"
     }
   }
 }

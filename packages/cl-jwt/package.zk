@@ -1,0 +1,6 @@
+// cl-jwt Package Manifest
+name := "cl-jwt"
+version := "0.1.0"
+description := "JSON Web Token (JWT) Sign & Verify Engine"
+main := "jwt.zk"
+license := "Commercial Control and non copy license"

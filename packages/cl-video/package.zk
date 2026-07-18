@@ -1,0 +1,9 @@
+name: "cl-video"
+version: "0.1.0"
+description: "Video decoding (FFmpeg-backed)"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+dependencies: []
+cpp_requires:
+  - "ffmpeg"
+EOP

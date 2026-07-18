@@ -1,0 +1,8 @@
+// cl-cron: In-process Cron Job Scheduler Engine
+
+fn interval_seconds(seconds: int, job_name: string) -> bool:
+    should_run := false
+    cpp_inject "static std::unordered_map<std::string, double> last_run;"
+    cpp_inject "double now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() / 1000.0;"
+    cpp_inject "if (last_run.find(job_name) == last_run.end() || (now - last_run[job_name]) >= seconds) { last_run[job_name] = now; should_run = true; }"
+    return should_run

@@ -1,0 +1,6 @@
+// cl-rate-limit Package Manifest
+name := "cl-rate-limit"
+version := "0.1.0"
+description := "Token Bucket & Sliding Window Rate Limiter Engine"
+main := "rate_limit.zk"
+license := "Commercial Control and non copy license"

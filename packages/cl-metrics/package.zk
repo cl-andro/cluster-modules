@@ -1,0 +1,6 @@
+// cl-metrics Package Manifest
+name := "cl-metrics"
+version := "0.1.0"
+description := "Prometheus Metrics Exporter Engine (Counter, Gauge, Histogram)"
+main := "metrics.zk"
+license := "Commercial Control and non copy license"

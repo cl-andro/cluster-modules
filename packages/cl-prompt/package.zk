@@ -1,0 +1,6 @@
+// cl-prompt Package Manifest
+name := "cl-prompt"
+version := "0.1.0"
+description := "AI Prompt Templating & Safety Guardrails Module"
+main := "prompt.zk"
+license := "Commercial Control and non copy license"

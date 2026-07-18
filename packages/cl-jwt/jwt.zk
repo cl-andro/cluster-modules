@@ -1,0 +1,33 @@
+// cl-jwt: JSON Web Token Sign & Verify Module
+import cl-base64 as base64
+import cl-crypto as crypto
+
+fn sign(payload_json: string, secret_key: string) -> string:
+    header := "{\"alg\":\"HS256\",\"typ\":\"JWT\"}"
+    header_b64 := base64::encode(header)
+    payload_b64 := base64::encode(payload_json)
+    
+    unsigned_token := header_b64 + "." + payload_b64
+    sig := crypto::hash(unsigned_token + secret_key)
+    sig_b64 := base64::encode(sig)
+    
+    return unsigned_token + "." + sig_b64
+
+fn verify(token: string, secret_key: string) -> bool:
+    cpp_inject "std::string t = token;"
+    cpp_inject "size_t p1 = t.find('.');"
+    cpp_inject "size_t p2 = t.rfind('.');"
+    cpp_inject "if (p1 == std::string::npos || p2 == std::string::npos || p1 == p2) return false;"
+    
+    unsigned_token := ""
+    cpp_inject "unsigned_token = t.substr(0, p2);"
+    
+    sig := crypto::hash(unsigned_token + secret_key)
+    expected_sig_b64 := base64::encode(sig)
+    
+    actual_sig_b64 := ""
+    cpp_inject "actual_sig_b64 = t.substr(p2 + 1);"
+    
+    if expected_sig_b64 == actual_sig_b64:
+        return true
+    return false

@@ -1,0 +1,9 @@
+name: "cl-audio"
+version: "0.1.0"
+description: "Audio I/O (PortAudio-backed)"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+dependencies: []
+cpp_requires:
+  - "portaudio"
+EOP

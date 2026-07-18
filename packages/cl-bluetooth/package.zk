@@ -1,0 +1,9 @@
+name: "cl-bluetooth"
+version: "0.1.0"
+description: "Bluetooth communication (BlueZ)"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+dependencies: []
+cpp_requires:
+  - "bluez"
+EOP

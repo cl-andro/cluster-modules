@@ -1,0 +1,25 @@
+// GUI Module (FLTK)
+
+fn window(title: string, w: int, h: int, body_fn: auto):
+    cpp_inject "Fl_Window* _cl_win = new Fl_Window(w, h, title.c_str());"
+    body_fn()
+    cpp_inject "_cl_win->end();"
+    cpp_inject "_cl_win->show();"
+
+fn button(label: string, callback: auto) -> auto:
+    cpp_inject "Fl_Button* _cl_btn = new Fl_Button(0, 0, 100, 30, label.c_str());"
+    result := 0
+    return result
+
+fn label(text: string, x: int, y: int, w: int, h: int) -> auto:
+    cpp_inject "Fl_Box* _cl_lbl = new Fl_Box(x, y, w, h, text.c_str());"
+    result := 0
+    return result
+
+fn input(x: int, y: int, w: int, h: int) -> auto:
+    cpp_inject "Fl_Input* _cl_inp = new Fl_Input(x, y, w, h);"
+    result := 0
+    return result
+
+fn run():
+    cpp_inject "Fl::run();"

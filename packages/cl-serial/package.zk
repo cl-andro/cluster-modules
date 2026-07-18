@@ -1,0 +1,8 @@
+name: "cl-serial"
+version: "0.1.0"
+description: "Serial port communication (termios)"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+dependencies: []
+cpp_requires: []
+EOP

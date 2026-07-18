@@ -1,0 +1,17 @@
+// cl-metrics: Prometheus Metrics Exporter Engine
+
+fn inc_counter(name: string, val: float):
+    cpp_inject "static std::unordered_map<std::string, double> counters;"
+    cpp_inject "counters[name] += val;"
+
+fn set_gauge(name: string, val: float):
+    cpp_inject "static std::unordered_map<std::string, double> gauges;"
+    cpp_inject "gauges[name] = val;"
+
+fn export_prometheus() -> string:
+    res := ""
+    cpp_inject "std::string out;"
+    cpp_inject "extern std::unordered_map<std::string, double> counters;"
+    cpp_inject "for (auto& p : counters) out += \"# TYPE \" + p.first + \" counter\\n\" + p.first + \" \" + std::to_string(p.second) + \"\\n\";"
+    cpp_inject "res = out;"
+    return res

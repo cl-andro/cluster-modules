@@ -1,0 +1,15 @@
+// cl-rate-limit: Token Bucket Rate Limiter Engine
+
+fn check_rate_limit(client_id: string, max_tokens: int, refill_rate_per_sec: float) -> bool:
+    allowed := false
+    cpp_inject "static std::unordered_map<std::string, double> tokens;"
+    cpp_inject "static std::unordered_map<std::string, double> last_time;"
+    cpp_inject "double now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() / 1000.0;"
+    
+    cpp_inject "if (last_time.find(client_id) == last_time.end()) { tokens[client_id] = max_tokens; last_time[client_id] = now; }"
+    cpp_inject "double elapsed = now - last_time[client_id];"
+    cpp_inject "last_time[client_id] = now;"
+    cpp_inject "tokens[client_id] = std::min((double)max_tokens, tokens[client_id] + elapsed * refill_rate_per_sec);"
+    
+    cpp_inject "if (tokens[client_id] >= 1.0) { tokens[client_id] -= 1.0; allowed = true; }"
+    return allowed

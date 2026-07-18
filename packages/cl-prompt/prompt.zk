@@ -1,0 +1,21 @@
+// cl-prompt: AI Prompt Templating & Safety Guardrails Module
+import cl-text as text
+
+fn fill_template(template_str: string, key: string, val: string) -> string:
+    placeholder := "{{" + key + "}}"
+    return text::replace(template_str, placeholder, val)
+
+fn sanitize_prompt(prompt_text: string) -> string:
+    clean_text := prompt_text
+    clean_text = text::replace(clean_text, "<script>", "")
+    clean_text = text::replace(clean_text, "</script>", "")
+    clean_text = text::replace(clean_text, "DROP TABLE", "")
+    clean_text = text::replace(clean_text, "DELETE FROM", "")
+    return clean_text
+
+fn build_system_prompt(role: string, context_data: string, user_query: string) -> string:
+    result := "System Role: " + role + "\n"
+    if context_data != "":
+        result = result + "Context: " + context_data + "\n"
+    result = result + "User Request: " + user_query
+    return result

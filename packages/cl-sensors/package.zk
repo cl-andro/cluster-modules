@@ -1,0 +1,8 @@
+name: "cl-sensors"
+version: "0.1.0"
+description: "Platform sensor access (accelerometer, gyroscope, GPS)"
+license: "Commercial Control and non copy license"
+author: "Cluster Authors"
+dependencies: []
+cpp_requires: []
+EOP

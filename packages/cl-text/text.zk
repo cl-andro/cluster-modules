@@ -1,10 +1,10 @@
 // Text/String Utilities Module
 
-fn split(str: string, delimiter: string) -> [string]:
+fn split(str: string, delimiter: string):
     return text_split(str, delimiter)
 
-fn replace(str: string, from: string, to: string) -> string:
-    return text_replace(str, from, to)
+fn replace(str: string, target_from: string, target_to: string) -> string:
+    return text_replace(str, target_from, target_to)
 
 fn lower(str: string) -> string:
     return text_lower(str)
@@ -21,7 +21,7 @@ fn starts_with(str: string, target: string) -> bool:
 fn trim(str: string) -> string:
     return string_trim(str)
 
-fn format(str: string, args: [string]) -> string:
+fn format(str: string, args) -> string:
     return text_format(str, args)
 
 fn length(str: string) -> int:

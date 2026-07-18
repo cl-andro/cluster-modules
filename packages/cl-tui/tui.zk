@@ -1,0 +1,24 @@
+// cl-tui: Rich Terminal User Interface (TUI) Engine
+import cl-ansi as ansi
+
+fn clear_screen():
+    put "\033[2J\033[H"
+
+fn move_cursor(row: int, col: int):
+    put "\033[" + str(row) + ";" + str(col) + "H"
+
+fn draw_box(title: string, width: int, height: int):
+    clear_screen()
+    top_bar := "┌─ " + title + " "
+    i := len(top_bar)
+    while i < width - 1:
+        top_bar := top_bar + "─"
+        i := i + 1
+    top_bar := top_bar + "┐"
+    put ansi.cyan(top_bar)
+
+fn hide_cursor():
+    put "\033[?25l"
+
+fn show_cursor():
+    put "\033[?25h"

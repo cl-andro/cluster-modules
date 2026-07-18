@@ -1,0 +1,6 @@
+// cl-llm Package Manifest
+name := "cl-llm"
+version := "0.1.0"
+description := "Unified local & cloud LLM API (Ollama, OpenAI, Gemini, Anthropic)"
+main := "llm.zk"
+license := "Commercial Control and non copy license"

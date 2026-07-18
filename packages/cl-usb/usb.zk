@@ -1,0 +1,25 @@
+// USB Device Module (libusb)
+
+fn list_devices() -> auto:
+    cpp_inject "// List USB devices (libusb_get_device_list)"
+    result := []
+    return result
+
+fn open(vendor_id: int, product_id: int) -> auto:
+    cpp_inject "// Open USB device by VID/PID"
+    result := 0
+    return result
+
+fn claim_interface(dev: auto, iface: int = 0):
+    cpp_inject "// Claim USB interface (libusb_claim_interface)"
+
+fn read(dev: auto, endpoint: int, size: int = 64) -> auto:
+    cpp_inject "// Read from USB endpoint (libusb_bulk_transfer)"
+    result := []
+    return result
+
+fn write(dev: auto, endpoint: int, raw: auto):
+    cpp_inject "// Write to USB endpoint (libusb_bulk_transfer)"
+
+fn close(dev: auto):
+    cpp_inject "// Close USB device (libusb_close)"

@@ -1,0 +1,34 @@
+// cl-llm: Unified Local & Cloud LLM API Module
+import cl-http as http
+import cl-json as json
+
+fn query_ollama(model: string, prompt: string, host: string) -> string:
+    target_host := host
+    if target_host == "":
+        target_host := "http://localhost:11434"
+        
+    url := target_host + "/api/generate"
+    body := "{\"model\":\"" + model + "\",\"prompt\":\"" + prompt + "\",\"stream\":false}"
+    resp := http::post_json(url, body)
+    return json::get_item(resp, "response")
+
+fn query_openai(model: string, prompt: string, api_key: string) -> string:
+    url := "https://api.openai.com/v1/chat/completions"
+    body := "{\"model\":\"" + model + "\",\"messages\":[{\"role\":\"user\",\"content\":\"" + prompt + "\"}]}"
+    resp := http::post(url, body)
+    return resp
+
+fn query_gemini(model: string, prompt: string, api_key: string) -> string:
+    url := "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key=" + api_key
+    body := "{\"contents\":[{\"parts\":[{\"text\":\"" + prompt + "\"}]}]}"
+    resp := http::post_json(url, body)
+    return resp
+
+fn chat(provider: string, model: string, prompt: string, key_or_host: string) -> string:
+    if provider == "ollama":
+        return query_ollama(model, prompt, key_or_host)
+    elif provider == "openai":
+        return query_openai(model, prompt, key_or_host)
+    elif provider == "gemini":
+        return query_gemini(model, prompt, key_or_host)
+    return "Unsupported LLM Provider: " + provider

@@ -1,0 +1,6 @@
+// cl-tui Package Manifest
+name := "cl-tui"
+version := "0.1.0"
+description := "Rich Terminal User Interface (TUI) & Layout Engine"
+main := "tui.zk"
+license := "Commercial Control and non copy license"

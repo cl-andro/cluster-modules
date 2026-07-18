@@ -1,0 +1,22 @@
+// Bluetooth Module (BlueZ)
+
+fn scan(duration: int = 10) -> auto:
+    cpp_inject "// Scan for Bluetooth devices (hci_inquiry)"
+    result := []
+    return result
+
+fn connect(addr: string, port: int = 1) -> auto:
+    cpp_inject "// Connect to Bluetooth device (socket + connect)"
+    result := 0
+    return result
+
+fn send(fd: auto, raw: string):
+    cpp_inject "// Send data over Bluetooth (write)"
+
+fn recv(fd: auto, n: int = 1024) -> string:
+    cpp_inject "// Receive data over Bluetooth (read)"
+    result := ""
+    return result
+
+fn disconnect(fd: auto):
+    cpp_inject "// Disconnect Bluetooth socket (close)"

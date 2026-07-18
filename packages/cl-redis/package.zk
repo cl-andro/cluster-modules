@@ -1,0 +1,6 @@
+// cl-redis Package Manifest
+name := "cl-redis"
+version := "0.1.0"
+description := "Redis Protocol (RESP) High-Speed Client"
+main := "redis.zk"
+license := "Commercial Control and non copy license"
