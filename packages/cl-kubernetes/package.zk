@@ -1,0 +1,6 @@
+// cl-kubernetes Package Manifest
+name := "cl-kubernetes"
+version := "0.1.0"
+description := "Kubernetes (K8s) API Client & Pod Orchestrator"
+main := "kubernetes.zk"
+license := "Commercial Control and non copy license"

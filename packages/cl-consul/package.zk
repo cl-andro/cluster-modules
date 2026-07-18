@@ -1,0 +1,6 @@
+// cl-consul Package Manifest
+name := "cl-consul"
+version := "0.1.0"
+description := "HashiCorp Consul Service Discovery & Key-Value Mesh Engine"
+main := "consul.zk"
+license := "Commercial Control and non copy license"

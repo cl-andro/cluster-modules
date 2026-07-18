@@ -1,0 +1,10 @@
+// cl-consul: HashiCorp Consul Service Discovery Engine
+import cl-http as http
+
+fn get_services(consul_addr: string) -> string:
+    url := consul_addr + "/v1/catalog/services"
+    return http::get(url)
+
+fn register_service(consul_addr: string, service_json: string) -> string:
+    url := consul_addr + "/v1/agent/service/register"
+    return http::post_json(url, service_json)

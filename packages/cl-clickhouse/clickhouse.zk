@@ -1,0 +1,6 @@
+// cl-clickhouse: ClickHouse OLAP Analytics Engine
+import cl-http as http
+
+fn query(endpoint: string, sql_query: string) -> string:
+    url := endpoint + "/?query=" + sql_query + "%20FORMAT%20JSON"
+    return http::get(url)

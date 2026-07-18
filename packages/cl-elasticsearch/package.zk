@@ -1,0 +1,6 @@
+// cl-elasticsearch Package Manifest
+name := "cl-elasticsearch"
+version := "0.1.0"
+description := "Elasticsearch & OpenSearch Full-Text Search Connector"
+main := "elasticsearch.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,6 @@
+// cl-etcd Package Manifest
+name := "cl-etcd"
+version := "0.1.0"
+description := "etcd v3 Distributed Key-Value Store Client"
+main := "etcd.zk"
+license := "Commercial Control and non copy license"

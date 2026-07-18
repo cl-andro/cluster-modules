@@ -1,0 +1,10 @@
+// cl-cassandra: Apache Cassandra & ScyllaDB Connector Engine
+import cl-socket as socket
+
+fn execute_cql(host: string, port: int, cql_statement: string) -> string:
+    sock := socket::connect(host, port)
+    if sock < 0:
+        return "Connection failed"
+    socket::send(sock, cql_statement + "\n")
+    resp := socket::recv(sock, 4096)
+    return resp

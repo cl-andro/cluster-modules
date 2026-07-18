@@ -1,13 +1,13 @@
 // JSON Module
 
-fn parse(text: string) -> string:
+fn parse(text: string):
     return json_parse(text)
 
 fn get_item(d: string, key: string) -> string:
     return json_get(d, key)
 
 fn stringify(obj: string) -> string:
-    return to_text(obj)
+    return obj
 
 fn pretty(d: string) -> string:
     return d

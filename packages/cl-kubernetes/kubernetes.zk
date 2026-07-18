@@ -1,0 +1,10 @@
+// cl-kubernetes: Kubernetes API & Pod Operator Engine
+import cl-http as http
+
+fn list_pods(api_server: string, namespace_name: string) -> string:
+    url := api_server + "/api/v1/namespaces/" + namespace_name + "/pods"
+    return http::get(url)
+
+fn get_pod_logs(api_server: string, namespace_name: string, pod_name: string) -> string:
+    url := api_server + "/api/v1/namespaces/" + namespace_name + "/pods/" + pod_name + "/log"
+    return http::get(url)

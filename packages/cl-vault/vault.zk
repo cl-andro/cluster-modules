@@ -1,0 +1,10 @@
+// cl-vault: HashiCorp Vault Secrets Manager REST Client Engine
+import cl-http as http
+
+fn get_secret(vault_addr: string, secret_path: string) -> string:
+    url := vault_addr + "/v1/secret/data/" + secret_path
+    return http::get(url)
+
+fn write_secret(vault_addr: string, secret_path: string, secret_json: string) -> string:
+    url := vault_addr + "/v1/secret/data/" + secret_path
+    return http::post_json(url, secret_json)

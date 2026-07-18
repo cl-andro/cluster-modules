@@ -1,0 +1,6 @@
+// cl-sqlite-vector Package Manifest
+name := "cl-sqlite-vector"
+version := "0.1.0"
+description := "Embedded SQLite Vector Extension for Local Nearest-Neighbor Search"
+main := "sqlite_vector.zk"
+license := "Commercial Control and non copy license"

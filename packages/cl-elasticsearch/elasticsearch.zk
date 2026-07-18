@@ -1,0 +1,10 @@
+// cl-elasticsearch: Elasticsearch & OpenSearch Connector Engine
+import cl-http as http
+
+fn search(endpoint: string, index: string, query_json: string) -> string:
+    url := endpoint + "/" + index + "/_search"
+    return http::post_json(url, query_json)
+
+fn index_document(endpoint: string, index: string, doc_id: string, doc_json: string) -> string:
+    url := endpoint + "/" + index + "/_doc/" + doc_id
+    return http::post_json(url, doc_json)

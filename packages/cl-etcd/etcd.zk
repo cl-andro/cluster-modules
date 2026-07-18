@@ -1,0 +1,16 @@
+// cl-etcd: etcd v3 Key-Value Engine
+import cl-http as http
+import cl-base64 as base64
+
+fn get_kv(etcd_addr: string, key: string) -> string:
+    key_b64 := base64::encode(key)
+    body := "{\"key\":\"" + key_b64 + "\"}"
+    url := etcd_addr + "/v3/kv/range"
+    return http::post_json(url, body)
+
+fn put_kv(etcd_addr: string, key: string, val: string) -> string:
+    key_b64 := base64::encode(key)
+    val_b64 := base64::encode(val)
+    body := "{\"key\":\"" + key_b64 + "\",\"value\":\"" + val_b64 + "\"}"
+    url := etcd_addr + "/v3/kv/put"
+    return http::post_json(url, body)

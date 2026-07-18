@@ -1,0 +1,6 @@
+// cl-mongo Package Manifest
+name := "cl-mongo"
+version := "0.1.0"
+description := "MongoDB Wire Protocol & Document Store Engine"
+main := "mongo.zk"
+license := "Commercial Control and non copy license"

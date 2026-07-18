@@ -2,28 +2,23 @@
 // Wraps native C++ http_get and http_post functions
 
 fn get(url: string) -> string:
-    res := "                                                                                                "
-    cpp_inject "res = http_get(url.c_str());"
+    cpp_inject "std::string res = http_get(url.c_str());"
     return res
 
 fn post(url: string, body: string) -> string:
-    res := "                                                                                                "
-    cpp_inject "res = http_post(url.c_str(), body.c_str());"
+    cpp_inject "std::string res = http_post(url.c_str(), body.c_str());"
     return res
 
 fn get_json(url: string) -> string:
-    res := "                                                                                                "
-    cpp_inject "res = http_get(url.c_str());"
+    cpp_inject "std::string res = http_get(url.c_str());"
     return res
 
 fn post_json(url: string, payload: string) -> string:
-    res := "                                                                                                "
-    cpp_inject "res = http_post(url.c_str(), payload.c_str());"
+    cpp_inject "std::string res = http_post(url.c_str(), payload.c_str());"
     return res
 
 fn download(url: string, dest: string) -> bool:
-    content := "                                                                                                "
-    cpp_inject "content = http_get(url.c_str());"
+    cpp_inject "std::string content = http_get(url.c_str());"
     if content == "":
         return false
     file_write(dest, content)

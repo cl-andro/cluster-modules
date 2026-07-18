@@ -1,0 +1,11 @@
+// cl-mongo: MongoDB Document Store Engine
+import cl-http as http
+import cl-json as json
+
+fn find_one(uri: string, db_name: string, collection: string, filter_json: string) -> string:
+    url := uri + "/" + db_name + "/" + collection + "/find_one"
+    return http::post_json(url, filter_json)
+
+fn insert_one(uri: string, db_name: string, collection: string, doc_json: string) -> string:
+    url := uri + "/" + db_name + "/" + collection + "/insert_one"
+    return http::post_json(url, doc_json)

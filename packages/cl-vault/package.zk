@@ -1,0 +1,6 @@
+// cl-vault Package Manifest
+name := "cl-vault"
+version := "0.1.0"
+description := "HashiCorp Vault Secrets Manager REST Client"
+main := "vault.zk"
+license := "Commercial Control and non copy license"

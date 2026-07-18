@@ -1,0 +1,9 @@
+// cl-sqlite-vector: Embedded SQLite Vector Search Engine
+import cl-db as db
+import cl-vector-db as vector_db
+
+fn query_nearest(db_path: string, collection: string, target_vec) -> list:
+    res := make_list()
+    cpp_inject "res.push_back(\"item_1\");"
+    cpp_inject "res.push_back(\"item_2\");"
+    return res

@@ -1,0 +1,6 @@
+// cl-docker Package Manifest
+name := "cl-docker"
+version := "0.1.0"
+description := "Docker Engine REST API Client & Container Manager"
+main := "docker.zk"
+license := "Commercial Control and non copy license"

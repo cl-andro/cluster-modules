@@ -466,6 +466,76 @@
       "path": "packages/cl-cache",
       "main": "cache.zk",
       "license": "Commercial Control and non copy license"
+    },
+    "cl-sqlite-vector": {
+      "description": "Embedded SQLite Vector Extension for Local Nearest-Neighbor Search",
+      "latest": "0.1.0",
+      "path": "packages/cl-sqlite-vector",
+      "main": "sqlite_vector.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-mongo": {
+      "description": "MongoDB Wire Protocol & Document Store Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-mongo",
+      "main": "mongo.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-elasticsearch": {
+      "description": "Elasticsearch & OpenSearch Full-Text Search Connector",
+      "latest": "0.1.0",
+      "path": "packages/cl-elasticsearch",
+      "main": "elasticsearch.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-clickhouse": {
+      "description": "ClickHouse High-Speed Analytics OLAP Database Connector",
+      "latest": "0.1.0",
+      "path": "packages/cl-clickhouse",
+      "main": "clickhouse.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-cassandra": {
+      "description": "Apache Cassandra & ScyllaDB Distributed NoSQL Connector",
+      "latest": "0.1.0",
+      "path": "packages/cl-cassandra",
+      "main": "cassandra.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-docker": {
+      "description": "Docker Engine REST API Client & Container Manager",
+      "latest": "0.1.0",
+      "path": "packages/cl-docker",
+      "main": "docker.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-kubernetes": {
+      "description": "Kubernetes (K8s) API Client & Pod Orchestrator",
+      "latest": "0.1.0",
+      "path": "packages/cl-kubernetes",
+      "main": "kubernetes.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-vault": {
+      "description": "HashiCorp Vault Secrets Manager REST Client",
+      "latest": "0.1.0",
+      "path": "packages/cl-vault",
+      "main": "vault.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-etcd": {
+      "description": "etcd v3 Distributed Key-Value Store Client",
+      "latest": "0.1.0",
+      "path": "packages/cl-etcd",
+      "main": "etcd.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-consul": {
+      "description": "HashiCorp Consul Service Discovery & Key-Value Mesh Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-consul",
+      "main": "consul.zk",
+      "license": "Commercial Control and non copy license"
     }
   }
 }

@@ -1,0 +1,14 @@
+// cl-docker: Docker Engine REST API Connector Engine
+import cl-http as http
+
+fn list_containers(socket_or_host: string) -> string:
+    url := socket_or_host + "/containers/json"
+    return http::get(url)
+
+fn start_container(socket_or_host: string, container_id: string) -> string:
+    url := socket_or_host + "/containers/" + container_id + "/start"
+    return http::post(url, "")
+
+fn stop_container(socket_or_host: string, container_id: string) -> string:
+    url := socket_or_host + "/containers/" + container_id + "/stop"
+    return http::post(url, "")

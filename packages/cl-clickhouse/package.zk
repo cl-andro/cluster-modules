@@ -1,0 +1,6 @@
+// cl-clickhouse Package Manifest
+name := "cl-clickhouse"
+version := "0.1.0"
+description := "ClickHouse High-Speed Analytics OLAP Database Connector"
+main := "clickhouse.zk"
+license := "Commercial Control and non copy license"
