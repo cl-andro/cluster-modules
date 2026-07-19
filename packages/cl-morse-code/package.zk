@@ -1,0 +1,6 @@
+// cl-morse-code Package Manifest
+name := "cl-morse-code"
+version := "0.1.0"
+description := "Advanced Morse Code Translation Engine"
+main := "morse_code.zk"
+license := "Commercial Control and non copy license"

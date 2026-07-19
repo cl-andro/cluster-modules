@@ -1,0 +1,22 @@
+// cl-base45: Base45 Encoding and Decoding Engine
+
+fn encode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "static const char* ALPHABET = \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:\";"
+        cpp_inject "std::string out;"
+        cpp_inject "size_t len = s.size();"
+        cpp_inject "for (size_t i = 0; i < len; i += 2) {"
+        cpp_inject "    if (i + 1 < len) {"
+        cpp_inject "        unsigned int val = ((unsigned char)s[i] << 8) | (unsigned char)s[i + 1];"
+        cpp_inject "        out += ALPHABET[val % 45];"
+        cpp_inject "        out += ALPHABET[(val / 45) % 45];"
+        cpp_inject "        out += ALPHABET[val / 2025];"
+        cpp_inject "    } else {"
+        cpp_inject "        unsigned int val = (unsigned char)s[i];"
+        cpp_inject "        out += ALPHABET[val % 45];"
+        cpp_inject "        out += ALPHABET[val / 45];"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res

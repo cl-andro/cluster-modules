@@ -1,0 +1,6 @@
+// cl-memcached Package Manifest
+name := "cl-memcached"
+version := "0.1.0"
+description := "Memcached Key-Value Memory Object Store Client"
+main := "memcached.zk"
+license := "Commercial Control and non copy license"

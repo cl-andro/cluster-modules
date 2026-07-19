@@ -1,0 +1,16 @@
+// cl-rot47: ROT47 Caesar Cipher Encoder and Decoder Engine
+
+fn encode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out = s;"
+        cpp_inject "for (char &c : out) {"
+        cpp_inject "    if (c >= '!' && c <= '~') {"
+        cpp_inject "        c = (c - '!' + 47) % 94 + '!';"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res
+
+fn decode(s: string) -> string:
+    return encode(s)

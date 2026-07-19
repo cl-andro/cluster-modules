@@ -1,0 +1,9 @@
+// cl-rabbitmq: RabbitMQ AMQP Message Broker Engine
+import cl-socket as socket
+
+fn publish(host: string, port: int, queue_name: string, message: string) -> bool:
+    sock := socket::connect(host, port)
+    if sock < 0:
+        return false
+    socket::send(sock, "AMQP\x00\x00\x09\x01" + queue_name + ":" + message)
+    return true

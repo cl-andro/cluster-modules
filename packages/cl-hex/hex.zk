@@ -1,0 +1,23 @@
+// cl-hex: Hex Encoding and Decoding Engine
+cpp_inject "#include <iomanip>"
+cpp_inject "#include <sstream>"
+
+fn encode(input: string) -> string:
+    res: string := ""
+    unsafe:
+        cpp_inject "std::stringstream ss;"
+        cpp_inject "for (char c : input) ss << std::hex << std::setw(2) << std::setfill('0') << (int)(unsigned char)c;"
+        cpp_inject "res = ss.str();"
+    return res
+
+fn decode(hex_str: string) -> string:
+    res: string := ""
+    unsafe:
+        cpp_inject "std::string s;"
+        cpp_inject "for (size_t i = 0; i < hex_str.length(); i += 2) {"
+        cpp_inject "    std::string byte = hex_str.substr(i, 2);"
+        cpp_inject "    char chr = (char) (int)strtol(byte.c_str(), NULL, 16);"
+        cpp_inject "    s.push_back(chr);"
+        cpp_inject "}"
+        cpp_inject "res = s;"
+    return res

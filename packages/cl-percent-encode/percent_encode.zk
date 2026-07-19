@@ -1,0 +1,37 @@
+// cl-percent-encode: URL Percent Encoder and Decoder Engine
+cpp_inject "#include <iomanip>"
+cpp_inject "#include <sstream>"
+
+fn encode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::ostringstream escaped;"
+        cpp_inject "escaped << std::hex;"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    if (std::isalnum((unsigned char)c) || c == '-' || c == '_' || c == '.' || c == '~') {"
+        cpp_inject "        escaped << c;"
+        cpp_inject "    } else {"
+        cpp_inject "        escaped << '%' << std::setw(2) << std::setfill('0') << (int)(unsigned char)c;"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = escaped.str();"
+    return res
+
+fn decode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out;"
+        cpp_inject "size_t len = s.size();"
+        cpp_inject "for (size_t i = 0; i < len; ++i) {"
+        cpp_inject "    if (s[i] == '%' && i + 2 < len) {"
+        cpp_inject "        int val = std::stol(s.substr(i + 1, 2), nullptr, 16);"
+        cpp_inject "        out += (char)val;"
+        cpp_inject "        i += 2;"
+        cpp_inject "    } else if (s[i] == '+') {"
+        cpp_inject "        out += ' ';"
+        cpp_inject "    } else {"
+        cpp_inject "        out += s[i];"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res

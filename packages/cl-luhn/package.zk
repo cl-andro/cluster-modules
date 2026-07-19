@@ -1,0 +1,6 @@
+// cl-luhn Package Manifest
+name := "cl-luhn"
+version := "0.1.0"
+description := "Luhn Algorithm Validation Engine"
+main := "luhn.zk"
+license := "Commercial Control and non copy license"

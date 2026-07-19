@@ -1,0 +1,6 @@
+// cl-djb2 Package Manifest
+name := "cl-djb2"
+version := "0.1.0"
+description := "DJB2 Hashing Engine"
+main := "djb2.zk"
+license := "Commercial Control and non copy license"

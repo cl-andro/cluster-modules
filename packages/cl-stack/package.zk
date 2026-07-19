@@ -1,0 +1,6 @@
+// cl-stack Package Manifest
+name := "cl-stack"
+version := "0.1.0"
+description := "LIFO Stack Container Model"
+main := "stack.zk"
+license := "Commercial Control and non copy license"

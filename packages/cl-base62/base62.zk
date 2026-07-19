@@ -1,0 +1,33 @@
+// cl-base62: Base62 Encoding and Decoding Engine
+cpp_inject "#include <algorithm>"
+
+fn encode(val: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "static const char* ALPHABET = \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\";"
+        cpp_inject "if (val == 0) res = \"0\";"
+        cpp_inject "else {"
+        cpp_inject "    std::string s;"
+        cpp_inject "    long long temp = val;"
+        cpp_inject "    while (temp > 0) {"
+        cpp_inject "        s += ALPHABET[temp % 62];"
+        cpp_inject "        temp /= 62;"
+        cpp_inject "    }"
+        cpp_inject "    std::reverse(s.begin(), s.end());"
+        cpp_inject "    res = s;"
+        cpp_inject "}"
+    return res
+
+fn decode(s: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "static const std::string ALPHABET = \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\";"
+        cpp_inject "long long val = 0;"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    size_t idx = ALPHABET.find(c);"
+        cpp_inject "    if (idx != std::string::npos) {"
+        cpp_inject "        val = val * 62 + idx;"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = val;"
+    return res

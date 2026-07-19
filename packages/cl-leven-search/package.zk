@@ -1,0 +1,6 @@
+// cl-leven-search Package Manifest
+name := "cl-leven-search"
+version := "0.1.0"
+description := "Levenshtein Fuzzy Search Engine"
+main := "leven_search.zk"
+license := "Commercial Control and non copy license"

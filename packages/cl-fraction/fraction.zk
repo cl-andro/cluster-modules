@@ -1,0 +1,50 @@
+// cl-fraction: Fraction and Rational Math Utilities
+
+fn gcd_val(a: int, b: int) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "long long x = std::abs(a);"
+        cpp_inject "long long y = std::abs(b);"
+        cpp_inject "while (y != 0) {"
+        cpp_inject "    long long temp = y;"
+        cpp_inject "    y = x % y;"
+        cpp_inject "    x = temp;"
+        cpp_inject "}"
+        cpp_inject "res = x;"
+    return res
+
+fn simplify(num: int, den: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "long long n = num;"
+        cpp_inject "long long d = den;"
+        cpp_inject "if (d == 0) { res = \"NaN\"; } else {"
+        cpp_inject "    long long tx = std::abs(n), ty = std::abs(d);"
+        cpp_inject "    while (ty != 0) { long long temp = ty; ty = tx % ty; tx = temp; }"
+        cpp_inject "    long long g = tx;"
+        cpp_inject "    n /= g; d /= g;"
+        cpp_inject "    if (d < 0) { n = -n; d = -d; }"
+        cpp_inject "    if (d == 1) res = std::to_string(n);"
+        cpp_inject "    else res = std::to_string(n) + \"/\" + std::to_string(d);"
+        cpp_inject "}"
+    return res
+
+fn add(n1: int, d1: int, n2: int, d2: int) -> string:
+    num := n1 * d2 + n2 * d1
+    den := d1 * d2
+    return simplify(num, den)
+
+fn sub(n1: int, d1: int, n2: int, d2: int) -> string:
+    num := n1 * d2 - n2 * d1
+    den := d1 * d2
+    return simplify(num, den)
+
+fn mul(n1: int, d1: int, n2: int, d2: int) -> string:
+    num := n1 * n2
+    den := d1 * d2
+    return simplify(num, den)
+
+fn div(n1: int, d1: int, n2: int, d2: int) -> string:
+    num := n1 * d2
+    den := d1 * n2
+    return simplify(num, den)

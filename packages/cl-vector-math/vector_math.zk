@@ -1,0 +1,30 @@
+// cl-vector-math: Float Vectors Arithmetic and Geometry Engine
+
+fn dot_product(v1: vector[float], v2: vector[float]) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "double sum = 0.0;"
+        cpp_inject "size_t len = std::min(v1.size(), v2.size());"
+        cpp_inject "for (size_t i = 0; i < len; ++i) sum += v1[i] * v2[i];"
+        cpp_inject "res = sum;"
+    return res
+
+fn magnitude(v: vector[float]) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "double sum = 0.0;"
+        cpp_inject "for (double val : v) sum += val * val;"
+        cpp_inject "res = std::sqrt(sum);"
+    return res
+
+fn distance(v1: vector[float], v2: vector[float]) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "double sum = 0.0;"
+        cpp_inject "size_t len = std::min(v1.size(), v2.size());"
+        cpp_inject "for (size_t i = 0; i < len; ++i) {"
+        cpp_inject "    double diff = v1[i] - v2[i];"
+        cpp_inject "    sum += diff * diff;"
+        cpp_inject "}"
+        cpp_inject "res = std::sqrt(sum);"
+    return res

@@ -1,0 +1,28 @@
+// cl-morse-code: Advanced Morse Code Translation Engine
+
+fn encode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "static const std::unordered_map<char, const char*> MORSE = {"
+        cpp_inject "    {'a', \".-\"}, {'b', \"-...\"}, {'c', \"-.-.\"}, {'d', \"-..\"}, {'e', \".\"},"
+        cpp_inject "    {'f', \"..-.\"}, {'g', \"--.\"}, {'h', \"....\"}, {'i', \"..\"}, {'j', \".---\"},"
+        cpp_inject "    {'k', \"-.-\"}, {'l', \".-..\"}, {'m', \"--\"}, {'n', \"-.\"}, {'o', \"---\"},"
+        cpp_inject "    {'p', \".--.\"}, {'q', \"--.-\"}, {'r', \".-.\"}, {'s', \"...\"}, {'t', \"-\"},"
+        cpp_inject "    {'u', \"..-\"}, {'v', \"...-\"}, {'w', \".--\"}, {'x', \"-..-\"}, {'y', \"-.--\"},"
+        cpp_inject "    {'z', \"--..\"}, {'1', \".----\"}, {'2', \"..---\"}, {'3', \"...--\"},"
+        cpp_inject "    {'4', \"....-\"}, {'5', \".....\"}, {'6', \"-....\"}, {'7', \"--...\"},"
+        cpp_inject "    {'8', \"---..\"}, {'9', \"----.\"}, {'0', \"-----\"}"
+        cpp_inject "};"
+        cpp_inject "std::string out;"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    char lower = std::tolower(c);"
+        cpp_inject "    if (lower == ' ') {"
+        cpp_inject "        out += \"/ \";"
+        cpp_inject "    } else {"
+        cpp_inject "        auto it = MORSE.find(lower);"
+        cpp_inject "        if (it != MORSE.end()) out += std::string(it->second) + \" \";"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "if (!out.empty() && out.back() == ' ') out.pop_back();"
+        cpp_inject "res = out;"
+    return res

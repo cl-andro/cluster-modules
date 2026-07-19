@@ -1,0 +1,20 @@
+// cl-caesar: Caesar Cipher Engine
+
+fn encode(s: string, shift: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out = s;"
+        cpp_inject "int sh = (shift % 26 + 26) % 26;"
+        cpp_inject "for (char &c : out) {"
+        cpp_inject "    if (c >= 'a' && c <= 'z') c = (c - 'a' + sh) % 26 + 'a';"
+        cpp_inject "    else if (c >= 'A' && c <= 'Z') c = (c - 'A' + sh) % 26 + 'A';"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res
+
+fn decode(s: string, shift: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "int sh = 26 - (shift % 26);"
+        cpp_inject "res = cl_caesar::encode(s, sh);"
+    return res

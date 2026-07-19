@@ -1,0 +1,23 @@
+// cl-sort2: Float and Integer Vectors Sorting Engine
+
+fn bubble_sort_int(&arr: vector[int]):
+    unsafe:
+        cpp_inject "int n = (int)arr.size();"
+        cpp_inject "for (int i = 0; i < n - 1; ++i) {"
+        cpp_inject "    for (int j = 0; j < n - i - 1; ++j) {"
+        cpp_inject "        if (arr[j] > arr[j + 1]) {"
+        cpp_inject "            std::swap(arr[j], arr[j + 1]);"
+        cpp_inject "        }"
+        cpp_inject "    }"
+        cpp_inject "}"
+
+fn bubble_sort_float(&arr: vector[float]):
+    unsafe:
+        cpp_inject "int n = (int)arr.size();"
+        cpp_inject "for (int i = 0; i < n - 1; ++i) {"
+        cpp_inject "    for (int j = 0; j < n - i - 1; ++j) {"
+        cpp_inject "        if (arr[j] > arr[j + 1]) {"
+        cpp_inject "            std::swap(arr[j], arr[j + 1]);"
+        cpp_inject "        }"
+        cpp_inject "    }"
+        cpp_inject "}"

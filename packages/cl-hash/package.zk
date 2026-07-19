@@ -1,0 +1,6 @@
+// cl-hash Package Manifest
+name := "cl-hash"
+version := "0.1.0"
+description := "FNV-1a Fast Hashing Engine"
+main := "hash.zk"
+license := "Commercial Control and non copy license"

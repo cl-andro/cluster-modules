@@ -1,0 +1,26 @@
+// cl-router: High-Speed Radix URL Router Engine
+
+model RouteMatch:
+    path: string
+    route_id: string
+
+model Router:
+    routes: unordered_map[string, string]
+
+fn init_router() -> Router:
+    r := Router()
+    r.routes = unordered_map[string, string]()
+    return r
+
+fn add_route(&r: Router, path: string, route_id: string):
+    map_set(r.routes, path, route_id)
+
+fn match_route(&r: Router, path: string) -> RouteMatch:
+    m := RouteMatch()
+    if map_has(r.routes, path):
+        m.path = path
+        m.route_id = map_get(r.routes, path)
+    else:
+        m.path = ""
+        m.route_id = ""
+    return m

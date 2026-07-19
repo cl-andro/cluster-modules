@@ -1,0 +1,6 @@
+// cl-semver2 Package Manifest
+name := "cl-semver2"
+version := "0.1.0"
+description := "Semantic Version Comparison Engine"
+main := "semver2.zk"
+license := "Commercial Control and non copy license"

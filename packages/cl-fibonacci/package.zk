@@ -1,0 +1,6 @@
+// cl-fibonacci Package Manifest
+name := "cl-fibonacci"
+version := "0.1.0"
+description := "Fibonacci Sequence Generator Engine"
+main := "fibonacci.zk"
+license := "Commercial Control and non copy license"

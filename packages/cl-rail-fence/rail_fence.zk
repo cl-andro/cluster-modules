@@ -1,0 +1,52 @@
+// cl-rail-fence: Rail Fence Cipher Encoder and Decoder Engine
+
+fn encode(s: string, rails: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "if (rails <= 1 || s.empty()) { res = s; } else {"
+        cpp_inject "    std::vector<std::string> fence(rails);"
+        cpp_inject "    int rail = 0;"
+        cpp_inject "    bool dir_down = false;"
+        cpp_inject "    for (char c : s) {"
+        cpp_inject "        fence[rail] += c;"
+        cpp_inject "        if (rail == 0 || rail == rails - 1) dir_down = !dir_down;"
+        cpp_inject "        rail += dir_down ? 1 : -1;"
+        cpp_inject "    }"
+        cpp_inject "    std::string out;"
+        cpp_inject "    for (const auto& r : fence) out += r;"
+        cpp_inject "    res = out;"
+        cpp_inject "}"
+    return res
+
+fn decode(s: string, rails: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "if (rails <= 1 || s.empty()) { res = s; } else {"
+        cpp_inject "    std::vector<std::vector<bool>> fence(rails, std::vector<bool>(s.size(), false));"
+        cpp_inject "    int rail = 0;"
+        cpp_inject "    bool dir_down = false;"
+        cpp_inject "    for (size_t i = 0; i < s.size(); ++i) {"
+        cpp_inject "        fence[rail][i] = true;"
+        cpp_inject "        if (rail == 0 || rail == rails - 1) dir_down = !dir_down;"
+        cpp_inject "        rail += dir_down ? 1 : -1;"
+        cpp_inject "    }"
+        cpp_inject "    size_t index = 0;"
+        cpp_inject "    std::vector<std::vector<char>> fence_chars(rails, std::vector<char>(s.size()));"
+        cpp_inject "    for (int r = 0; r < rails; ++r) {"
+        cpp_inject "        for (size_t c = 0; c < s.size(); ++c) {"
+        cpp_inject "            if (fence[r][c] && index < s.size()) {"
+        cpp_inject "                fence_chars[r][c] = s[index++];"
+        cpp_inject "            }"
+        cpp_inject "        }"
+        cpp_inject "    }"
+        cpp_inject "    std::string out;"
+        cpp_inject "    rail = 0;"
+        cpp_inject "    dir_down = false;"
+        cpp_inject "    for (size_t i = 0; i < s.size(); ++i) {"
+        cpp_inject "        out += fence_chars[rail][i];"
+        cpp_inject "        if (rail == 0 || rail == rails - 1) dir_down = !dir_down;"
+        cpp_inject "        rail += dir_down ? 1 : -1;"
+        cpp_inject "    }"
+        cpp_inject "    res = out;"
+        cpp_inject "}"
+    return res

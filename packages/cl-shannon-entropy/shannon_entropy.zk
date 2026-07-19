@@ -1,0 +1,17 @@
+// cl-shannon-entropy: Shannon Entropy Calculation Engine
+
+fn calculate(s: string) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "if (!s.empty()) {"
+        cpp_inject "    std::unordered_map<char, double> freq;"
+        cpp_inject "    for (char c : s) freq[c]++;"
+        cpp_inject "    double entropy = 0.0;"
+        cpp_inject "    double total = (double)s.size();"
+        cpp_inject "    for (const auto& pair : freq) {"
+        cpp_inject "        double p = pair.second / total;"
+        cpp_inject "        entropy -= p * std::log2(p);"
+        cpp_inject "    }"
+        cpp_inject "    res = entropy;"
+        cpp_inject "}"
+    return res

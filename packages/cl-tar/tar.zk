@@ -1,0 +1,12 @@
+// cl-tar: Tar Archiving Engine
+import cl-subprocess as sub
+
+fn create(archive_path: string, source_dir: string) -> bool:
+    cmd := "tar -cf " + archive_path + " -C " + source_dir + " ."
+    sub::run(cmd)
+    return true
+
+fn extract(archive_path: string, dest_dir: string) -> bool:
+    cmd := "mkdir -p " + dest_dir + " && tar -xf " + archive_path + " -C " + dest_dir
+    sub::run(cmd)
+    return true

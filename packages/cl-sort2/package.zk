@@ -1,0 +1,6 @@
+// cl-sort2 Package Manifest
+name := "cl-sort2"
+version := "0.1.0"
+description := "Float and Integer Vectors Sorting Engine"
+main := "sort2.zk"
+license := "Commercial Control and non copy license"

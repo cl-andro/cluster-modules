@@ -1,0 +1,79 @@
+// cl-deque: Double-Ended Queue (Deque) Container Model
+cpp_inject "#include <unordered_map>"
+cpp_inject "#include <deque>"
+cpp_inject "static std::unordered_map<int64_t, std::deque<std::string>> _deque_store;"
+
+model Deque:
+    id: int
+
+fn init_deque(&d: Deque):
+    if d.id == 0:
+        unsafe:
+            cpp_inject "static int64_t next_id = 1;"
+            cpp_inject "d.id = next_id++;"
+
+fn push_front(&d: Deque, val: string):
+    init_deque(d)
+    unsafe:
+        cpp_inject "_deque_store[d.id].push_front(val);"
+
+fn push_back(&d: Deque, val: string):
+    init_deque(d)
+    unsafe:
+        cpp_inject "_deque_store[d.id].push_back(val);"
+
+fn pop_front(&d: Deque) -> string:
+    init_deque(d)
+    res := ""
+    unsafe:
+        cpp_inject "auto& dq = _deque_store[d.id];"
+        cpp_inject "if (!dq.empty()) {"
+        cpp_inject "    res = dq.front();"
+        cpp_inject "    dq.pop_front();"
+        cpp_inject "}"
+    return res
+
+fn pop_back(&d: Deque) -> string:
+    init_deque(d)
+    res := ""
+    unsafe:
+        cpp_inject "auto& dq = _deque_store[d.id];"
+        cpp_inject "if (!dq.empty()) {"
+        cpp_inject "    res = dq.back();"
+        cpp_inject "    dq.pop_back();"
+        cpp_inject "}"
+    return res
+
+fn peek_front(d: Deque) -> string:
+    if d.id == 0:
+        return ""
+    res := ""
+    unsafe:
+        cpp_inject "auto& dq = _deque_store[d.id];"
+        cpp_inject "if (!dq.empty()) res = dq.front();"
+    return res
+
+fn peek_back(d: Deque) -> string:
+    if d.id == 0:
+        return ""
+    res := ""
+    unsafe:
+        cpp_inject "auto& dq = _deque_store[d.id];"
+        cpp_inject "if (!dq.empty()) res = dq.back();"
+    return res
+
+fn size(d: Deque) -> int:
+    if d.id == 0:
+        return 0
+    sz := 0
+    unsafe:
+        cpp_inject "sz = (int)_deque_store[d.id].size();"
+    return sz
+
+fn empty(d: Deque) -> bool:
+    if d.id == 0:
+        return true
+    res := true
+    unsafe:
+        cpp_inject "res = _deque_store[d.id].empty();"
+    return res

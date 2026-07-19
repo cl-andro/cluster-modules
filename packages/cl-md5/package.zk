@@ -1,0 +1,6 @@
+// cl-md5 Package Manifest
+name := "cl-md5"
+version := "0.1.0"
+description := "MD5 Hashing Utility"
+main := "md5.zk"
+license := "Commercial Control and non copy license"

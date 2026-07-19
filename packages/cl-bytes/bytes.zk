@@ -1,0 +1,35 @@
+// cl-bytes: Byte and Integer Packing/Unpacking Engine
+
+fn to_be32(val: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "res.push_back((char)((val >> 24) & 0xFF));"
+        cpp_inject "res.push_back((char)((val >> 16) & 0xFF));"
+        cpp_inject "res.push_back((char)((val >> 8) & 0xFF));"
+        cpp_inject "res.push_back((char)(val & 0xFF));"
+    return res
+
+fn to_le32(val: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "res.push_back((char)(val & 0xFF));"
+        cpp_inject "res.push_back((char)((val >> 8) & 0xFF));"
+        cpp_inject "res.push_back((char)((val >> 16) & 0xFF));"
+        cpp_inject "res.push_back((char)((val >> 24) & 0xFF));"
+    return res
+
+fn from_be32(b: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "if (b.size() >= 4) {"
+        cpp_inject "    res = ((unsigned char)b[0] << 24) | ((unsigned char)b[1] << 16) | ((unsigned char)b[2] << 8) | (unsigned char)b[3];"
+        cpp_inject "}"
+    return res
+
+fn from_le32(b: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "if (b.size() >= 4) {"
+        cpp_inject "    res = (unsigned char)b[0] | ((unsigned char)b[1] << 8) | ((unsigned char)b[2] << 16) | ((unsigned char)b[3] << 24);"
+        cpp_inject "}"
+    return res

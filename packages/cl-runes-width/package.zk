@@ -1,0 +1,6 @@
+// cl-runes-width Package Manifest
+name := "cl-runes-width"
+version := "0.1.0"
+description := "East Asian Unicode character width Engine"
+main := "runes_width.zk"
+license := "Commercial Control and non copy license"

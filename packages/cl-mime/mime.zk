@@ -1,0 +1,26 @@
+// cl-mime: MIME Type Detection Engine
+
+model MIME:
+    types: unordered_map[string, string]
+
+fn mime_set(&m: MIME, ext: string, mime_type: string):
+    unsafe:
+        cpp_inject "m.types[ext] = mime_type;"
+
+fn init_mime() -> MIME:
+    m := MIME()
+    m.types = unordered_map[string, string]()
+    mime_set(m, "html", "text/html")
+    mime_set(m, "css", "text/css")
+    mime_set(m, "js", "application/javascript")
+    mime_set(m, "json", "application/json")
+    mime_set(m, "png", "image/png")
+    mime_set(m, "jpg", "image/jpeg")
+    mime_set(m, "gif", "image/gif")
+    mime_set(m, "txt", "text/plain")
+    return m
+
+fn get_type(&m: MIME, ext: string) -> string:
+    if map_has(m.types, ext):
+        return map_get(m.types, ext)
+    return "application/octet-stream"

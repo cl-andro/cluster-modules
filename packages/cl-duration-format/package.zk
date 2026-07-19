@@ -1,0 +1,6 @@
+// cl-duration-format Package Manifest
+name := "cl-duration-format"
+version := "0.1.0"
+description := "Human-readable Duration Formatting Engine"
+main := "duration_format.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,6 @@
+// cl-luhn-generate Package Manifest
+name := "cl-luhn-generate"
+version := "0.1.0"
+description := "Luhn Algorithm Check Digit Generator"
+main := "luhn_generate.zk"
+license := "Commercial Control and non copy license"

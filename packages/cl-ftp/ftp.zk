@@ -1,0 +1,18 @@
+// cl-ftp: FTP and FTPS Client Engine
+import cl-socket as socket
+
+fn connect(host: string, port: int) -> int:
+    sock := socket::connect(host, port)
+    if sock < 0:
+        return -1
+    socket::recv(sock, 1024)
+    return sock
+
+fn login(sock: int, user: string, pass: string) -> bool:
+    if sock < 0:
+        return false
+    socket::send(sock, "USER " + user + "\r\n")
+    socket::recv(sock, 1024)
+    socket::send(sock, "PASS " + pass + "\r\n")
+    resp := socket::recv(sock, 1024)
+    return true

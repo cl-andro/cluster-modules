@@ -1,0 +1,39 @@
+// cl-stats-advanced: Advanced Vector Statistics calculations Engine
+
+fn covariance(v1: vector[float], v2: vector[float]) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "if (v1.size() > 1 && v1.size() == v2.size()) {"
+        cpp_inject "    double sum1 = 0.0, sum2 = 0.0;"
+        cpp_inject "    for (double val : v1) sum1 += val;"
+        cpp_inject "    for (double val : v2) sum2 += val;"
+        cpp_inject "    double avg1 = sum1 / v1.size(), avg2 = sum2 / v2.size();"
+        cpp_inject "    double cov = 0.0;"
+        cpp_inject "    for (size_t i = 0; i < v1.size(); ++i) {"
+        cpp_inject "        cov += (v1[i] - avg1) * (v2[i] - avg2);"
+        cpp_inject "    }"
+        cpp_inject "    res = cov / (v1.size() - 1);"
+        cpp_inject "}"
+    return res
+
+fn correlation(v1: vector[float], v2: vector[float]) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "if (v1.size() > 1 && v1.size() == v2.size()) {"
+        cpp_inject "    double sum1 = 0.0, sum2 = 0.0;"
+        cpp_inject "    for (double val : v1) sum1 += val;"
+        cpp_inject "    for (double val : v2) sum2 += val;"
+        cpp_inject "    double avg1 = sum1 / v1.size(), avg2 = sum2 / v2.size();"
+        cpp_inject "    double cov = 0.0, var1 = 0.0, var2 = 0.0;"
+        cpp_inject "    for (size_t i = 0; i < v1.size(); ++i) {"
+        cpp_inject "        double diff1 = v1[i] - avg1;"
+        cpp_inject "        double diff2 = v2[i] - avg2;"
+        cpp_inject "        cov += diff1 * diff2;"
+        cpp_inject "        var1 += diff1 * diff1;"
+        cpp_inject "        var2 += diff2 * diff2;"
+        cpp_inject "    }"
+        cpp_inject "    if (var1 > 0 && var2 > 0) {"
+        cpp_inject "        res = cov / std::sqrt(var1 * var2);"
+        cpp_inject "    }"
+        cpp_inject "}"
+    return res

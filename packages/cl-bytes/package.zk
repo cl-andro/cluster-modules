@@ -1,0 +1,6 @@
+// cl-bytes Package Manifest
+name := "cl-bytes"
+version := "0.1.0"
+description := "Byte and Integer Packing/Unpacking Engine"
+main := "bytes.zk"
+license := "Commercial Control and non copy license"

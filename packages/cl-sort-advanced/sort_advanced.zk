@@ -1,0 +1,9 @@
+// cl-sort-advanced: Advanced Sort Algorithms Engine
+
+fn sort_int(&arr: vector[int]):
+    unsafe:
+        cpp_inject "std::sort(arr.begin(), arr.end());"
+
+fn sort_float(&arr: vector[float]):
+    unsafe:
+        cpp_inject "std::sort(arr.begin(), arr.end());"

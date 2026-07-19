@@ -1,0 +1,15 @@
+// cl-atbash: Atbash Cipher Encoder and Decoder Engine
+
+fn encode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out = s;"
+        cpp_inject "for (char &c : out) {"
+        cpp_inject "    if (c >= 'a' && c <= 'z') c = 'z' - (c - 'a');"
+        cpp_inject "    else if (c >= 'A' && c <= 'Z') c = 'Z' - (c - 'A');"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res
+
+fn decode(s: string) -> string:
+    return encode(s)

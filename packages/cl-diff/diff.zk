@@ -1,0 +1,15 @@
+// cl-diff: Text Diff and LCS Comparison Engine
+
+fn lcs_length(s1: string, s2: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "int m = (int)s1.size(), n = (int)s2.size();"
+        cpp_inject "std::vector<std::vector<int>> dp(m + 1, std::vector<int>(n + 1, 0));"
+        cpp_inject "for (int i = 1; i <= m; ++i) {"
+        cpp_inject "    for (int j = 1; j <= n; ++j) {"
+        cpp_inject "        if (s1[i - 1] == s2[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;"
+        cpp_inject "        else dp[i][j] = std::max(dp[i - 1][j], dp[i][j - 1]);"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = dp[m][n];"
+    return res

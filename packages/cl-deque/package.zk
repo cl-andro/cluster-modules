@@ -1,0 +1,6 @@
+// cl-deque Package Manifest
+name := "cl-deque"
+version := "0.1.0"
+description := "Double-Ended Queue (Deque) Container Model"
+main := "deque.zk"
+license := "Commercial Control and non copy license"

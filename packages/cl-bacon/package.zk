@@ -1,0 +1,6 @@
+// cl-bacon Package Manifest
+name := "cl-bacon"
+version := "0.1.0"
+description := "Bacon Cipher Encoder and Decoder Engine"
+main := "bacon.zk"
+license := "Commercial Control and non copy license"

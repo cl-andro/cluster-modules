@@ -1,0 +1,37 @@
+// cl-ascii: ASCII Character Category Classification Engine
+
+fn is_alpha(c: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "if (!c.empty()) {"
+        cpp_inject "    char ch = c[0];"
+        cpp_inject "    res = ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'));"
+        cpp_inject "}"
+    return res
+
+fn is_digit(c: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "if (!c.empty()) {"
+        cpp_inject "    char ch = c[0];"
+        cpp_inject "    res = (ch >= '0' && ch <= '9');"
+        cpp_inject "}"
+    return res
+
+fn is_space(c: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "if (!c.empty()) {"
+        cpp_inject "    char ch = c[0];"
+        cpp_inject "    res = (ch == ' ' || ch == '\\t' || ch == '\\n' || ch == '\\r' || ch == '\\v' || ch == '\\f');"
+        cpp_inject "}"
+    return res
+
+fn is_alnum(c: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "if (!c.empty()) {"
+        cpp_inject "    char ch = c[0];"
+        cpp_inject "    res = ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9'));"
+        cpp_inject "}"
+    return res

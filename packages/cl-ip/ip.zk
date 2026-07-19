@@ -1,0 +1,16 @@
+// cl-ip: IP Address Validation and Subnet Matcher
+cpp_inject "#include <arpa/inet.h>"
+
+fn is_v4(ip_str: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "struct sockaddr_in sa;"
+        cpp_inject "res = (inet_pton(AF_INET, ip_str.c_str(), &(sa.sin_addr)) == 1);"
+    return res
+
+fn is_v6(ip_str: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "struct sockaddr_in6 sa6;"
+        cpp_inject "res = (inet_pton(AF_INET6, ip_str.c_str(), &(sa6.sin6_addr)) == 1);"
+    return res

@@ -1,0 +1,6 @@
+// cl-bwt Package Manifest
+name := "cl-bwt"
+version := "0.1.0"
+description := "Burrows-Wheeler Transform Encoding and Decoding Engine"
+main := "bwt.zk"
+license := "Commercial Control and non copy license"

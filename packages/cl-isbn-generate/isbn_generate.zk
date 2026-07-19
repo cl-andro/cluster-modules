@@ -1,0 +1,33 @@
+// cl-isbn-generate: ISBN Check Digit Generator Engine
+
+fn generate_isbn10_check(payload: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string clean;"
+        cpp_inject "for (char c : payload) if (c >= '0' && c <= '9') clean += c;"
+        cpp_inject "if (clean.size() >= 9) {"
+        cpp_inject "    int sum = 0;"
+        cpp_inject "    for (int i = 0; i < 9; ++i) {"
+        cpp_inject "        sum += (clean[i] - '0') * (10 - i);"
+        cpp_inject "    }"
+        cpp_inject "    int diff = (11 - (sum % 11)) % 11;"
+        cpp_inject "    if (diff == 10) res = \"X\";"
+        cpp_inject "    else res = std::to_string(diff);"
+        cpp_inject "}"
+    return res
+
+fn generate_isbn13_check(payload: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string clean;"
+        cpp_inject "for (char c : payload) if (c >= '0' && c <= '9') clean += c;"
+        cpp_inject "if (clean.size() >= 12) {"
+        cpp_inject "    int sum = 0;"
+        cpp_inject "    for (int i = 0; i < 12; ++i) {"
+        cpp_inject "        int val = clean[i] - '0';"
+        cpp_inject "        sum += (i % 2 == 0) ? val : (val * 3);"
+        cpp_inject "    }"
+        cpp_inject "    int diff = (10 - (sum % 10)) % 10;"
+        cpp_inject "    res = std::to_string(diff);"
+        cpp_inject "}"
+    return res

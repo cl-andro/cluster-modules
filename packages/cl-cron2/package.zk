@@ -1,0 +1,6 @@
+// cl-cron2 Package Manifest
+name := "cl-cron2"
+version := "0.1.0"
+description := "Cron Expression Validation Engine"
+main := "cron2.zk"
+license := "Commercial Control and non copy license"

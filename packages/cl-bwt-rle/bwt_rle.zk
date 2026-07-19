@@ -1,0 +1,8 @@
+// cl-bwt-rle: BWT and RLE Combined Compression Engine
+import cl-bwt as bwt
+import cl-rle as rle
+
+fn compress(s: string) -> string:
+    bwt_str := bwt::encode(s)
+    rle_str := rle::encode(bwt_str)
+    return rle_str

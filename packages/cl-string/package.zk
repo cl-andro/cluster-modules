@@ -1,0 +1,6 @@
+// cl-string Package Manifest
+name := "cl-string"
+version := "0.1.0"
+description := "Additional String Helpers"
+main := "string.zk"
+license := "Commercial Control and non copy license"

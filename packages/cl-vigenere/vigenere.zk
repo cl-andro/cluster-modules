@@ -1,0 +1,47 @@
+// cl-vigenere: Vigenere Cipher Engine
+
+fn encode(s: string, key: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out = s;"
+        cpp_inject "if (!key.empty()) {"
+        cpp_inject "    size_t k_idx = 0;"
+        cpp_inject "    for (char &c : out) {"
+        cpp_inject "        if (c >= 'a' && c <= 'z') {"
+        cpp_inject "            char k = key[k_idx % key.size()];"
+        cpp_inject "            int shift = (k >= 'a' && k <= 'z') ? (k - 'a') : ((k >= 'A' && k <= 'Z') ? (k - 'A') : 0);"
+        cpp_inject "            c = (c - 'a' + shift) % 26 + 'a';"
+        cpp_inject "            k_idx++;"
+        cpp_inject "        } else if (c >= 'A' && c <= 'Z') {"
+        cpp_inject "            char k = key[k_idx % key.size()];"
+        cpp_inject "            int shift = (k >= 'a' && k <= 'z') ? (k - 'a') : ((k >= 'A' && k <= 'Z') ? (k - 'A') : 0);"
+        cpp_inject "            c = (c - 'A' + shift) % 26 + 'A';"
+        cpp_inject "            k_idx++;"
+        cpp_inject "        }"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res
+
+fn decode(s: string, key: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out = s;"
+        cpp_inject "if (!key.empty()) {"
+        cpp_inject "    size_t k_idx = 0;"
+        cpp_inject "    for (char &c : out) {"
+        cpp_inject "        if (c >= 'a' && c <= 'z') {"
+        cpp_inject "            char k = key[k_idx % key.size()];"
+        cpp_inject "            int shift = (k >= 'a' && k <= 'z') ? (k - 'a') : ((k >= 'A' && k <= 'Z') ? (k - 'A') : 0);"
+        cpp_inject "            c = (c - 'a' - shift + 26) % 26 + 'a';"
+        cpp_inject "            k_idx++;"
+        cpp_inject "        } else if (c >= 'A' && c <= 'Z') {"
+        cpp_inject "            char k = key[k_idx % key.size()];"
+        cpp_inject "            int shift = (k >= 'a' && k <= 'z') ? (k - 'a') : ((k >= 'A' && k <= 'Z') ? (k - 'A') : 0);"
+        cpp_inject "            c = (c - 'A' - shift + 26) % 26 + 'A';"
+        cpp_inject "            k_idx++;"
+        cpp_inject "        }"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res

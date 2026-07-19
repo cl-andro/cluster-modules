@@ -1,0 +1,6 @@
+// cl-rle Package Manifest
+name := "cl-rle"
+version := "0.1.0"
+description := "Run-Length Encoding (RLE) Compression Engine"
+main := "rle.zk"
+license := "Commercial Control and non copy license"

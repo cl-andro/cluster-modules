@@ -1,0 +1,6 @@
+// cl-base32 Package Manifest
+name := "cl-base32"
+version := "0.1.0"
+description := "Base32 Encoding and Decoding Engine"
+main := "base32.zk"
+license := "Commercial Control and non copy license"

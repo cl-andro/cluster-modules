@@ -1,0 +1,57 @@
+// cl-priority-queue: Priority Queue Container Model
+cpp_inject "#include <unordered_map>"
+cpp_inject "#include <vector>"
+cpp_inject "#include <algorithm>"
+cpp_inject "static std::unordered_map<int64_t, std::vector<std::pair<int64_t, std::string>>> _pq_store;"
+
+model PriorityQueue:
+    id: int
+
+fn init_pq(&pq: PriorityQueue):
+    if pq.id == 0:
+        unsafe:
+            cpp_inject "static int64_t next_id = 1;"
+            cpp_inject "pq.id = next_id++;"
+
+fn push(&pq: PriorityQueue, val: string, priority: int):
+    init_pq(pq)
+    unsafe:
+        cpp_inject "auto& v = _pq_store[pq.id];"
+        cpp_inject "v.push_back({priority, val});"
+        cpp_inject "std::sort(v.begin(), v.end(), [](const auto& a, const auto& b) { return a.first > b.first; });"
+
+fn pop(&pq: PriorityQueue) -> string:
+    init_pq(pq)
+    res := ""
+    unsafe:
+        cpp_inject "auto& v = _pq_store[pq.id];"
+        cpp_inject "if (!v.empty()) {"
+        cpp_inject "    res = v.front().second;"
+        cpp_inject "    v.erase(v.begin());"
+        cpp_inject "}"
+    return res
+
+fn peek(pq: PriorityQueue) -> string:
+    if pq.id == 0:
+        return ""
+    res := ""
+    unsafe:
+        cpp_inject "auto& v = _pq_store[pq.id];"
+        cpp_inject "if (!v.empty()) res = v.front().second;"
+    return res
+
+fn size(pq: PriorityQueue) -> int:
+    if pq.id == 0:
+        return 0
+    sz := 0
+    unsafe:
+        cpp_inject "sz = (int)_pq_store[pq.id].size();"
+    return sz
+
+fn empty(pq: PriorityQueue) -> bool:
+    if pq.id == 0:
+        return true
+    res := true
+    unsafe:
+        cpp_inject "res = _pq_store[pq.id].empty();"
+    return res

@@ -1,0 +1,6 @@
+// cl-hmac Package Manifest
+name := "cl-hmac"
+version := "0.1.0"
+description := "HMAC-SHA256 Authentication Engine"
+main := "hmac.zk"
+license := "Commercial Control and non copy license"

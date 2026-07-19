@@ -1,0 +1,6 @@
+// cl-caesar Package Manifest
+name := "cl-caesar"
+version := "0.1.0"
+description := "Caesar Cipher Encoder and Decoder Engine"
+main := "caesar.zk"
+license := "Commercial Control and non copy license"

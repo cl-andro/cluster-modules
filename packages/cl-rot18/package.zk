@@ -1,0 +1,6 @@
+// cl-rot18 Package Manifest
+name := "cl-rot18"
+version := "0.1.0"
+description := "ROT18 Cipher Encoding and Decoding Engine"
+main := "rot18.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,28 @@
+// cl-nats: NATS.io Pub/Sub Messaging Client Engine
+import cl-socket as socket
+
+fn connect(host: string, port: int) -> int:
+    sock := socket::connect(host, port)
+    if sock < 0:
+        return -1
+    // Read the server INFO message
+    socket::recv(sock, 1024)
+    // Send CONNECT message
+    connect_cmd := "CONNECT {\"verbose\":false,\"pedantic\":false,\"ssl_required\":false,\"name\":\"cluster-lang-client\"}\r\n"
+    socket::send(sock, connect_cmd)
+    return sock
+
+fn publish(sock: int, subject: string, message: string) -> bool:
+    if sock < 0:
+        return false
+    payload_len := len(message)
+    cmd := "PUB " + subject + " " + str(payload_len) + "\r\n" + message + "\r\n"
+    socket::send(sock, cmd)
+    return true
+
+fn subscribe(sock: int, subject: string, sid: int) -> bool:
+    if sock < 0:
+        return false
+    cmd := "SUB " + subject + " " + str(sid) + "\r\n"
+    socket::send(sock, cmd)
+    return true

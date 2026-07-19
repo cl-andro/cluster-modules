@@ -1,0 +1,37 @@
+// cl-bacon: Bacon Cipher Encoder and Decoder Engine
+
+fn encode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out;"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    char lower = std::tolower(c);"
+        cpp_inject "    if (lower >= 'a' && lower <= 'z') {"
+        cpp_inject "        int val = lower - 'a';"
+        cpp_inject "        for (int i = 4; i >= 0; --i) {"
+        cpp_inject "            out += ((val >> i) & 1) ? 'B' : 'A';"
+        cpp_inject "        }"
+        cpp_inject "        out += ' ';"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "if (!out.empty() && out.back() == ' ') out.pop_back();"
+        cpp_inject "res = out;"
+    return res
+
+fn decode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out;"
+        cpp_inject "std::string clean_s;"
+        cpp_inject "for (char c : s) if (c == 'A' || c == 'B') clean_s += c;"
+        cpp_inject "for (size_t i = 0; i + 4 < clean_s.size(); i += 5) {"
+        cpp_inject "    int val = 0;"
+        cpp_inject "    for (int j = 0; j < 5; ++j) {"
+        cpp_inject "        val = (val << 1) | (clean_s[i + j] == 'B' ? 1 : 0);"
+        cpp_inject "    }"
+        cpp_inject "    if (val >= 0 && val < 26) {"
+        cpp_inject "        out += (char)('A' + val);"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res

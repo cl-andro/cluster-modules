@@ -1,0 +1,54 @@
+// cl-queue: FIFO Queue Container Model
+cpp_inject "#include <unordered_map>"
+cpp_inject "#include <deque>"
+cpp_inject "static std::unordered_map<int64_t, std::deque<std::string>> _queue_store;"
+
+model Queue:
+    id: int
+
+fn init_queue(&q: Queue):
+    if q.id == 0:
+        unsafe:
+            cpp_inject "static int64_t next_id = 1;"
+            cpp_inject "q.id = next_id++;"
+
+fn enqueue(&q: Queue, val: string):
+    init_queue(q)
+    unsafe:
+        cpp_inject "_queue_store[q.id].push_back(val);"
+
+fn dequeue(&q: Queue) -> string:
+    init_queue(q)
+    res := ""
+    unsafe:
+        cpp_inject "auto& d = _queue_store[q.id];"
+        cpp_inject "if (!d.empty()) {"
+        cpp_inject "    res = d.front();"
+        cpp_inject "    d.pop_front();"
+        cpp_inject "}"
+    return res
+
+fn peek(q: Queue) -> string:
+    if q.id == 0:
+        return ""
+    res := ""
+    unsafe:
+        cpp_inject "auto& d = _queue_store[q.id];"
+        cpp_inject "if (!d.empty()) res = d.front();"
+    return res
+
+fn size(q: Queue) -> int:
+    if q.id == 0:
+        return 0
+    sz := 0
+    unsafe:
+        cpp_inject "sz = (int)_queue_store[q.id].size();"
+    return sz
+
+fn empty(q: Queue) -> bool:
+    if q.id == 0:
+        return true
+    res := true
+    unsafe:
+        cpp_inject "res = _queue_store[q.id].empty();"
+    return res

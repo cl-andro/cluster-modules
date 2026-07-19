@@ -1,0 +1,6 @@
+// cl-gcd-multi Package Manifest
+name := "cl-gcd-multi"
+version := "0.1.0"
+description := "Multi-argument GCD and LCM Math Engine"
+main := "gcd_multi.zk"
+license := "Commercial Control and non copy license"

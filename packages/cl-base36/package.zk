@@ -1,0 +1,6 @@
+// cl-base36 Package Manifest
+name := "cl-base36"
+version := "0.1.0"
+description := "Base36 Encoding and Decoding Engine"
+main := "base36.zk"
+license := "Commercial Control and non copy license"

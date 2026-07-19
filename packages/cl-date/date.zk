@@ -1,0 +1,32 @@
+// cl-date: Date Helper Utilities
+
+fn is_leap_year(year: int) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "res = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);"
+    return res
+
+fn days_in_month(year: int, month: int) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "if (month == 2) {"
+        cpp_inject "    res = ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) ? 29 : 28;"
+        cpp_inject "} else if (month == 4 || month == 6 || month == 9 || month == 11) {"
+        cpp_inject "    res = 30;"
+        cpp_inject "} else if (month >= 1 && month <= 12) {"
+        cpp_inject "    res = 31;"
+        cpp_inject "}"
+    return res
+
+fn day_of_week(year: int, month: int, day: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "static const char* DAYS[] = {\"Saturday\", \"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\"};"
+        cpp_inject "int m = month;"
+        cpp_inject "int y = year;"
+        cpp_inject "if (m < 3) { m += 12; y -= 1; }"
+        cpp_inject "int k = y % 100;"
+        cpp_inject "int j = y / 100;"
+        cpp_inject "int h = (day + 13 * (m + 1) / 5 + k + k / 4 + j / 4 + 5 * j) % 7;"
+        cpp_inject "res = DAYS[h];"
+    return res

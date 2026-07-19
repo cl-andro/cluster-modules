@@ -1,0 +1,15 @@
+// cl-crc16: CRC-16 Checksum Hashing Engine
+
+fn checksum(s: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "unsigned short crc = 0xFFFF;"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    crc ^= ((unsigned char)c << 8);"
+        cpp_inject "    for (int i = 0; i < 8; ++i) {"
+        cpp_inject "        if (crc & 0x8000) crc = (crc << 1) ^ 0x1021;"
+        cpp_inject "        else crc <<= 1;"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = crc;"
+    return res

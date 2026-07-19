@@ -1,0 +1,6 @@
+// cl-glob Package Manifest
+name := "cl-glob"
+version := "0.1.0"
+description := "File Path Pattern Matching Utility"
+main := "glob.zk"
+license := "Commercial Control and non copy license"

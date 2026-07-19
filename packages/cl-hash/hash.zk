@@ -1,0 +1,23 @@
+// cl-hash: FNV-1a Hashing Engine
+
+fn fnv1a_32(s: string) -> int:
+    hash := 0
+    unsafe:
+        cpp_inject "unsigned int h = 2166136261u;"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    h ^= (unsigned char)c;"
+        cpp_inject "    h *= 16777619u;"
+        cpp_inject "}"
+        cpp_inject "hash = h;"
+    return hash
+
+fn fnv1a_64(s: string) -> int:
+    hash := 0
+    unsafe:
+        cpp_inject "unsigned long long h = 14695981039346656037ull;"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    h ^= (unsigned char)c;"
+        cpp_inject "    h *= 1099511628211ull;"
+        cpp_inject "}"
+        cpp_inject "hash = h;"
+    return hash

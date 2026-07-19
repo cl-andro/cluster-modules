@@ -1,0 +1,57 @@
+// cl-totp: Time-Based One-Time Password Engine
+import cl-hmac as hmac
+
+fn generate_totp(secret: string, interval_sec: int) -> int:
+    now_sec := 0
+    unsafe:
+        cpp_inject "now_sec = (int)std::time(nullptr);"
+    time_step := now_sec / interval_sec
+    h := hmac::sha256_hmac(secret, str(time_step))
+    offset_char := ""
+    unsafe:
+        cpp_inject "offset_char = h.substr(63, 1);"
+    offset := 0
+    if offset_char == "a":
+        offset = 10
+    elif offset_char == "b":
+        offset = 11
+    elif offset_char == "c":
+        offset = 12
+    elif offset_char == "d":
+        offset = 13
+    elif offset_char == "e":
+        offset = 14
+    elif offset_char == "f":
+        offset = 15
+    else:
+        offset = int(offset_char)
+    
+    hex_part := ""
+    unsafe:
+        cpp_inject "hex_part = h.substr(offset * 2, 8);"
+    
+    val := 0
+    i := 0
+    while i < 8:
+        val = val << 4
+        c := ""
+        unsafe:
+            cpp_inject "c = hex_part.substr(i, 1);"
+        if c == "a":
+            val = val + 10
+        elif c == "b":
+            val = val + 11
+        elif c == "c":
+            val = val + 12
+        elif c == "d":
+            val = val + 13
+        elif c == "e":
+            val = val + 14
+        elif c == "f":
+            val = val + 15
+        else:
+            val = val + int(c)
+        i = i + 1
+    
+    val = val & 2147483647
+    return val % 1000000

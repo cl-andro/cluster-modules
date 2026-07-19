@@ -1,0 +1,37 @@
+// cl-isbn: ISBN Checksum Validation Engine
+
+fn validate_isbn10(isbn: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "std::string clean;"
+        cpp_inject "for (char c : isbn) if (c != '-' && c != ' ') clean += c;"
+        cpp_inject "if (clean.size() == 10) {"
+        cpp_inject "    int sum = 0;"
+        cpp_inject "    for (int i = 0; i < 9; ++i) {"
+        cpp_inject "        if (clean[i] >= '0' && clean[i] <= '9') sum += (clean[i] - '0') * (10 - i);"
+        cpp_inject "        else return false;"
+        cpp_inject "    }"
+        cpp_inject "    char last = clean[9];"
+        cpp_inject "    if (last == 'X' || last == 'x') sum += 10;"
+        cpp_inject "    else if (last >= '0' && last <= '9') sum += (last - '0');"
+        cpp_inject "    else return false;"
+        cpp_inject "    res = (sum % 11 == 0);"
+        cpp_inject "}"
+    return res
+
+fn validate_isbn13(isbn: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "std::string clean;"
+        cpp_inject "for (char c : isbn) if (c != '-' && c != ' ') clean += c;"
+        cpp_inject "if (clean.size() == 13) {"
+        cpp_inject "    int sum = 0;"
+        cpp_inject "    for (int i = 0; i < 13; ++i) {"
+        cpp_inject "        if (clean[i] >= '0' && clean[i] <= '9') {"
+        cpp_inject "            int val = clean[i] - '0';"
+        cpp_inject "            sum += (i % 2 == 0) ? val : (val * 3);"
+        cpp_inject "        } else return false;"
+        cpp_inject "    }"
+        cpp_inject "    res = (sum % 10 == 0);"
+        cpp_inject "}"
+    return res

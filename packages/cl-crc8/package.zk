@@ -1,0 +1,6 @@
+// cl-crc8 Package Manifest
+name := "cl-crc8"
+version := "0.1.0"
+description := "CRC-8 Checksum Hashing Engine"
+main := "crc8.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,25 @@
+// cl-version-parse: Semantic Version Parsing Engine
+
+fn major(v: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "int maj = 0;"
+        cpp_inject "std::sscanf(v.c_str(), \"%d\", &maj);"
+        cpp_inject "res = maj;"
+    return res
+
+fn minor(v: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "int maj = 0, min = 0;"
+        cpp_inject "std::sscanf(v.c_str(), \"%d.%d\", &maj, &min);"
+        cpp_inject "res = min;"
+    return res
+
+fn patch(v: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "int maj = 0, min = 0, pat = 0;"
+        cpp_inject "std::sscanf(v.c_str(), \"%d.%d.%d\", &maj, &min, &pat);"
+        cpp_inject "res = pat;"
+    return res

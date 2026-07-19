@@ -1,0 +1,6 @@
+// cl-decimal Package Manifest
+name := "cl-decimal"
+version := "0.1.0"
+description := "Fixed-Point Decimal Arithmetic Helper"
+main := "decimal.zk"
+license := "Commercial Control and non copy license"

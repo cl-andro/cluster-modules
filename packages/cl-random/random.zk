@@ -1,61 +1,48 @@
-cpp_inject("#include <random>")
-cpp_inject("#include <algorithm>")
-cpp_inject("#include <ctime>")
+cpp_inject "#include <random>"
+cpp_inject "#include <algorithm>"
+cpp_inject "#include <ctime>"
 
-cpp_inject("static std::mt19937 _rng(std::time(0));")
+cpp_inject "static std::mt19937 _rng(std::time(0));"
 
-fn seed(value)
-    cpp_inject("_rng.seed(value);")
+fn seed(value: int):
+    cpp_inject "_rng.seed(value);"
 
-fn int(min, max)
+fn randint(min: int, max: int) -> int:
     result := 0
-    cpp_inject("""
-        std::uniform_int_distribution<int> dist(min, max);
-        result = dist(_rng);
-    """)
+    cpp_inject "std::uniform_int_distribution<int> dist(min, max);"
+    cpp_inject "result = dist(_rng);"
     return result
 
-fn float(min, max)
+fn randfloat(min: float, max: float) -> float:
     result := 0.0
-    cpp_inject("""
-        std::uniform_real_distribution<double> dist(min, max);
-        result = dist(_rng);
-    """)
+    cpp_inject "std::uniform_real_distribution<double> dist(min, max);"
+    cpp_inject "result = dist(_rng);"
     return result
 
-fn choice(list)
-    n := list_size(list)
-    if n == 0
-        return ""
-    idx := int(0, n - 1)
-    return list[idx]
+fn choice(input_list: vector[string]) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "if (!input_list.empty()) res = input_list.at(rand() % input_list.size());"
+    return res
 
-fn shuffle(list)
-    result := list()
-    cpp_inject("result = list;")
-    n := list_size(result)
-    i := n - 1
-    while i > 0
-        j := int(0, i)
-        tmp := result[i]
-        result[i] := result[j]
-        result[j] := tmp
-        i := i - 1
+fn shuffle(input_list: vector[string]) -> vector[string]:
+    result := input_list
+    unsafe:
+        cpp_inject "std::random_device rd;"
+        cpp_inject "std::mt19937 g(rd());"
+        cpp_inject "std::shuffle(result.begin(), result.end(), g);"
     return result
 
-fn weighted(weights)
-    total := 0.0
-    n := list_size(weights)
-    i := 0
-    while i < n
-        total := total + weights[i]
-        i := i + 1
-    r := float(0.0, total)
-    cumulative := 0.0
-    i := 0
-    while i < n
-        cumulative := cumulative + weights[i]
-        if r <= cumulative
-            return i
-        i := i + 1
-    return n - 1
+fn weighted(weights: vector[float]) -> int:
+    idx := -1
+    unsafe:
+        cpp_inject "double total = 0.0;"
+        cpp_inject "for (double w : weights) total += w;"
+        cpp_inject "double r = ((double)rand() / RAND_MAX) * total;"
+        cpp_inject "double cumulative = 0.0;"
+        cpp_inject "for (size_t i = 0; i < weights.size(); ++i) {"
+        cpp_inject "    cumulative += weights[i];"
+        cpp_inject "    if (r <= cumulative) { idx = (int)i; break; }"
+        cpp_inject "}"
+        cpp_inject "if (idx == -1 && !weights.empty()) idx = (int)weights.size() - 1;"
+    return idx

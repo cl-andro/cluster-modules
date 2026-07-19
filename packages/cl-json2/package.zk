@@ -1,0 +1,6 @@
+// cl-json2 Package Manifest
+name := "cl-json2"
+version := "0.1.0"
+description := "JSON Pretty Printer Engine"
+main := "json2.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,21 @@
+// cl-cron2: Cron Expression Validation Engine
+cpp_inject "#include <sstream>"
+
+fn validate(expr: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "std::stringstream ss(expr);"
+        cpp_inject "std::string field;"
+        cpp_inject "int count = 0;"
+        cpp_inject "bool ok = true;"
+        cpp_inject "while (ss >> field) {"
+        cpp_inject "    count++;"
+        cpp_inject "    for (char c : field) {"
+        cpp_inject "        if (c != '*' && c != '/' && c != ',' && c != '-' && (c < '0' || c > '9')) {"
+        cpp_inject "            ok = false;"
+        cpp_inject "            break;"
+        cpp_inject "        }"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = (ok && count == 5);"
+    return res

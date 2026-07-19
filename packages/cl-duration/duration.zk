@@ -1,0 +1,26 @@
+// cl-duration: Duration Parsing Engine
+
+fn parse(s: string) -> int:
+    ms := 0
+    unsafe:
+        cpp_inject "long long total_ms = 0;"
+        cpp_inject "long long cur_num = 0;"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    if (c >= '0' && c <= '9') {"
+        cpp_inject "        cur_num = cur_num * 10 + (c - '0');"
+        cpp_inject "    } else if (c == 'd') {"
+        cpp_inject "        total_ms += cur_num * 24 * 3600 * 1000;"
+        cpp_inject "        cur_num = 0;"
+        cpp_inject "    } else if (c == 'h') {"
+        cpp_inject "        total_ms += cur_num * 3600 * 1000;"
+        cpp_inject "        cur_num = 0;"
+        cpp_inject "    } else if (c == 'm') {"
+        cpp_inject "        total_ms += cur_num * 60 * 1000;"
+        cpp_inject "        cur_num = 0;"
+        cpp_inject "    } else if (c == 's') {"
+        cpp_inject "        total_ms += cur_num * 1000;"
+        cpp_inject "        cur_num = 0;"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "ms = total_ms;"
+    return ms

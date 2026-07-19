@@ -1,0 +1,36 @@
+// cl-rle: Run-Length Encoding (RLE) Compression Engine
+
+fn encode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out;"
+        cpp_inject "size_t len = s.size();"
+        cpp_inject "for (size_t i = 0; i < len; ++i) {"
+        cpp_inject "    int count = 1;"
+        cpp_inject "    while (i + 1 < len && s[i] == s[i + 1]) {"
+        cpp_inject "        count++;"
+        cpp_inject "        i++;"
+        cpp_inject "    }"
+        cpp_inject "    out += s[i] + std::to_string(count);"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res
+
+fn decode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out;"
+        cpp_inject "size_t len = s.size();"
+        cpp_inject "for (size_t i = 0; i < len; ) {"
+        cpp_inject "    char c = s[i++];"
+        cpp_inject "    std::string num_str;"
+        cpp_inject "    while (i < len && s[i] >= '0' && s[i] <= '9') {"
+        cpp_inject "        num_str += s[i++];"
+        cpp_inject "    }"
+        cpp_inject "    if (!num_str.empty()) {"
+        cpp_inject "        int count = std::stoi(num_str);"
+        cpp_inject "        out.append(count, c);"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res

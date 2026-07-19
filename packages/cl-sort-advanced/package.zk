@@ -1,0 +1,6 @@
+// cl-sort-advanced Package Manifest
+name := "cl-sort-advanced"
+version := "0.1.0"
+description := "Advanced Sort Algorithms Engine"
+main := "sort_advanced.zk"
+license := "Commercial Control and non copy license"

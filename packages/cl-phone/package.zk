@@ -1,0 +1,6 @@
+// cl-phone Package Manifest
+name := "cl-phone"
+version := "0.1.0"
+description := "E.164 Phone Number Validator Engine"
+main := "phone.zk"
+license := "Commercial Control and non copy license"

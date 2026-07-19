@@ -1,0 +1,37 @@
+// cl-polybius: Polybius Square Cipher Encoder and Decoder Engine
+
+fn encode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out;"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    char lower = std::tolower(c);"
+        cpp_inject "    if (lower == 'j') lower = 'i';"
+        cpp_inject "    if (lower >= 'a' && lower <= 'z') {"
+        cpp_inject "        int val = lower - 'a';"
+        cpp_inject "        if (lower > 'j') val--;"
+        cpp_inject "        int row = val / 5 + 1;"
+        cpp_inject "        int col = val % 5 + 1;"
+        cpp_inject "        out += std::to_string(row) + std::to_string(col) + \" \";"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "if (!out.empty() && out.back() == ' ') out.pop_back();"
+        cpp_inject "res = out;"
+    return res
+
+fn decode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out;"
+        cpp_inject "std::string clean_s;"
+        cpp_inject "for (char c : s) if (c >= '1' && c <= '5') clean_s += c;"
+        cpp_inject "for (size_t i = 0; i + 1 < clean_s.size(); i += 2) {"
+        cpp_inject "    int row = clean_s[i] - '0';"
+        cpp_inject "    int col = clean_s[i + 1] - '0';"
+        cpp_inject "    int val = (row - 1) * 5 + (col - 1);"
+        cpp_inject "    char decoded_c = (char)('a' + val);"
+        cpp_inject "    if (decoded_c >= 'j') decoded_c++;"
+        cpp_inject "    out += (char)std::toupper(decoded_c);"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res

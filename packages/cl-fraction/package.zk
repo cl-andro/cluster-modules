@@ -1,0 +1,6 @@
+// cl-fraction Package Manifest
+name := "cl-fraction"
+version := "0.1.0"
+description := "Fraction and Rational Math Utilities"
+main := "fraction.zk"
+license := "Commercial Control and non copy license"

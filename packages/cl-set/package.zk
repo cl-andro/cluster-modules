@@ -1,0 +1,6 @@
+// cl-set Package Manifest
+name := "cl-set"
+version := "0.1.0"
+description := "Standard Unique String Hash Set Container Model"
+main := "set.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,6 @@
+// cl-version-parse Package Manifest
+name := "cl-version-parse"
+version := "0.1.0"
+description := "Semantic Version Parsing Engine"
+main := "version_parse.zk"
+license := "Commercial Control and non copy license"

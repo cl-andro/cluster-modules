@@ -1,0 +1,6 @@
+// cl-signal Package Manifest
+name := "cl-signal"
+version := "0.1.0"
+description := "OS Signal Handling Engine"
+main := "signal.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,6 @@
+// cl-queue Package Manifest
+name := "cl-queue"
+version := "0.1.0"
+description := "FIFO Queue Container Model"
+main := "queue.zk"
+license := "Commercial Control and non copy license"

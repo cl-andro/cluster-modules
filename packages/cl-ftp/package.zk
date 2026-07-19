@@ -1,0 +1,6 @@
+// cl-ftp Package Manifest
+name := "cl-ftp"
+version := "0.1.0"
+description := "FTP and FTPS Client Protocol Wrapper"
+main := "ftp.zk"
+license := "Commercial Control and non copy license"

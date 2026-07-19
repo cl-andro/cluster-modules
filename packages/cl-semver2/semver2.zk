@@ -1,0 +1,14 @@
+// cl-semver2: Semantic Version Comparison Engine
+
+fn compare(v1: string, v2: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "int major1 = 0, minor1 = 0, patch1 = 0;"
+        cpp_inject "int major2 = 0, minor2 = 0, patch2 = 0;"
+        cpp_inject "std::sscanf(v1.c_str(), \"%d.%d.%d\", &major1, &minor1, &patch1);"
+        cpp_inject "std::sscanf(v2.c_str(), \"%d.%d.%d\", &major2, &minor2, &patch2);"
+        cpp_inject "if (major1 != major2) res = (major1 > major2) ? 1 : -1;"
+        cpp_inject "else if (minor1 != minor2) res = (minor1 > minor2) ? 1 : -1;"
+        cpp_inject "else if (patch1 != patch2) res = (patch1 > patch2) ? 1 : -1;"
+        cpp_inject "else res = 0;"
+    return res

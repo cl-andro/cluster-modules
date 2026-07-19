@@ -1,0 +1,6 @@
+// cl-stats-advanced Package Manifest
+name := "cl-stats-advanced"
+version := "0.1.0"
+description := "Advanced Vector Statistics calculations Engine"
+main := "stats_advanced.zk"
+license := "Commercial Control and non copy license"

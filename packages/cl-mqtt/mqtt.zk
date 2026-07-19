@@ -1,0 +1,41 @@
+// cl-mqtt: MQTT IoT Client Engine
+import cl-socket as socket
+
+fn chr(val: int) -> string:
+    res: string := ""
+    unsafe:
+        cpp_inject "res = string(1, (char)val);"
+    return res
+
+fn connect(host: string, port: int, client_id: string) -> int:
+    sock := socket::connect(host, port)
+    if sock < 0:
+        return -1
+    // Build CONNECT packet (MQTT 3.1.1)
+    id_len := len(client_id)
+    rem_len := 12 + id_len
+    packet := "\x10" + chr(rem_len) + "\x00\x04MQTT\x04\x02\x00\x3c" + chr(id_len >> 8) + chr(id_len & 255) + client_id
+    socket::send(sock, packet)
+    socket::recv(sock, 1024) // CONNACK
+    return sock
+
+fn publish(sock: int, topic: string, payload: string) -> bool:
+    if sock < 0:
+        return false
+    // Build PUBLISH packet (QoS 0)
+    topic_len := len(topic)
+    rem_len := 2 + topic_len + len(payload)
+    packet := "\x30" + chr(rem_len) + chr(topic_len >> 8) + chr(topic_len & 255) + topic + payload
+    socket::send(sock, packet)
+    return true
+
+fn subscribe(sock: int, topic: string) -> bool:
+    if sock < 0:
+        return false
+    // Build SUBSCRIBE packet (QoS 0)
+    topic_len := len(topic)
+    rem_len := 2 + 2 + topic_len + 1
+    packet := "\x82" + chr(rem_len) + "\x00\x01" + chr(topic_len >> 8) + chr(topic_len & 255) + topic + "\x00"
+    socket::send(sock, packet)
+    socket::recv(sock, 1024) // SUBACK
+    return true

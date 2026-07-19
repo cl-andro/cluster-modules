@@ -1,0 +1,30 @@
+// cl-runes-width: East Asian Unicode character width Engine
+
+fn width(s: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "int w = 0;"
+        cpp_inject "for (size_t i = 0; i < s.size(); ) {"
+        cpp_inject "    unsigned char ch = s[i];"
+        cpp_inject "    size_t size = 0;"
+        cpp_inject "    unsigned int code = 0;"
+        cpp_inject "    if (ch <= 127) { size = 1; code = ch; }"
+        cpp_inject "    else if ((ch & 0xE0) == 0xC0) { size = 2; code = ((ch & 0x1F) << 6) | (s[i+1] & 0x3F); }"
+        cpp_inject "    else if ((ch & 0xF0) == 0xE0) { size = 3; code = ((ch & 0x0F) << 12) | ((s[i+1] & 0x3F) << 6) | (s[i+2] & 0x3F); }"
+        cpp_inject "    else if ((ch & 0xF8) == 0xF0) { size = 4; code = ((ch & 0x07) << 18) | ((s[i+1] & 0x3F) << 12) | ((s[i+2] & 0x3F) << 6) | (s[i+3] & 0x3F); }"
+        cpp_inject "    else { size = 1; code = ch; }"
+        cpp_inject "    if (code >= 0x1100 && ("
+        cpp_inject "        (code >= 0x1100 && code <= 0x115F) ||"
+        cpp_inject "        (code >= 0x2E80 && code <= 0xA4CF) ||"
+        cpp_inject "        (code >= 0xAC00 && code <= 0xD7A3) ||"
+        cpp_inject "        (code >= 0xF900 && code <= 0xFAFF) ||"
+        cpp_inject "        (code >= 0xFE10 && code <= 0xFE19) ||"
+        cpp_inject "        (code >= 0xFE30 && code <= 0xFE6F) ||"
+        cpp_inject "        (code >= 0xFF00 && code <= 0xFF60) ||"
+        cpp_inject "        (code >= 0xFFE0 && code <= 0xFFE6) ||"
+        cpp_inject "        (code >= 0x20000 && code <= 0x3FFFD)"
+        cpp_inject "    )) w += 2; else w += 1;"
+        cpp_inject "    i += size;"
+        cpp_inject "}"
+        cpp_inject "res = w;"
+    return res

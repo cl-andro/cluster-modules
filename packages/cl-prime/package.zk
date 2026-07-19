@@ -1,0 +1,6 @@
+// cl-prime Package Manifest
+name := "cl-prime"
+version := "0.1.0"
+description := "Primality Testing and Prime Generation Engine"
+main := "prime.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,6 @@
+// cl-percent-encode Package Manifest
+name := "cl-percent-encode"
+version := "0.1.0"
+description := "URL Percent Encoder and Decoder Engine"
+main := "percent_encode.zk"
+license := "Commercial Control and non copy license"

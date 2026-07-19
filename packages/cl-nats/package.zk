@@ -1,0 +1,6 @@
+// cl-nats Package Manifest
+name := "cl-nats"
+version := "0.1.0"
+description := "NATS.io High-Performance Pub/Sub Microservice Messaging Engine"
+main := "nats.zk"
+license := "Commercial Control and non copy license"

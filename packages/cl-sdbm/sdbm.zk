@@ -1,0 +1,11 @@
+// cl-sdbm: SDBM Hashing Engine
+
+fn hash(s: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "unsigned long h = 0;"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    h = (unsigned char)c + (h << 6) + (h << 16) - h;"
+        cpp_inject "}"
+        cpp_inject "res = h;"
+    return res

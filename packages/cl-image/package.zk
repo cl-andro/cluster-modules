@@ -1,0 +1,6 @@
+// cl-image Package Manifest
+name := "cl-image"
+version := "0.1.0"
+description := "Simple Image Conversion Engine"
+main := "image.zk"
+license := "Commercial Control and non copy license"

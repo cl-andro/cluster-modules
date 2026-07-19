@@ -1,0 +1,6 @@
+// cl-phonetic Package Manifest
+name := "cl-phonetic"
+version := "0.1.0"
+description := "Soundex Phonetic Classification Engine"
+main := "phonetic.zk"
+license := "Commercial Control and non copy license"

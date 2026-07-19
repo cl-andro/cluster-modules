@@ -1,0 +1,6 @@
+// cl-csv2 Package Manifest
+name := "cl-csv2"
+version := "0.1.0"
+description := "CSV Writer and Serializer Engine"
+main := "csv2.zk"
+license := "Commercial Control and non copy license"

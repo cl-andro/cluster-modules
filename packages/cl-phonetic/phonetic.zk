@@ -1,0 +1,30 @@
+// cl-phonetic: Soundex Phonetic Classification Engine
+
+fn soundex(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "if (s.empty()) { res = \"0000\"; } else {"
+        cpp_inject "    std::string code;"
+        cpp_inject "    code += (char)std::toupper(s[0]);"
+        cpp_inject "    static const char mappings[] = {"
+        cpp_inject "        '0', '1', '2', '3', '0', '1', '2', '0', '0', '2', '2', '4', '5', '5', '0', '1', '2', '6', '2', '3', '0', '1', '0', '2', '0', '2'"
+        cpp_inject "    };"
+        cpp_inject "    char prev = '0';"
+        cpp_inject "    char first_lower = std::tolower(s[0]);"
+        cpp_inject "    if (first_lower >= 'a' && first_lower <= 'z') {"
+        cpp_inject "        prev = mappings[first_lower - 'a'];"
+        cpp_inject "    }"
+        cpp_inject "    for (size_t i = 1; i < s.size() && code.size() < 4; ++i) {"
+        cpp_inject "        char c = std::tolower(s[i]);"
+        cpp_inject "        if (c >= 'a' && c <= 'z') {"
+        cpp_inject "            char m = mappings[c - 'a'];"
+        cpp_inject "            if (m != '0' && m != prev) {"
+        cpp_inject "                code += m;"
+        cpp_inject "            }"
+        cpp_inject "            prev = m;"
+        cpp_inject "        }"
+        cpp_inject "    }"
+        cpp_inject "    while (code.size() < 4) code += '0';"
+        cpp_inject "    res = code;"
+        cpp_inject "}"
+    return res

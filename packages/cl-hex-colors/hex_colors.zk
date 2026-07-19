@@ -1,0 +1,22 @@
+// cl-hex-colors: Hex Color Conversion Utility
+
+fn hex_to_rgb(hex: string) -> vector[int]:
+    res := vector[int]()
+    unsafe:
+        cpp_inject "std::string h = hex;"
+        cpp_inject "if (!h.empty() && h[0] == '#') h = h.substr(1);"
+        cpp_inject "if (h.size() == 6) {"
+        cpp_inject "    int r = std::stol(h.substr(0, 2), nullptr, 16);"
+        cpp_inject "    int g = std::stol(h.substr(2, 2), nullptr, 16);"
+        cpp_inject "    int b = std::stol(h.substr(4, 2), nullptr, 16);"
+        cpp_inject "    res.push_back(r); res.push_back(g); res.push_back(b);"
+        cpp_inject "}"
+    return res
+
+fn rgb_to_hex(r: int, g: int, b: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "char buf[8];"
+        cpp_inject "std::snprintf(buf, sizeof(buf), \"#%02X%02X%02X\", (int)r, (int)g, (int)b);"
+        cpp_inject "res = buf;"
+    return res

@@ -1,0 +1,17 @@
+// cl-runes-case: UTF-8 Runes Unicode Casing Engine
+
+fn to_upper(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out = s;"
+        cpp_inject "for (char &c : out) c = std::toupper((unsigned char)c);"
+        cpp_inject "res = out;"
+    return res
+
+fn to_lower(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out = s;"
+        cpp_inject "for (char &c : out) c = std::tolower((unsigned char)c);"
+        cpp_inject "res = out;"
+    return res

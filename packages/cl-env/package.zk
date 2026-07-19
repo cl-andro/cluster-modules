@@ -1,0 +1,6 @@
+// cl-env Package Manifest
+name := "cl-env"
+version := "0.1.0"
+description := "OS Environment Configuration Parser Engine"
+main := "env.zk"
+license := "Commercial Control and non copy license"

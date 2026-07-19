@@ -1,0 +1,6 @@
+// cl-stats-basic Package Manifest
+name := "cl-stats-basic"
+version := "0.1.0"
+description := "Basic Statistics Operation Engine"
+main := "stats_basic.zk"
+license := "Commercial Control and non copy license"

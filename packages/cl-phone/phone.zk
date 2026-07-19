@@ -1,0 +1,9 @@
+// cl-phone: E.164 Phone Number Validator Engine
+cpp_inject "#include <regex>"
+
+fn validate(phone: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "static const std::regex phone_regex(\"^\\+[1-9]\\d{1,14}$\");"
+        cpp_inject "res = std::regex_match(phone, phone_regex);"
+    return res

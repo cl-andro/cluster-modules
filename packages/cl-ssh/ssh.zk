@@ -1,0 +1,11 @@
+// cl-ssh: SSH2 and SFTP Client Engine
+import cl-subprocess as sub
+
+fn execute_remote(host: string, user: string, cmd: string) -> string:
+    full_cmd := "ssh -o StrictHostKeyChecking=no " + user + "@" + host + " \"" + cmd + "\""
+    return sub::run(full_cmd)
+
+fn sftp_upload(host: string, user: string, local_file: string, remote_path: string) -> bool:
+    full_cmd := "scp -o StrictHostKeyChecking=no " + local_file + " " + user + "@" + host + ":" + remote_path
+    ret := sub::run(full_cmd)
+    return true

@@ -1,0 +1,12 @@
+// cl-image: Simple Image Conversion Engine
+import cl-subprocess as sub
+
+fn resize(src: string, dest: string, width: int, height: int) -> bool:
+    cmd := "convert " + src + " -resize " + str(width) + "x" + str(height) + " " + dest
+    sub::run(cmd)
+    return true
+
+fn convert_format(src: string, dest: string) -> bool:
+    cmd := "convert " + src + " " + dest
+    sub::run(cmd)
+    return true

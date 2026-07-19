@@ -21,7 +21,7 @@ fn render(template: string, vars) -> string:
         i := i + 1
     return result
 
-fn table(data, headers: [string]) -> string:
+fn table(data, headers: vector[string]) -> string:
     result := "<table>\n<tr>"
     i := 0
     while i < list_size(headers):
@@ -41,7 +41,7 @@ fn table(data, headers: [string]) -> string:
     result := result + "</table>"
     return result
 
-fn list(items: [string], ordered: bool) -> string:
+fn list(items: vector[string], ordered: bool) -> string:
     tag_name := "ul"
     if ordered:
         tag_name := "ol"

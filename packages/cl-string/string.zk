@@ -1,0 +1,23 @@
+// cl-string: Additional String Helpers
+
+fn starts_with(s: string, prefix: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "res = (s.rfind(prefix, 0) == 0);"
+    return res
+
+fn ends_with(s: string, suffix: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "if (s.length() >= suffix.length()) {"
+        cpp_inject "    res = (s.compare(s.length() - suffix.length(), suffix.length(), suffix) == 0);"
+        cpp_inject "}"
+    return res
+
+fn repeat(s: string, count: int) -> string:
+    res: string := ""
+    i := 0
+    while i < count:
+        res = res + s
+        i = i + 1
+    return res

@@ -1,0 +1,15 @@
+// cl-duration-format: Human-readable Duration Formatting Engine
+
+fn format(seconds: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "long long total_secs = seconds;"
+        cpp_inject "long long h = total_secs / 3600;"
+        cpp_inject "long long m = (total_secs % 3600) / 60;"
+        cpp_inject "long long s = total_secs % 60;"
+        cpp_inject "std::string out;"
+        cpp_inject "if (h > 0) out += std::to_string(h) + \"h \";"
+        cpp_inject "if (m > 0 || h > 0) out += std::to_string(m) + \"m \";"
+        cpp_inject "out += std::to_string(s) + \"s\";"
+        cpp_inject "res = out;"
+    return res

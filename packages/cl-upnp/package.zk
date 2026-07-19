@@ -1,0 +1,6 @@
+// cl-upnp Package Manifest
+name := "cl-upnp"
+version := "0.1.0"
+description := "UPnP WANIPConnection Port Forwarding Client"
+main := "upnp.zk"
+license := "Commercial Control and non copy license"

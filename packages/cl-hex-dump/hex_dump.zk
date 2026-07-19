@@ -1,0 +1,16 @@
+// cl-hex-dump: Hexadecimal Dump Formatter Engine
+
+fn format(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out;"
+        cpp_inject "static const char* HEX = \"0123456789ABCDEF\";"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    unsigned char val = (unsigned char)c;"
+        cpp_inject "    out += HEX[val >> 4];"
+        cpp_inject "    out += HEX[val & 0x0F];"
+        cpp_inject "    out += ' ';"
+        cpp_inject "}"
+        cpp_inject "if (!out.empty() && out.back() == ' ') out.pop_back();"
+        cpp_inject "res = out;"
+    return res

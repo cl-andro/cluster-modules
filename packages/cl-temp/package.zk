@@ -1,0 +1,6 @@
+// cl-temp Package Manifest
+name := "cl-temp"
+version := "0.1.0"
+description := "Temporary Files and Directories Engine"
+main := "temp.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,6 @@
+// cl-mqtt Package Manifest
+name := "cl-mqtt"
+version := "0.1.0"
+description := "MQTT IoT Protocol High-Speed Client"
+main := "mqtt.zk"
+license := "Commercial Control and non copy license"

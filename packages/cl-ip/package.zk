@@ -1,0 +1,6 @@
+// cl-ip Package Manifest
+name := "cl-ip"
+version := "0.1.0"
+description := "IP Address Validation and Subnet Matcher"
+main := "ip.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,14 @@
+// cl-signal: OS Signal Handling Wrapper
+cpp_inject "#include <csignal>"
+
+fn raise_sigint() -> bool:
+    res := false
+    unsafe:
+        cpp_inject "res = (std::raise(SIGINT) == 0);"
+    return res
+
+fn raise_sigterm() -> bool:
+    res := false
+    unsafe:
+        cpp_inject "res = (std::raise(SIGTERM) == 0);"
+    return res

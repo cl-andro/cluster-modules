@@ -1,0 +1,32 @@
+// cl-stats2: Additional Statistics Utilities
+
+fn get_item(input_list: vector[float], idx: int) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "res = input_list.at(idx);"
+    return res
+
+fn mean(input_list: vector[float]) -> float:
+    sz := list_size(input_list)
+    if sz == 0:
+        return 0.0
+    sum := 0.0
+    i := 0
+    while i < sz:
+        sum = sum + get_item(input_list, i)
+        i = i + 1
+    return sum / 1.0 / sz
+
+fn variance(input_list: vector[float]) -> float:
+    sz := list_size(input_list)
+    if sz <= 1:
+        return 0.0
+    avg := mean(input_list)
+    sum_sq_diff := 0.0
+    i := 0
+    while i < sz:
+        diff := get_item(input_list, i) - avg
+        diff_sq := diff * diff
+        sum_sq_diff = sum_sq_diff + diff_sq
+        i = i + 1
+    return sum_sq_diff / 1.0 / sz

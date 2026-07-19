@@ -1,0 +1,36 @@
+// cl-dns: DNS Resolver Engine
+cpp_inject "#include <netdb.h>"
+cpp_inject "#include <sys/socket.h>"
+cpp_inject "#include <arpa/inet.h>"
+
+fn resolve_a(host: string) -> string:
+    result := "Error"
+    unsafe:
+        cpp_inject "struct addrinfo hints, *res;"
+        cpp_inject "memset(&hints, 0, sizeof(hints));"
+        cpp_inject "hints.ai_family = AF_INET;"
+        cpp_inject "hints.ai_socktype = SOCK_STREAM;"
+        cpp_inject "if (getaddrinfo(host.c_str(), NULL, &hints, &res) == 0) {"
+        cpp_inject "    char ipstr[INET_ADDRSTRLEN];"
+        cpp_inject "    struct sockaddr_in *ipv4 = (struct sockaddr_in *)res->ai_addr;"
+        cpp_inject "    inet_ntop(AF_INET, &(ipv4->sin_addr), ipstr, sizeof(ipstr));"
+        cpp_inject "    result = string(ipstr);"
+        cpp_inject "    freeaddrinfo(res);"
+        cpp_inject "}"
+    return result
+
+fn resolve_aaaa(host: string) -> string:
+    result := "Error"
+    unsafe:
+        cpp_inject "struct addrinfo hints, *res;"
+        cpp_inject "memset(&hints, 0, sizeof(hints));"
+        cpp_inject "hints.ai_family = AF_INET6;"
+        cpp_inject "hints.ai_socktype = SOCK_STREAM;"
+        cpp_inject "if (getaddrinfo(host.c_str(), NULL, &hints, &res) == 0) {"
+        cpp_inject "    char ipstr[INET6_ADDRSTRLEN];"
+        cpp_inject "    struct sockaddr_in6 *ipv6 = (struct sockaddr_in6 *)res->ai_addr;"
+        cpp_inject "    inet_ntop(AF_INET6, &(ipv6->sin6_addr), ipstr, sizeof(ipstr));"
+        cpp_inject "    result = string(ipstr);"
+        cpp_inject "    freeaddrinfo(res);"
+        cpp_inject "}"
+    return result

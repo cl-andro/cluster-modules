@@ -1,0 +1,50 @@
+// cl-morse: Morse Code Translator Engine
+cpp_inject "#include <sstream>"
+
+fn encode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "static const char* MORSE[] = {"
+        cpp_inject "    \".-\", \"-...\", \"-.-.\", \"-..\", \".\", \"..-.\", \"--.\", \"....\", \"..\", \".---\", \"-.-\", \".-..\", \"--\","
+        cpp_inject "    \"-.\", \"---\", \".--.\", \"--.-\", \".-.\", \"...\", \"-\", \"..-\", \"...-\", \".--\", \"-..-\", \"-.--\", \"--..\""
+        cpp_inject "};"
+        cpp_inject "std::string out;"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    if (c >= 'a' && c <= 'z') {"
+        cpp_inject "        out += MORSE[c - 'a'];"
+        cpp_inject "        out += ' ';"
+        cpp_inject "    } else if (c >= 'A' && c <= 'Z') {"
+        cpp_inject "        out += MORSE[c - 'A'];"
+        cpp_inject "        out += ' ';"
+        cpp_inject "    } else if (c == ' ') {"
+        cpp_inject "        out += \"/ \";"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "if (!out.empty() && out.back() == ' ') out.pop_back();"
+        cpp_inject "res = out;"
+    return res
+
+fn decode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "static const char* MORSE[] = {"
+        cpp_inject "    \".-\", \"-...\", \"-.-.\", \"-..\", \".\", \"..-.\", \"--.\", \"....\", \"..\", \".---\", \"-.-\", \".-..\", \"--\","
+        cpp_inject "    \"-.\", \"---\", \".--.\", \"--.-\", \".-.\", \"...\", \"-\", \"..-\", \"...-\", \".--\", \"-..-\", \"-.--\", \"--..\""
+        cpp_inject "};"
+        cpp_inject "std::string out;"
+        cpp_inject "std::stringstream ss(s);"
+        cpp_inject "std::string token;"
+        cpp_inject "while (ss >> token) {"
+        cpp_inject "    if (token == \"/\") {"
+        cpp_inject "        out += ' ';"
+        cpp_inject "    } else {"
+        cpp_inject "        for (int i = 0; i < 26; ++i) {"
+        cpp_inject "            if (token == MORSE[i]) {"
+        cpp_inject "                out += (char)('A' + i);"
+        cpp_inject "                break;"
+        cpp_inject "            }"
+        cpp_inject "        }"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res

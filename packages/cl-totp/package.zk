@@ -1,0 +1,6 @@
+// cl-totp Package Manifest
+name := "cl-totp"
+version := "0.1.0"
+description := "Time-Based One-Time Password Engine"
+main := "totp.zk"
+license := "Commercial Control and non copy license"

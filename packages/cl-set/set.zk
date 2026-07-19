@@ -1,0 +1,54 @@
+// cl-set: Unique String Hash Set Container Model
+cpp_inject "#include <unordered_map>"
+cpp_inject "#include <unordered_set>"
+cpp_inject "static std::unordered_map<int64_t, std::unordered_set<std::string>> _set_store;"
+
+model HashSet:
+    id: int
+
+fn init_set(&s: HashSet):
+    if s.id == 0:
+        unsafe:
+            cpp_inject "static int64_t next_id = 1;"
+            cpp_inject "s.id = next_id++;"
+
+fn add(&s: HashSet, val: string) -> bool:
+    init_set(s)
+    added := false
+    unsafe:
+        cpp_inject "auto& st = _set_store[s.id];"
+        cpp_inject "auto res_pair = st.insert(val);"
+        cpp_inject "added = res_pair.second;"
+    return added
+
+fn remove(&s: HashSet, val: string) -> bool:
+    if s.id == 0:
+        return false
+    removed := false
+    unsafe:
+        cpp_inject "auto& st = _set_store[s.id];"
+        cpp_inject "removed = (st.erase(val) > 0);"
+    return removed
+
+fn contains(s: HashSet, val: string) -> bool:
+    if s.id == 0:
+        return false
+    res := false
+    unsafe:
+        cpp_inject "auto& st = _set_store[s.id];"
+        cpp_inject "res = (st.find(val) != st.end());"
+    return res
+
+fn size(s: HashSet) -> int:
+    if s.id == 0:
+        return 0
+    sz := 0
+    unsafe:
+        cpp_inject "sz = (int)_set_store[s.id].size();"
+    return sz
+
+fn clear(&s: HashSet):
+    if s.id == 0:
+        return
+    unsafe:
+        cpp_inject "_set_store[s.id].clear();"

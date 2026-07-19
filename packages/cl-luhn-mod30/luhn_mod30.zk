@@ -1,0 +1,22 @@
+// cl-luhn-mod30: Luhn Modulo 30 Algorithm Helper
+
+fn validate(payload: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "static const std::string ALPHABET = \"0123456789ABCDEFGHIJKLMNOPQRST\";"
+        cpp_inject "int sum = 0;"
+        cpp_inject "bool alternate = false;"
+        cpp_inject "for (int i = (int)payload.size() - 1; i >= 0; --i) {"
+        cpp_inject "    size_t idx = ALPHABET.find(std::toupper((unsigned char)payload[i]));"
+        cpp_inject "    if (idx != std::string::npos) {"
+        cpp_inject "        int val = (int)idx;"
+        cpp_inject "        if (alternate) {"
+        cpp_inject "            val *= 2;"
+        cpp_inject "            if (val > 29) val = val - 29;"
+        cpp_inject "        }"
+        cpp_inject "        sum += val;"
+        cpp_inject "        alternate = !alternate;"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = (sum % 30 == 0);"
+    return res

@@ -1,0 +1,6 @@
+// cl-sha256 Package Manifest
+name := "cl-sha256"
+version := "0.1.0"
+description := "SHA-256 Hashing Engine"
+main := "sha256.zk"
+license := "Commercial Control and non copy license"

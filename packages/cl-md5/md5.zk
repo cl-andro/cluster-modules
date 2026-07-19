@@ -1,0 +1,11 @@
+// cl-md5: MD5 Hashing Utility
+import cl-subprocess as sub
+
+fn hash(input: string) -> string:
+    file_write(".zk_md5_input.txt", input)
+    res := sub::run("md5sum .zk_md5_input.txt")
+    file_delete(".zk_md5_input.txt")
+    ret: string := ""
+    unsafe:
+        cpp_inject "if (res.length() >= 32) ret = res.substr(0, 32);"
+    return ret

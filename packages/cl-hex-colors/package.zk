@@ -1,0 +1,6 @@
+// cl-hex-colors Package Manifest
+name := "cl-hex-colors"
+version := "0.1.0"
+description := "Hex Color Conversion Utility"
+main := "hex_colors.zk"
+license := "Commercial Control and non copy license"

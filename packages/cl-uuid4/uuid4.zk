@@ -1,0 +1,17 @@
+// cl-uuid4: UUID Version 4 Generator Engine
+cpp_inject "#include <sstream>"
+cpp_inject "#include <iomanip>"
+
+fn generate() -> string:
+    res: string := ""
+    unsafe:
+        cpp_inject "std::stringstream ss;"
+        cpp_inject "for (int i = 0; i < 16; ++i) {"
+        cpp_inject "    int r = rand() % 256;"
+        cpp_inject "    if (i == 6) r = (r & 0x0F) | 0x40;"
+        cpp_inject "    else if (i == 8) r = (r & 0x3F) | 0x80;"
+        cpp_inject "    ss << std::hex << std::setw(2) << std::setfill('0') << r;"
+        cpp_inject "    if (i == 3 || i == 5 || i == 7 || i == 9) ss << '-';"
+        cpp_inject "}"
+        cpp_inject "res = ss.str();"
+    return res

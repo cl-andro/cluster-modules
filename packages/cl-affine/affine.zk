@@ -1,0 +1,29 @@
+// cl-affine: Affine Cipher Encoder and Decoder Engine
+
+fn encode(s: string, a: int, b: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out = s;"
+        cpp_inject "for (char &c : out) {"
+        cpp_inject "    if (c >= 'a' && c <= 'z') c = ((a * (c - 'a') + b) % 26 + 26) % 26 + 'a';"
+        cpp_inject "    else if (c >= 'A' && c <= 'Z') c = ((a * (c - 'A') + b) % 26 + 26) % 26 + 'A';"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res
+
+fn decode(s: string, a: int, b: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out = s;"
+        cpp_inject "int a_inv = -1;"
+        cpp_inject "for (int i = 0; i < 26; ++i) {"
+        cpp_inject "    if ((a * i) % 26 == 1) { a_inv = i; break; }"
+        cpp_inject "}"
+        cpp_inject "if (a_inv != -1) {"
+        cpp_inject "    for (char &c : out) {"
+        cpp_inject "        if (c >= 'a' && c <= 'z') c = ((a_inv * (c - 'a' - b + 26)) % 26 + 26) % 26 + 'a';"
+        cpp_inject "        else if (c >= 'A' && c <= 'Z') c = ((a_inv * (c - 'A' - b + 26)) % 26 + 26) % 26 + 'A';"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res

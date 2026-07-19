@@ -1,0 +1,20 @@
+// cl-fraction-format: Float to Rational Fraction String Formatter
+
+fn to_fraction(val: float) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "double x = val;"
+        cpp_inject "double tolerance = 1.0e-9;"
+        cpp_inject "double h1 = 1.0, h2 = 0.0, k1 = 0.0, k2 = 1.0;"
+        cpp_inject "double b = x;"
+        cpp_inject "do {"
+        cpp_inject "    double a = std::floor(b);"
+        cpp_inject "    double aux = h1; h1 = a * h1 + h2; h2 = aux;"
+        cpp_inject "    aux = k1; k1 = a * k1 + k2; k2 = aux;"
+        cpp_inject "    b = 1.0 / (b - a);"
+        cpp_inject "} while (std::abs(x - h1 / k1) > x * tolerance);"
+        cpp_inject "long long num = (long long)h1;"
+        cpp_inject "long long den = (long long)k1;"
+        cpp_inject "if (den == 1) res = std::to_string(num);"
+        cpp_inject "else res = std::to_string(num) + \"/\" + std::to_string(den);"
+    return res

@@ -1,0 +1,6 @@
+// cl-retry Package Manifest
+name := "cl-retry"
+version := "0.1.0"
+description := "Operations Retry and Backoff Engine"
+main := "retry.zk"
+license := "Commercial Control and non copy license"

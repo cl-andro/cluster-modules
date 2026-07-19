@@ -1,0 +1,53 @@
+// cl-stack: LIFO Stack Container Model
+cpp_inject "#include <unordered_map>"
+cpp_inject "static std::unordered_map<int64_t, std::vector<std::string>> _stack_store;"
+
+model Stack:
+    id: int
+
+fn init_stack(&s: Stack):
+    if s.id == 0:
+        unsafe:
+            cpp_inject "static int64_t next_id = 1;"
+            cpp_inject "s.id = next_id++;"
+
+fn push(&s: Stack, val: string):
+    init_stack(s)
+    unsafe:
+        cpp_inject "_stack_store[s.id].push_back(val);"
+
+fn pop(&s: Stack) -> string:
+    init_stack(s)
+    res := ""
+    unsafe:
+        cpp_inject "auto& v = _stack_store[s.id];"
+        cpp_inject "if (!v.empty()) {"
+        cpp_inject "    res = v.back();"
+        cpp_inject "    v.pop_back();"
+        cpp_inject "}"
+    return res
+
+fn peek(s: Stack) -> string:
+    if s.id == 0:
+        return ""
+    res := ""
+    unsafe:
+        cpp_inject "auto& v = _stack_store[s.id];"
+        cpp_inject "if (!v.empty()) res = v.back();"
+    return res
+
+fn size(s: Stack) -> int:
+    if s.id == 0:
+        return 0
+    sz := 0
+    unsafe:
+        cpp_inject "sz = (int)_stack_store[s.id].size();"
+    return sz
+
+fn empty(s: Stack) -> bool:
+    if s.id == 0:
+        return true
+    res := true
+    unsafe:
+        cpp_inject "res = _stack_store[s.id].empty();"
+    return res

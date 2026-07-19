@@ -1,0 +1,6 @@
+// cl-vernam Package Manifest
+name := "cl-vernam"
+version := "0.1.0"
+description := "Vernam XOR Cipher Encoding and Decoding Engine"
+main := "vernam.zk"
+license := "Commercial Control and non copy license"

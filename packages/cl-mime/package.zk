@@ -1,0 +1,6 @@
+// cl-mime Package Manifest
+name := "cl-mime"
+version := "0.1.0"
+description := "MIME Type Detection Engine"
+main := "mime.zk"
+license := "Commercial Control and non copy license"

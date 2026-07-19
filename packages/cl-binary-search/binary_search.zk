@@ -1,0 +1,25 @@
+// cl-binary-search: Binary Search Helper for Sorted Vectors
+
+fn search_int(arr: vector[int], target: int) -> int:
+    idx := -1
+    unsafe:
+        cpp_inject "int low = 0, high = (int)arr.size() - 1;"
+        cpp_inject "while (low <= high) {"
+        cpp_inject "    int mid = low + (high - low) / 2;"
+        cpp_inject "    if (arr[mid] == target) { idx = mid; break; }"
+        cpp_inject "    else if (arr[mid] < target) low = mid + 1;"
+        cpp_inject "    else high = mid - 1;"
+        cpp_inject "}"
+    return idx
+
+fn search_float(arr: vector[float], target: float) -> int:
+    idx := -1
+    unsafe:
+        cpp_inject "int low = 0, high = (int)arr.size() - 1;"
+        cpp_inject "while (low <= high) {"
+        cpp_inject "    int mid = low + (high - low) / 2;"
+        cpp_inject "    if (arr[mid] == target) { idx = mid; break; }"
+        cpp_inject "    else if (arr[mid] < target) low = mid + 1;"
+        cpp_inject "    else high = mid - 1;"
+        cpp_inject "}"
+    return idx

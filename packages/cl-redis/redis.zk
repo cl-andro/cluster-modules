@@ -2,19 +2,19 @@
 import cl-socket as socket
 
 fn connect(host: string, port: int) -> int:
-    return socket.connect(host, port)
+    return socket::connect(host, port)
 
 fn set_key(sock: int, key: string, val: string) -> string:
     cmd := "*3\r\n$3\r\nSET\r\n$" + str(len(key)) + "\r\n" + key + "\r\n$" + str(len(val)) + "\r\n" + val + "\r\n"
-    socket.send(sock, cmd)
-    return socket.recv(sock, 1024)
+    socket::send(sock, cmd)
+    return socket::recv(sock, 1024)
 
 fn get_key(sock: int, key: string) -> string:
     cmd := "*2\r\n$3\r\nGET\r\n$" + str(len(key)) + "\r\n" + key + "\r\n"
-    socket.send(sock, cmd)
-    return socket.recv(sock, 1024)
+    socket::send(sock, cmd)
+    return socket::recv(sock, 1024)
 
 fn del_key(sock: int, key: string) -> string:
     cmd := "*2\r\n$3\r\nDEL\r\n$" + str(len(key)) + "\r\n" + key + "\r\n"
-    socket.send(sock, cmd)
-    return socket.recv(sock, 1024)
+    socket::send(sock, cmd)
+    return socket::recv(sock, 1024)

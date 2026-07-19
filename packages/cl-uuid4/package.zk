@@ -1,0 +1,6 @@
+// cl-uuid4 Package Manifest
+name := "cl-uuid4"
+version := "0.1.0"
+description := "UUID Version 4 Generator Engine"
+main := "uuid4.zk"
+license := "Commercial Control and non copy license"

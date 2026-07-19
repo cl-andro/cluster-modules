@@ -1,0 +1,33 @@
+// cl-prime: Primality Testing and Prime Generation Engine
+
+fn is_prime(n: int) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "if (n <= 1) res = false;"
+        cpp_inject "else if (n <= 3) res = true;"
+        cpp_inject "else if (n % 2 == 0 || n % 3 == 0) res = false;"
+        cpp_inject "else {"
+        cpp_inject "    bool p = true;"
+        cpp_inject "    for (long long i = 5; i * i <= n; i += 6) {"
+        cpp_inject "        if (n % i == 0 || n % (i + 2) == 0) { p = false; break; }"
+        cpp_inject "    }"
+        cpp_inject "    res = p;"
+        cpp_inject "}"
+    return res
+
+fn sieve(limit: int) -> vector[int]:
+    res := vector[int]()
+    unsafe:
+        cpp_inject "if (limit >= 2) {"
+        cpp_inject "    std::vector<bool> is_p(limit + 1, true);"
+        cpp_inject "    is_p[0] = is_p[1] = false;"
+        cpp_inject "    for (long long p = 2; p * p <= limit; p++) {"
+        cpp_inject "        if (is_p[p]) {"
+        cpp_inject "            for (long long i = p * p; i <= limit; i += p) is_p[i] = false;"
+        cpp_inject "        }"
+        cpp_inject "    }"
+        cpp_inject "    for (int p = 2; p <= limit; p++) {"
+        cpp_inject "        if (is_p[p]) res.push_back(p);"
+        cpp_inject "    }"
+        cpp_inject "}"
+    return res

@@ -1,0 +1,6 @@
+// cl-stats2 Package Manifest
+name := "cl-stats2"
+version := "0.1.0"
+description := "Additional Statistics Utilities"
+main := "stats2.zk"
+license := "Commercial Control and non copy license"

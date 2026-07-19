@@ -1,0 +1,33 @@
+// cl-base85: Base85 Encoding and Decoding Engine
+
+fn encode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out;"
+        cpp_inject "size_t len = s.size();"
+        cpp_inject "size_t i = 0;"
+        cpp_inject "while (i < len) {"
+        cpp_inject "    unsigned int val = 0;"
+        cpp_inject "    int count = 0;"
+        cpp_inject "    for (int j = 0; j < 4; ++j) {"
+        cpp_inject "        val <<= 8;"
+        cpp_inject "        if (i < len) {"
+        cpp_inject "            val |= (unsigned char)s[i++];"
+        cpp_inject "            count++;"
+        cpp_inject "        }"
+        cpp_inject "    }"
+        cpp_inject "    if (val == 0 && count == 4) {"
+        cpp_inject "        out += 'z';"
+        cpp_inject "    } else {"
+        cpp_inject "        char buf[5];"
+        cpp_inject "        for (int j = 4; j >= 0; --j) {"
+        cpp_inject "            buf[j] = (char)(val % 85 + '!');"
+        cpp_inject "            val /= 85;"
+        cpp_inject "        }"
+        cpp_inject "        for (int j = 0; j <= count; ++j) {"
+        cpp_inject "            out += buf[j];"
+        cpp_inject "        }"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res

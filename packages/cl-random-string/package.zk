@@ -1,0 +1,6 @@
+// cl-random-string Package Manifest
+name := "cl-random-string"
+version := "0.1.0"
+description := "Random String Generation Engine"
+main := "random_string.zk"
+license := "Commercial Control and non copy license"

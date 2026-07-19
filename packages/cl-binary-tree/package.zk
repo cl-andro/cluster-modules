@@ -1,0 +1,6 @@
+// cl-binary-tree Package Manifest
+name := "cl-binary-tree"
+version := "0.1.0"
+description := "Binary Search Tree (BST) Container Model"
+main := "binary_tree.zk"
+license := "Commercial Control and non copy license"

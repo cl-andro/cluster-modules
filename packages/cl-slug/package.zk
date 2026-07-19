@@ -1,0 +1,6 @@
+// cl-slug Package Manifest
+name := "cl-slug"
+version := "0.1.0"
+description := "URL Slug Generator Engine"
+main := "slug.zk"
+license := "Commercial Control and non copy license"

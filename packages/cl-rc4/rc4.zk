@@ -1,0 +1,28 @@
+// cl-rc4: RC4 Stream Cipher Encoding and Decoding Engine
+
+fn encrypt(payload: string, key: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "if (!payload.empty() && !key.empty()) {"
+        cpp_inject "    unsigned char S[256];"
+        cpp_inject "    for (int i = 0; i < 256; ++i) S[i] = i;"
+        cpp_inject "    int j = 0;"
+        cpp_inject "    for (int i = 0; i < 256; ++i) {"
+        cpp_inject "        j = (j + S[i] + (unsigned char)key[i % key.size()]) % 256;"
+        cpp_inject "        std::swap(S[i], S[j]);"
+        cpp_inject "    }"
+        cpp_inject "    std::string out = payload;"
+        cpp_inject "    int i = 0;"
+        cpp_inject "    j = 0;"
+        cpp_inject "    for (char &c : out) {"
+        cpp_inject "        i = (i + 1) % 256;"
+        cpp_inject "        j = (j + S[i]) % 256;"
+        cpp_inject "        std::swap(S[i], S[j]);"
+        cpp_inject "        c ^= S[(S[i] + S[j]) % 256];"
+        cpp_inject "    }"
+        cpp_inject "    res = out;"
+        cpp_inject "}"
+    return res
+
+fn decrypt(payload: string, key: string) -> string:
+    return encrypt(payload, key)

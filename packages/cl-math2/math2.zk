@@ -1,0 +1,32 @@
+// cl-math2: Additional Math Utilities
+cpp_inject "#include <cmath>"
+
+fn sin(x: float) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "res = std::sin(x);"
+    return res
+
+fn cos(x: float) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "res = std::cos(x);"
+    return res
+
+fn tan(x: float) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "res = std::tan(x);"
+    return res
+
+fn log(x: float) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "res = std::log(x);"
+    return res
+
+fn exp(x: float) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "res = std::exp(x);"
+    return res

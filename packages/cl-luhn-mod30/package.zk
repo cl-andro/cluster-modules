@@ -1,0 +1,6 @@
+// cl-luhn-mod30 Package Manifest
+name := "cl-luhn-mod30"
+version := "0.1.0"
+description := "Luhn Modulo 30 Algorithm Helper"
+main := "luhn_mod30.zk"
+license := "Commercial Control and non copy license"

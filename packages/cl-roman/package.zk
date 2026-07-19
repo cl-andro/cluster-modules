@@ -1,0 +1,6 @@
+// cl-roman Package Manifest
+name := "cl-roman"
+version := "0.1.0"
+description := "Roman Numeral Encoding and Decoding Engine"
+main := "roman.zk"
+license := "Commercial Control and non copy license"

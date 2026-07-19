@@ -1,0 +1,6 @@
+// cl-shannon-entropy Package Manifest
+name := "cl-shannon-entropy"
+version := "0.1.0"
+description := "Shannon Entropy Calculation Engine"
+main := "shannon_entropy.zk"
+license := "Commercial Control and non copy license"

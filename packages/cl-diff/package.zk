@@ -1,0 +1,6 @@
+// cl-diff Package Manifest
+name := "cl-diff"
+version := "0.1.0"
+description := "Text Diff and LCS Comparison Engine"
+main := "diff.zk"
+license := "Commercial Control and non copy license"

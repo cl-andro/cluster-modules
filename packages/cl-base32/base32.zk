@@ -1,0 +1,20 @@
+// cl-base32: Base32 Encoding and Decoding Engine
+
+fn encode(input: string) -> string:
+    res: string := ""
+    unsafe:
+        cpp_inject "static const char* chars = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ234567\";"
+        cpp_inject "std::string out;"
+        cpp_inject "int val = 0, valb = -5;"
+        cpp_inject "for (unsigned char c : input) {"
+        cpp_inject "    val = (val << 8) + c;"
+        cpp_inject "    valb += 8;"
+        cpp_inject "    while (valb >= 0) {"
+        cpp_inject "        out.push_back(chars[(val >> valb) & 0x1F]);"
+        cpp_inject "        valb -= 5;"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "if (valb > -5) out.push_back(chars[((val << (8 - (valb + 5))) >> 3) & 0x1F]);"
+        cpp_inject "while (out.size() % 8) out.push_back('=');"
+        cpp_inject "res = out;"
+    return res

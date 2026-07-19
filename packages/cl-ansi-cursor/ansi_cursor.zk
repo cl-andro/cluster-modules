@@ -1,0 +1,19 @@
+// cl-ansi-cursor: ANSI Terminal Cursor Control Engine
+
+fn move_to(row: int, col: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "res = \"\\033[\" + std::to_string(row) + \";\" + std::to_string(col) + \"H\";"
+    return res
+
+fn clear_screen() -> string:
+    res := ""
+    unsafe:
+        cpp_inject "res = \"\\033[2J\";"
+    return res
+
+fn show_cursor(show: bool) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "if (show) res = \"\\033[?25h\"; else res = \"\\033[?25l\";"
+    return res

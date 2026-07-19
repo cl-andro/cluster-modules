@@ -6,8 +6,8 @@ cpp_inject "#include <array>"
 fn run(cmd: string) -> string:
     return os_run(cmd)
 
-fn run_split(args: [string]) -> string:
-    cmd := ""
+fn run_split(args: vector[string]) -> string:
+    cmd: string := ""
     for arg in args:
         if cmd != "":
             cmd = cmd + " "
@@ -17,18 +17,18 @@ fn run_split(args: [string]) -> string:
 fn run_bg(cmd: string) -> int:
     result := -1
     unsafe:
-        cpp_inject "result = system((cmd + \" &>\"/dev/null &\").c_str());"
+        cpp_inject "result = system((cmd + \" &>/dev/null &\").c_str());"
     return result
 
-fn output_lines(cmd: string) -> [string]:
-    result := [string]()
+fn output_lines(cmd: string) -> vector[string]:
+    result := vector[string]()
     cpp_inject "std::array<char, 128> buf;"
     cpp_inject "std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.c_str(), \"r\"), pclose);"
     cpp_inject "if (pipe) {"
     cpp_inject "    while (fgets(buf.data(), buf.size(), pipe.get())) {"
     cpp_inject "        string line(buf.data());"
     cpp_inject "        if (!line.empty() && line.back() == '\\n') line.pop_back();"
-    cpp_inject "        vec_push(result, line);"
+    cpp_inject "        result.push_back(line);"
     cpp_inject "    }"
     cpp_inject "}"
     return result

@@ -1,0 +1,25 @@
+// cl-slug: URL Slug Generator Engine
+
+fn slugify(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out;"
+        cpp_inject "bool last_dash = true;"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    if (c >= 'a' && c <= 'z') {"
+        cpp_inject "        out += c;"
+        cpp_inject "        last_dash = false;"
+        cpp_inject "    } else if (c >= 'A' && c <= 'Z') {"
+        cpp_inject "        out += (char)(c - 'A' + 'a');"
+        cpp_inject "        last_dash = false;"
+        cpp_inject "    } else if (c >= '0' && c <= '9') {"
+        cpp_inject "        out += c;"
+        cpp_inject "        last_dash = false;"
+        cpp_inject "    } else if (!last_dash) {"
+        cpp_inject "        out += '-';"
+        cpp_inject "        last_dash = true;"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "if (!out.empty() && out.back() == '-') out.pop_back();"
+        cpp_inject "res = out;"
+    return res

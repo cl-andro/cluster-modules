@@ -1,0 +1,6 @@
+// cl-url Package Manifest
+name := "cl-url"
+version := "0.1.0"
+description := "URL Parsing and Encoding Engine"
+main := "url.zk"
+license := "Commercial Control and non copy license"

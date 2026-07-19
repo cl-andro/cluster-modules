@@ -1,0 +1,15 @@
+// cl-temp: Temporary Files and Directories Engine
+import cl-random as rand
+
+fn temp_file(prefix: string) -> string:
+    r := rand::randint(100000, 999999)
+    path := "/tmp/" + prefix + "_" + str(r) + ".tmp"
+    file_write(path, "")
+    return path
+
+fn temp_dir(prefix: string) -> string:
+    r := rand::randint(100000, 999999)
+    path := "/tmp/" + prefix + "_" + str(r)
+    unsafe:
+        cpp_inject "system((\"mkdir -p \" + path).c_str());"
+    return path

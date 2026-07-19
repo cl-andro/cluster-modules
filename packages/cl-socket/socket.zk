@@ -23,23 +23,36 @@ fn tcp_connect(host: string, port: int) -> int:
         cpp_inject "}"
     return sock
 
-fn tcp_send(sock: int, data: string) -> int:
+fn tcp_send(sock: int, payload: string) -> int:
     sent := -1
     unsafe:
-        cpp_inject "sent = (int)send(sock, data.c_str(), data.size(), 0);"
+        cpp_inject "sent = (int)send(sock, payload.c_str(), payload.size(), 0);"
     return sent
 
 fn tcp_recv(sock: int, max_size: int) -> string:
     result := ""
     unsafe:
         cpp_inject "char buf[4096];"
-        cpp_inject "int n = (int)recv(sock, buf, std::min(max_size, 4096), 0);"
+        cpp_inject "int n = (int)recv(sock, buf, std::min((long long)max_size, (long long)4096), 0);"
         cpp_inject "if (n > 0) result.assign(buf, n);"
     return result
 
 fn tcp_close(sock: int):
     unsafe:
         cpp_inject "close(sock);"
+
+// Aliases for better compatibility
+fn connect(host: string, port: int) -> int:
+    return tcp_connect(host, port)
+
+fn send(sock: int, payload: string) -> int:
+    return tcp_send(sock, payload)
+
+fn recv(sock: int, max_size: int) -> string:
+    return tcp_recv(sock, max_size)
+
+fn close(sock: int):
+    tcp_close(sock)
 
 fn tcp_listen(port: int) -> int:
     sock := -1

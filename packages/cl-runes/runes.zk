@@ -1,0 +1,40 @@
+// cl-runes: UTF-8 Rune Count and Validation Engine
+
+fn count(s: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "int c = 0;"
+        cpp_inject "for (size_t i = 0; i < s.size(); ) {"
+        cpp_inject "    unsigned char ch = s[i];"
+        cpp_inject "    if (ch <= 127) i += 1;"
+        cpp_inject "    else if ((ch & 0xE0) == 0xC0) i += 2;"
+        cpp_inject "    else if ((ch & 0xF0) == 0xE0) i += 3;"
+        cpp_inject "    else if ((ch & 0xF8) == 0xF0) i += 4;"
+        cpp_inject "    else i += 1;"
+        cpp_inject "    c++;"
+        cpp_inject "}"
+        cpp_inject "res = c;"
+    return res
+
+fn validate(s: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "bool ok = true;"
+        cpp_inject "size_t len = s.size();"
+        cpp_inject "for (size_t i = 0; i < len; ) {"
+        cpp_inject "    unsigned char ch = s[i];"
+        cpp_inject "    size_t size = 0;"
+        cpp_inject "    if (ch <= 127) size = 1;"
+        cpp_inject "    else if ((ch & 0xE0) == 0xC0) size = 2;"
+        cpp_inject "    else if ((ch & 0xF0) == 0xE0) size = 3;"
+        cpp_inject "    else if ((ch & 0xF8) == 0xF0) size = 4;"
+        cpp_inject "    else { ok = false; break; }"
+        cpp_inject "    if (i + size > len) { ok = false; break; }"
+        cpp_inject "    for (size_t j = 1; j < size; ++j) {"
+        cpp_inject "        if ((s[i + j] & 0xC0) != 0x80) { ok = false; break; }"
+        cpp_inject "    }"
+        cpp_inject "    if (!ok) break;"
+        cpp_inject "    i += size;"
+        cpp_inject "}"
+        cpp_inject "res = ok;"
+    return res

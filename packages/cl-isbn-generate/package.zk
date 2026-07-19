@@ -1,0 +1,6 @@
+// cl-isbn-generate Package Manifest
+name := "cl-isbn-generate"
+version := "0.1.0"
+description := "ISBN Check Digit Generator Engine"
+main := "isbn_generate.zk"
+license := "Commercial Control and non copy license"

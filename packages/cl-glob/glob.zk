@@ -1,0 +1,15 @@
+// cl-glob: File Path Pattern Matching
+cpp_inject "#include <glob.h>"
+
+fn glob(pattern: string) -> vector[string]:
+    result := vector[string]()
+    cpp_inject "glob_t glob_result;"
+    cpp_inject "memset(&glob_result, 0, sizeof(glob_result));"
+    cpp_inject "int return_value = ::glob(pattern.c_str(), GLOB_TILDE, NULL, &glob_result);"
+    cpp_inject "if (return_value == 0) {"
+    cpp_inject "    for (size_t i = 0; i < glob_result.gl_pathc; ++i) {"
+    cpp_inject "        result.push_back(std::string(glob_result.gl_pathv[i]));"
+    cpp_inject "    }"
+    cpp_inject "}"
+    cpp_inject "globfree(&glob_result);"
+    return result

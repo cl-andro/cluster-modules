@@ -1,0 +1,6 @@
+// cl-polybius Package Manifest
+name := "cl-polybius"
+version := "0.1.0"
+description := "Polybius Square Cipher Encoder and Decoder Engine"
+main := "polybius.zk"
+license := "Commercial Control and non copy license"

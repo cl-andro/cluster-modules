@@ -1,0 +1,42 @@
+// cl-decimal: Fixed-Point Decimal Arithmetic Helper
+cpp_inject "#include <cmath>"
+cpp_inject "#include <sstream>"
+cpp_inject "#include <iomanip>"
+
+fn to_cents(val: string, precision: int) -> int:
+    factor := 1
+    i := 0
+    while i < precision:
+        factor = factor * 10
+        i = i + 1
+    cents := 0
+    unsafe:
+        cpp_inject "double d = std::stod(val);"
+        cpp_inject "cents = (long long)std::round(d * factor);"
+    return cents
+
+fn from_cents(cents: int, precision: int) -> string:
+    factor := 1
+    i := 0
+    while i < precision:
+        factor = factor * 10
+        i = i + 1
+    res := ""
+    unsafe:
+        cpp_inject "double d = (double)cents / factor;"
+        cpp_inject "std::stringstream ss;"
+        cpp_inject "ss << std::fixed << std::setprecision(precision) << d;"
+        cpp_inject "res = ss.str();"
+    return res
+
+fn add(a: string, b: string, precision: int) -> string:
+    ac := to_cents(a, precision)
+    bc := to_cents(b, precision)
+    sum := ac + bc
+    return from_cents(sum, precision)
+
+fn sub(a: string, b: string, precision: int) -> string:
+    ac := to_cents(a, precision)
+    bc := to_cents(b, precision)
+    diff := ac - bc
+    return from_cents(diff, precision)

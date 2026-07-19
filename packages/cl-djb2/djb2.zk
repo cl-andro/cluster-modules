@@ -1,0 +1,11 @@
+// cl-djb2: DJB2 Hashing Engine
+
+fn hash(s: string) -> int:
+    res := 5381
+    unsafe:
+        cpp_inject "unsigned long h = 5381;"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    h = ((h << 5) + h) + (unsigned char)c;"
+        cpp_inject "}"
+        cpp_inject "res = h;"
+    return res

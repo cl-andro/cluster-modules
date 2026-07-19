@@ -1,0 +1,6 @@
+// cl-tar Package Manifest
+name := "cl-tar"
+version := "0.1.0"
+description := "Tar Archiving and Extraction Engine"
+main := "tar.zk"
+license := "Commercial Control and non copy license"

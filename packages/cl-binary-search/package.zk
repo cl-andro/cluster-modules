@@ -1,0 +1,6 @@
+// cl-binary-search Package Manifest
+name := "cl-binary-search"
+version := "0.1.0"
+description := "Binary Search Helper for Sorted Vectors"
+main := "binary_search.zk"
+license := "Commercial Control and non copy license"

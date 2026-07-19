@@ -1,0 +1,6 @@
+// cl-hex Package Manifest
+name := "cl-hex"
+version := "0.1.0"
+description := "Hex Encoding and Decoding Engine"
+main := "hex.zk"
+license := "Commercial Control and non copy license"

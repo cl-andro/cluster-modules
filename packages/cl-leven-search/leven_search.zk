@@ -1,0 +1,14 @@
+// cl-leven-search: Levenshtein Fuzzy Search Engine
+import cl-levenshtein as lev
+
+fn find_closest(target: string, choices: vector[string]) -> string:
+    closest := ""
+    min_dist := 999999
+    n := list_size(choices)
+    for i := 0; i < n; i++:
+        choice := choices[i]
+        d := lev::distance(target, choice)
+        if d < min_dist:
+            min_dist = d
+            closest = choice
+    return closest

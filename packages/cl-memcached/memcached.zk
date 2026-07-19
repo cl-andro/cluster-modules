@@ -1,0 +1,27 @@
+// cl-memcached: Memcached Client Engine
+import cl-socket as socket
+
+fn connect(host: string, port: int) -> int:
+    return socket::connect(host, port)
+
+fn set_key(sock: int, key: string, val: string, exptime: int) -> string:
+    if sock < 0:
+        return "Error: socket closed"
+    bytes_len := len(val)
+    cmd := "set " + key + " 0 " + str(exptime) + " " + str(bytes_len) + "\r\n" + val + "\r\n"
+    socket::send(sock, cmd)
+    return socket::recv(sock, 1024)
+
+fn get_key(sock: int, key: string) -> string:
+    if sock < 0:
+        return "Error: socket closed"
+    cmd := "get " + key + "\r\n"
+    socket::send(sock, cmd)
+    return socket::recv(sock, 1024)
+
+fn del_key(sock: int, key: string) -> string:
+    if sock < 0:
+        return "Error: socket closed"
+    cmd := "delete " + key + "\r\n"
+    socket::send(sock, cmd)
+    return socket::recv(sock, 1024)

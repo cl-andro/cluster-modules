@@ -1,0 +1,6 @@
+// cl-ssh Package Manifest
+name := "cl-ssh"
+version := "0.1.0"
+description := "SSH2 and SFTP Client Protocol Wrapper"
+main := "ssh.zk"
+license := "Commercial Control and non copy license"

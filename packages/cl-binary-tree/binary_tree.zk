@@ -1,0 +1,41 @@
+// cl-binary-tree: Binary Search Tree (BST) Container Model
+cpp_inject "#include <unordered_map>"
+cpp_inject "#include <set>"
+cpp_inject "static std::unordered_map<int64_t, std::set<int>> _tree_store;"
+
+model BinaryTree:
+    id: int
+
+fn init_tree(&t: BinaryTree):
+    if t.id == 0:
+        unsafe:
+            cpp_inject "static int64_t next_id = 1;"
+            cpp_inject "t.id = next_id++;"
+
+fn insert(&t: BinaryTree, val: int):
+    init_tree(t)
+    unsafe:
+        cpp_inject "_tree_store[t.id].insert(val);"
+
+fn contains(t: BinaryTree, val: int) -> bool:
+    if t.id == 0:
+        return false
+    res := false
+    unsafe:
+        cpp_inject "auto& st = _tree_store[t.id];"
+        cpp_inject "res = (st.find(val) != st.end());"
+    return res
+
+fn size(t: BinaryTree) -> int:
+    if t.id == 0:
+        return 0
+    sz := 0
+    unsafe:
+        cpp_inject "sz = (int)_tree_store[t.id].size();"
+    return sz
+
+fn clear(&t: BinaryTree):
+    if t.id == 0:
+        return
+    unsafe:
+        cpp_inject "_tree_store[t.id].clear();"

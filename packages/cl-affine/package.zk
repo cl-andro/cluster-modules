@@ -1,0 +1,6 @@
+// cl-affine Package Manifest
+name := "cl-affine"
+version := "0.1.0"
+description := "Affine Cipher Encoder and Decoder Engine"
+main := "affine.zk"
+license := "Commercial Control and non copy license"

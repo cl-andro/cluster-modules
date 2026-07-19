@@ -1,0 +1,6 @@
+// cl-base32-hex Package Manifest
+name := "cl-base32-hex"
+version := "0.1.0"
+description := "Base32 Extended Hex Alphabet Encoding and Decoding Engine"
+main := "base32_hex.zk"
+license := "Commercial Control and non copy license"

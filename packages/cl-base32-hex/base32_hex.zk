@@ -1,0 +1,22 @@
+// cl-base32-hex: Base32 Extended Hex Alphabet Encoding and Decoding Engine
+
+fn encode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "static const char* ALPHABET = \"0123456789ABCDEFGHIJKLMNOPQRSTUV\";"
+        cpp_inject "std::string out;"
+        cpp_inject "int val = 0, valb = -1;"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    val = (val << 8) | (unsigned char)c;"
+        cpp_inject "    valb += 8;"
+        cpp_inject "    while (valb >= 5) {"
+        cpp_inject "        out += ALPHABET[(val >> (valb - 5)) & 31];"
+        cpp_inject "        valb -= 5;"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "if (valb > 0) {"
+        cpp_inject "    out += ALPHABET[(val << (5 - valb)) & 31];"
+        cpp_inject "}"
+        cpp_inject "while (out.size() % 8 != 0) out += '=';"
+        cpp_inject "res = out;"
+    return res

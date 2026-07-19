@@ -1,0 +1,12 @@
+// cl-adler32: Adler-32 Checksum Hashing Engine
+
+fn checksum(s: string) -> int:
+    res := 1
+    unsafe:
+        cpp_inject "unsigned long a = 1, b = 0;"
+        cpp_inject "for (char c : s) {"
+        cpp_inject "    a = (a + (unsigned char)c) % 65521;"
+        cpp_inject "    b = (b + a) % 65521;"
+        cpp_inject "}"
+        cpp_inject "res = (b << 16) | a;"
+    return res

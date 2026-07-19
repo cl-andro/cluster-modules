@@ -1,0 +1,6 @@
+// cl-priority-queue Package Manifest
+name := "cl-priority-queue"
+version := "0.1.0"
+description := "Priority Queue Container Model"
+main := "priority_queue.zk"
+license := "Commercial Control and non copy license"

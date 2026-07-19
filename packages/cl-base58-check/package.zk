@@ -1,0 +1,6 @@
+// cl-base58-check Package Manifest
+name := "cl-base58-check"
+version := "0.1.0"
+description := "Base58Check Encoding and Decoding Engine"
+main := "base58_check.zk"
+license := "Commercial Control and non copy license"

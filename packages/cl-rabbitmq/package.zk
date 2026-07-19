@@ -1,0 +1,6 @@
+// cl-rabbitmq Package Manifest
+name := "cl-rabbitmq"
+version := "0.1.0"
+description := "AMQP 0-9-1 RabbitMQ High-Speed Message Broker Connector"
+main := "rabbitmq.zk"
+license := "Commercial Control and non copy license"

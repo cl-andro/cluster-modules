@@ -1,0 +1,6 @@
+// cl-murmur Package Manifest
+name := "cl-murmur"
+version := "0.1.0"
+description := "MurmurHash3 Hashing Engine"
+main := "murmur.zk"
+license := "Commercial Control and non copy license"

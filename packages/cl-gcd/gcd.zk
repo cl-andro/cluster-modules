@@ -1,0 +1,33 @@
+// cl-gcd: GCD and LCM Math Engine
+
+fn gcd(a: int, b: int) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "long long x = std::abs(a);"
+        cpp_inject "long long y = std::abs(b);"
+        cpp_inject "while (y != 0) {"
+        cpp_inject "    long long temp = y;"
+        cpp_inject "    y = x % y;"
+        cpp_inject "    x = temp;"
+        cpp_inject "}"
+        cpp_inject "res = x;"
+    return res
+
+fn lcm(a: int, b: int) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "long long x = std::abs(a);"
+        cpp_inject "long long y = std::abs(b);"
+        cpp_inject "if (x == 0 || y == 0) res = 0;"
+        cpp_inject "else {"
+        cpp_inject "    long long g = 0;"
+        cpp_inject "    long long tx = x, ty = y;"
+        cpp_inject "    while (ty != 0) {"
+        cpp_inject "        long long temp = ty;"
+        cpp_inject "        ty = tx % ty;"
+        cpp_inject "        tx = temp;"
+        cpp_inject "    }"
+        cpp_inject "    g = tx;"
+        cpp_inject "    res = (x / g) * y;"
+        cpp_inject "}"
+    return res

@@ -1,0 +1,6 @@
+// cl-rc4 Package Manifest
+name := "cl-rc4"
+version := "0.1.0"
+description := "RC4 Stream Cipher Encoding and Decoding Engine"
+main := "rc4.zk"
+license := "Commercial Control and non copy license"

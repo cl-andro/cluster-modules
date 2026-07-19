@@ -1,0 +1,29 @@
+// cl-base58: Base58 Encoding and Decoding Engine
+
+fn encode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "static const char* ALPHABET = \"123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz\";"
+        cpp_inject "std::vector<unsigned char> bytes(s.begin(), s.end());"
+        cpp_inject "std::vector<int> digits(1, 0);"
+        cpp_inject "for (size_t i = 0; i < bytes.size(); ++i) {"
+        cpp_inject "    int carry = bytes[i];"
+        cpp_inject "    for (size_t j = 0; j < digits.size(); ++j) {"
+        cpp_inject "        carry += digits[j] << 8;"
+        cpp_inject "        digits[j] = carry % 58;"
+        cpp_inject "        carry /= 58;"
+        cpp_inject "    }"
+        cpp_inject "    while (carry > 0) {"
+        cpp_inject "        digits.push_back(carry % 58);"
+        cpp_inject "        carry /= 58;"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "std::string out;"
+        cpp_inject "for (size_t i = 0; i < bytes.size() && bytes[i] == 0; ++i) {"
+        cpp_inject "    out.push_back('1');"
+        cpp_inject "}"
+        cpp_inject "for (auto it = digits.rbegin(); it != digits.rend(); ++it) {"
+        cpp_inject "    out.push_back(ALPHABET[*it]);"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res

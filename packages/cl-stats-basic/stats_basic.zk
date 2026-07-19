@@ -1,0 +1,49 @@
+// cl-stats-basic: Basic Statistics Operation Engine
+
+fn mean(v: vector[float]) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "if (!v.empty()) {"
+        cpp_inject "    double sum = 0.0;"
+        cpp_inject "    for (double val : v) sum += val;"
+        cpp_inject "    res = sum / v.size();"
+        cpp_inject "}"
+    return res
+
+fn median(v: vector[float]) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "if (!v.empty()) {"
+        cpp_inject "    std::vector<double> temp = v;"
+        cpp_inject "    std::sort(temp.begin(), temp.end());"
+        cpp_inject "    size_t n = temp.size();"
+        cpp_inject "    if (n % 2 == 1) res = temp[n / 2];"
+        cpp_inject "    else res = (temp[n / 2 - 1] + temp[n / 2]) / 2.0;"
+        cpp_inject "}"
+    return res
+
+fn variance(v: vector[float]) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "if (v.size() > 1) {"
+        cpp_inject "    double sum = 0.0;"
+        cpp_inject "    for (double val : v) sum += val;"
+        cpp_inject "    double avg = sum / v.size();"
+        cpp_inject "    double sq_sum = 0.0;"
+        cpp_inject "    for (double val : v) sq_sum += (val - avg) * (val - avg);"
+        cpp_inject "    res = sq_sum / (v.size() - 1);"
+        cpp_inject "}"
+    return res
+
+fn stddev(v: vector[float]) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "if (v.size() > 1) {"
+        cpp_inject "    double sum = 0.0;"
+        cpp_inject "    for (double val : v) sum += val;"
+        cpp_inject "    double avg = sum / v.size();"
+        cpp_inject "    double sq_sum = 0.0;"
+        cpp_inject "    for (double val : v) sq_sum += (val - avg) * (val - avg);"
+        cpp_inject "    res = std::sqrt(sq_sum / (v.size() - 1));"
+        cpp_inject "}"
+    return res

@@ -1,0 +1,14 @@
+// cl-random-string: Random String Generation Engine
+
+fn generate(length: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "static const char charset[] = \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\";"
+        cpp_inject "std::string out;"
+        cpp_inject "if (length > 0) {"
+        cpp_inject "    for (int i = 0; i < length; ++i) {"
+        cpp_inject "        out += charset[std::rand() % 62];"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res

@@ -1,0 +1,6 @@
+// cl-ansi-cursor Package Manifest
+name := "cl-ansi-cursor"
+version := "0.1.0"
+description := "ANSI Terminal Cursor Control Engine"
+main := "ansi_cursor.zk"
+license := "Commercial Control and non copy license"

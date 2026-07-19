@@ -1,0 +1,6 @@
+// cl-email Package Manifest
+name := "cl-email"
+version := "0.1.0"
+description := "Email Structure Validator Engine"
+main := "email.zk"
+license := "Commercial Control and non copy license"

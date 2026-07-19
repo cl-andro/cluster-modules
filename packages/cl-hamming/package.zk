@@ -1,0 +1,6 @@
+// cl-hamming Package Manifest
+name := "cl-hamming"
+version := "0.1.0"
+description := "Hamming Distance Calculation Engine"
+main := "hamming.zk"
+license := "Commercial Control and non copy license"

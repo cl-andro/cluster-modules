@@ -1,0 +1,6 @@
+// cl-rail-fence Package Manifest
+name := "cl-rail-fence"
+version := "0.1.0"
+description := "Rail Fence Cipher Encoder and Decoder Engine"
+main := "rail_fence.zk"
+license := "Commercial Control and non copy license"

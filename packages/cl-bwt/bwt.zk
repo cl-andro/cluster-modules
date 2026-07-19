@@ -1,0 +1,54 @@
+// cl-bwt: Burrows-Wheeler Transform Encoding and Decoding Engine
+
+fn encode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "if (!s.empty()) {"
+        cpp_inject "    std::vector<std::string> rotations;"
+        cpp_inject "    for (size_t i = 0; i < s.size(); ++i) {"
+        cpp_inject "        rotations.push_back(s.substr(i) + s.substr(0, i));"
+        cpp_inject "    }"
+        cpp_inject "    std::sort(rotations.begin(), rotations.end());"
+        cpp_inject "    std::string last_col;"
+        cpp_inject "    for (const auto& rot : rotations) {"
+        cpp_inject "        last_col += rot.back();"
+        cpp_inject "    }"
+        cpp_inject "    res = last_col;"
+        cpp_inject "}"
+    return res
+
+fn get_primary_index(s: string) -> int:
+    idx := -1
+    unsafe:
+        cpp_inject "if (!s.empty()) {"
+        cpp_inject "    std::vector<std::string> rotations;"
+        cpp_inject "    for (size_t i = 0; i < s.size(); ++i) {"
+        cpp_inject "        rotations.push_back(s.substr(i) + s.substr(0, i));"
+        cpp_inject "    }"
+        cpp_inject "    std::sort(rotations.begin(), rotations.end());"
+        cpp_inject "    for (size_t i = 0; i < rotations.size(); ++i) {"
+        cpp_inject "        if (rotations[i] == s) { idx = (int)i; break; }"
+        cpp_inject "    }"
+        cpp_inject "}"
+    return idx
+
+fn decode(bwt: string, primary_index: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "if (!bwt.empty()) {"
+        cpp_inject "    int len = (int)bwt.size();"
+        cpp_inject "    std::vector<std::pair<char, int>> sorted_bwt(len);"
+        cpp_inject "    for (int i = 0; i < len; ++i) sorted_bwt[i] = {bwt[i], i};"
+        cpp_inject "    std::stable_sort(sorted_bwt.begin(), sorted_bwt.end(), [](const auto& a, const auto& b) { return a.first < b.first; });"
+        cpp_inject "    std::vector<int> next_shift(len);"
+        cpp_inject "    for (int i = 0; i < len; ++i) next_shift[i] = sorted_bwt[i].second;"
+        cpp_inject "    std::string original;"
+        cpp_inject "    int curr = primary_index;"
+        cpp_inject "    for (int i = 0; i < len; ++i) {"
+        cpp_inject "        original += bwt[curr];"
+        cpp_inject "        curr = next_shift[curr];"
+        cpp_inject "    }"
+        cpp_inject "    std::reverse(original.begin(), original.end());"
+        cpp_inject "    res = original;"
+        cpp_inject "}"
+    return res

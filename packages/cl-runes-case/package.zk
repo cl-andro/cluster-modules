@@ -1,0 +1,6 @@
+// cl-runes-case Package Manifest
+name := "cl-runes-case"
+version := "0.1.0"
+description := "UTF-8 Runes Unicode Casing Engine"
+main := "runes_case.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,6 @@
+// cl-isbn Package Manifest
+name := "cl-isbn"
+version := "0.1.0"
+description := "ISBN Checksum Validation Engine"
+main := "isbn.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,6 @@
+// cl-math2 Package Manifest
+name := "cl-math2"
+version := "0.1.0"
+description := "Additional Trigonometric and Advanced Math Utilities"
+main := "math2.zk"
+license := "Commercial Control and non copy license"

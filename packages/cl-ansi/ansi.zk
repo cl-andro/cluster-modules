@@ -1,37 +1,31 @@
-cpp_inject("#include <string>")
+// cl-ansi: ANSI Terminal Color Formatter Engine
 
-fn red(text)
-    cpp_inject("return \"\\033[31m\" + text + \"\\033[0m\";")
+fn red(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "res = \"\\033[31m\" + s + \"\\033[0m\";"
+    return res
 
-fn green(text)
-    cpp_inject("return \"\\033[32m\" + text + \"\\033[0m\";")
+fn green(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "res = \"\\033[32m\" + s + \"\\033[0m\";"
+    return res
 
-fn yellow(text)
-    cpp_inject("return \"\\033[33m\" + text + \"\\033[0m\";")
+fn yellow(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "res = \"\\033[33m\" + s + \"\\033[0m\";"
+    return res
 
-fn blue(text)
-    cpp_inject("return \"\\033[34m\" + text + \"\\033[0m\";")
+fn blue(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "res = \"\\033[34m\" + s + \"\\033[0m\";"
+    return res
 
-fn magenta(text)
-    cpp_inject("return \"\\033[35m\" + text + \"\\033[0m\";")
-
-fn cyan(text)
-    cpp_inject("return \"\\033[36m\" + text + \"\\033[0m\";")
-
-fn white(text)
-    cpp_inject("return \"\\033[37m\" + text + \"\\033[0m\";")
-
-fn bold(text)
-    cpp_inject("return \"\\033[1m\" + text + \"\\033[0m\";")
-
-fn dim(text)
-    cpp_inject("return \"\\033[2m\" + text + \"\\033[0m\";")
-
-fn italic(text)
-    cpp_inject("return \"\\033[3m\" + text + \"\\033[0m\";")
-
-fn underline(text)
-    cpp_inject("return \"\\033[4m\" + text + \"\\033[0m\";")
-
-fn reset()
-    cpp_inject("return \"\\033[0m\";")
+fn bold(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "res = \"\\033[1m\" + s + \"\\033[0m\";"
+    return res

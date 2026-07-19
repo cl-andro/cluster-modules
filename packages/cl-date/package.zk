@@ -1,0 +1,6 @@
+// cl-date Package Manifest
+name := "cl-date"
+version := "0.1.0"
+description := "Date Helper Utilities"
+main := "date.zk"
+license := "Commercial Control and non copy license"

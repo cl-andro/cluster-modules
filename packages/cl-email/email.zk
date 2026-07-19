@@ -1,0 +1,9 @@
+// cl-email: Email Structure Validator Engine
+cpp_inject "#include <regex>"
+
+fn validate(email: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "static const std::regex email_regex(\"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$\");"
+        cpp_inject "res = std::regex_match(email, email_regex);"
+    return res

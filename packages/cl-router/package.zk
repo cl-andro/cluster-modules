@@ -1,0 +1,6 @@
+// cl-router Package Manifest
+name := "cl-router"
+version := "0.1.0"
+description := "High-Speed URL Router utilizing Radix-Trie or Map matching"
+main := "router.zk"
+license := "Commercial Control and non copy license"

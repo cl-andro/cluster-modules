@@ -1,0 +1,6 @@
+// cl-gcd Package Manifest
+name := "cl-gcd"
+version := "0.1.0"
+description := "GCD and LCM Math Engine"
+main := "gcd.zk"
+license := "Commercial Control and non copy license"

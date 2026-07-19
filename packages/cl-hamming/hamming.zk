@@ -1,0 +1,13 @@
+// cl-hamming: Hamming Distance Calculation Engine
+
+fn distance(s1: string, s2: string) -> int:
+    dist := 0
+    unsafe:
+        cpp_inject "if (s1.size() != s2.size()) { dist = -1; } else {"
+        cpp_inject "    int d = 0;"
+        cpp_inject "    for (size_t i = 0; i < s1.size(); ++i) {"
+        cpp_inject "        if (s1[i] != s2[i]) d++;"
+        cpp_inject "    }"
+        cpp_inject "    dist = d;"
+        cpp_inject "}"
+    return dist

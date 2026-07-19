@@ -1,0 +1,23 @@
+// cl-luhn: Luhn Algorithm Validation Engine
+
+fn validate(digits: string) -> bool:
+    res := false
+    unsafe:
+        cpp_inject "int sum = 0;"
+        cpp_inject "bool alternate = false;"
+        cpp_inject "if (!digits.empty()) {"
+        cpp_inject "    for (int i = (int)digits.size() - 1; i >= 0; --i) {"
+        cpp_inject "        char c = digits[i];"
+        cpp_inject "        if (c >= '0' && c <= '9') {"
+        cpp_inject "            int n = c - '0';"
+        cpp_inject "            if (alternate) {"
+        cpp_inject "                n *= 2;"
+        cpp_inject "                if (n > 9) n = n - 9;"
+        cpp_inject "            }"
+        cpp_inject "            sum += n;"
+        cpp_inject "            alternate = !alternate;"
+        cpp_inject "        }"
+        cpp_inject "    }"
+        cpp_inject "    res = (sum % 10 == 0);"
+        cpp_inject "}"
+    return res

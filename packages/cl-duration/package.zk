@@ -1,0 +1,6 @@
+// cl-duration Package Manifest
+name := "cl-duration"
+version := "0.1.0"
+description := "Duration Parsing and Formatting Engine"
+main := "duration.zk"
+license := "Commercial Control and non copy license"

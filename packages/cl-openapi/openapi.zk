@@ -1,0 +1,19 @@
+// cl-openapi: OpenAPI / Swagger Document Generator Engine
+
+model OpenAPI:
+    title: string
+    version: string
+    paths: unordered_map[string, string]
+
+fn create_spec(title: string, version: string) -> OpenAPI:
+    spec := OpenAPI()
+    spec.title = title
+    spec.version = version
+    spec.paths = unordered_map[string, string]()
+    return spec
+
+fn add_path(&spec: OpenAPI, path: string, method: string, desc: string):
+    map_set(spec.paths, path + ":" + method, desc)
+
+fn to_json(&spec: OpenAPI) -> string:
+    return "{\"openapi\":\"3.0.0\",\"info\":{\"title\":\"" + spec.title + "\",\"version\":\"" + spec.version + "\"},\"paths\":{}}"

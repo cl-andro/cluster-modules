@@ -1,0 +1,6 @@
+// cl-dns Package Manifest
+name := "cl-dns"
+version := "0.1.0"
+description := "DNS resolver client supporting A and AAAA query lookups"
+main := "dns.zk"
+license := "Commercial Control and non copy license"

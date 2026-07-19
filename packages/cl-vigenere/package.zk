@@ -1,0 +1,6 @@
+// cl-vigenere Package Manifest
+name := "cl-vigenere"
+version := "0.1.0"
+description := "Vigenere Cipher Encoder and Decoder Engine"
+main := "vigenere.zk"
+license := "Commercial Control and non copy license"

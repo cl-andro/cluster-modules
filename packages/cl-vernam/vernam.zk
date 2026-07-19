@@ -1,0 +1,16 @@
+// cl-vernam: Vernam XOR Cipher Encoding and Decoding Engine
+
+fn encrypt(payload: string, key: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "if (!payload.empty() && !key.empty()) {"
+        cpp_inject "    std::string out = payload;"
+        cpp_inject "    for (size_t i = 0; i < payload.size(); ++i) {"
+        cpp_inject "        out[i] = payload[i] ^ key[i % key.size()];"
+        cpp_inject "    }"
+        cpp_inject "    res = out;"
+        cpp_inject "}"
+    return res
+
+fn decrypt(payload: string, key: string) -> string:
+    return encrypt(payload, key)

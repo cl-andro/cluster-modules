@@ -1,0 +1,49 @@
+// cl-url: URL Parsing and Encoding Engine
+cpp_inject "#include <iomanip>"
+cpp_inject "#include <sstream>"
+cpp_inject "#include <cctype>"
+
+model URL:
+    protocol: string
+    host: string
+    port: int
+    path: string
+
+fn parse(url_str: string) -> URL:
+    u := URL()
+    u.protocol = ""
+    u.host = ""
+    u.port = 80
+    u.path = "/"
+    unsafe:
+        cpp_inject "std::string s = url_str;"
+        cpp_inject "size_t proto_end = s.find(\"://\");"
+        cpp_inject "if (proto_end != std::string::npos) {"
+        cpp_inject "    u.protocol = s.substr(0, proto_end);"
+        cpp_inject "    s = s.substr(proto_end + 3);"
+        cpp_inject "}"
+        cpp_inject "size_t path_start = s.find('/');"
+        cpp_inject "std::string host_part = s;"
+        cpp_inject "if (path_start != std::string::npos) {"
+        cpp_inject "    host_part = s.substr(0, path_start);"
+        cpp_inject "    u.path = s.substr(path_start);"
+        cpp_inject "}"
+        cpp_inject "size_t port_colon = host_part.find(':');"
+        cpp_inject "if (port_colon != std::string::npos) {"
+        cpp_inject "    u.host = host_part.substr(0, port_colon);"
+        cpp_inject "    u.port = std::stoi(host_part.substr(port_colon + 1));"
+        cpp_inject "} else {"
+        cpp_inject "    u.host = host_part;"
+        cpp_inject "}"
+    return u
+
+fn encode(input: string) -> string:
+    res: string := ""
+    unsafe:
+        cpp_inject "std::stringstream ss;"
+        cpp_inject "for (char c : input) {"
+        cpp_inject "    if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') ss << c;"
+        cpp_inject "    else ss << '%' << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << (int)(unsigned char)c;"
+        cpp_inject "}"
+        cpp_inject "res = ss.str();"
+    return res

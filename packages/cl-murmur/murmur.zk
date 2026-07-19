@@ -1,0 +1,36 @@
+// cl-murmur: MurmurHash3 Hashing Engine
+
+fn hash32(key: string, seed: int) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "unsigned int h1 = (unsigned int)seed;"
+        cpp_inject "const unsigned int c1 = 0xcc9e2d51;"
+        cpp_inject "const unsigned int c2 = 0x1b873593;"
+        cpp_inject "const int len = (int)key.size();"
+        cpp_inject "const int nblocks = len / 4;"
+        cpp_inject "const unsigned int* blocks = (const unsigned int*)(key.data());"
+        cpp_inject "for (int i = 0; i < nblocks; ++i) {"
+        cpp_inject "    unsigned int k1 = blocks[i];"
+        cpp_inject "    k1 *= c1;"
+        cpp_inject "    k1 = (k1 << 15) | (k1 >> 17);"
+        cpp_inject "    k1 *= c2;"
+        cpp_inject "    h1 ^= k1;"
+        cpp_inject "    h1 = (h1 << 13) | (h1 >> 19);"
+        cpp_inject "    h1 = h1 * 5 + 0xe6546b64;"
+        cpp_inject "}"
+        cpp_inject "const unsigned char* tail = (const unsigned char*)(key.data() + nblocks * 4);"
+        cpp_inject "unsigned int k1 = 0;"
+        cpp_inject "switch (len & 3) {"
+        cpp_inject "    case 3: k1 ^= tail[2] << 16;"
+        cpp_inject "    case 2: k1 ^= tail[1] << 8;"
+        cpp_inject "    case 1: k1 ^= tail[0];"
+        cpp_inject "            k1 *= c1; k1 = (k1 << 15) | (k1 >> 17); k1 *= c2; h1 ^= k1;"
+        cpp_inject "};"
+        cpp_inject "h1 ^= len;"
+        cpp_inject "h1 ^= (h1 >> 16);"
+        cpp_inject "h1 *= 0x85ebca6b;"
+        cpp_inject "h1 ^= (h1 >> 13);"
+        cpp_inject "h1 *= 0xc2b2ae35;"
+        cpp_inject "h1 ^= (h1 >> 16);"
+        cpp_inject "res = (int)h1;"
+    return res

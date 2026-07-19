@@ -1,0 +1,6 @@
+// cl-crc16 Package Manifest
+name := "cl-crc16"
+version := "0.1.0"
+description := "CRC-16 Checksum Hashing Engine"
+main := "crc16.zk"
+license := "Commercial Control and non copy license"

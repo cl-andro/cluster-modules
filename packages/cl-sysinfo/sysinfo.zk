@@ -1,0 +1,12 @@
+// cl-sysinfo: System Information Engine
+cpp_inject "#include <unistd.h>"
+
+fn cpu_cores() -> int:
+    cores := 1
+    unsafe:
+        cpp_inject "cores = sysconf(_SC_NPROCESSORS_ONLN);"
+    return cores
+
+fn os_type() -> string:
+    res := "Linux"
+    return res

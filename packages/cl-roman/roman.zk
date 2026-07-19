@@ -1,0 +1,48 @@
+// cl-roman: Roman Numeral Encoding and Decoding Engine
+
+fn encode(val: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "int num = val;"
+        cpp_inject "static const std::pair<int, const char*> ROMAN[] = {"
+        cpp_inject "    {1000, \"M\"}, {900, \"CM\"}, {500, \"D\"}, {400, \"CD\"},"
+        cpp_inject "    {100, \"C\"}, {90, \"XC\"}, {50, \"L\"}, {40, \"XL\"},"
+        cpp_inject "    {10, \"X\"}, {9, \"IX\"}, {5, \"V\"}, {4, \"IV\"}, {1, \"I\"}"
+        cpp_inject "};"
+        cpp_inject "std::string out;"
+        cpp_inject "for (const auto& pair : ROMAN) {"
+        cpp_inject "    while (num >= pair.first) {"
+        cpp_inject "        out += pair.second;"
+        cpp_inject "        num -= pair.first;"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res
+
+fn decode(s: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "static auto value = [](char c) -> int {"
+        cpp_inject "    switch (c) {"
+        cpp_inject "        case 'I': return 1;"
+        cpp_inject "        case 'V': return 5;"
+        cpp_inject "        case 'X': return 10;"
+        cpp_inject "        case 'L': return 50;"
+        cpp_inject "        case 'C': return 100;"
+        cpp_inject "        case 'D': return 500;"
+        cpp_inject "        case 'M': return 1000;"
+        cpp_inject "        default: return 0;"
+        cpp_inject "    }"
+        cpp_inject "};"
+        cpp_inject "int total = 0;"
+        cpp_inject "for (size_t i = 0; i < s.size(); ++i) {"
+        cpp_inject "    int v1 = value(s[i]);"
+        cpp_inject "    if (i + 1 < s.size()) {"
+        cpp_inject "        int v2 = value(s[i + 1]);"
+        cpp_inject "        if (v1 >= v2) { total += v1; } else { total += v2 - v1; i++; }"
+        cpp_inject "    } else {"
+        cpp_inject "        total += v1;"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = total;"
+    return res

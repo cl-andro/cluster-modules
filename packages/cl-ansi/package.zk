@@ -1,6 +1,6 @@
-name: "cl-ansi"
-version: "0.1.0"
-description: "ANSI terminal colors and styles"
-license: "Commercial Control and non copy license"
-author: "Cluster Authors"
-dependencies: []
+// cl-ansi Package Manifest
+name := "cl-ansi"
+version := "0.1.0"
+description := "ANSI Terminal Color Formatter Engine"
+main := "ansi.zk"
+license := "Commercial Control and non copy license"

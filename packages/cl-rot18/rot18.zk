@@ -1,0 +1,16 @@
+// cl-rot18: ROT18 Cipher Encoding and Decoding Engine
+
+fn encode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out = s;"
+        cpp_inject "for (char &c : out) {"
+        cpp_inject "    if (c >= 'a' && c <= 'z') c = (c - 'a' + 13) % 26 + 'a';"
+        cpp_inject "    else if (c >= 'A' && c <= 'Z') c = (c - 'A' + 13) % 26 + 'A';"
+        cpp_inject "    else if (c >= '0' && c <= '9') c = (c - '0' + 5) % 10 + '0';"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res
+
+fn decode(s: string) -> string:
+    return encode(s)

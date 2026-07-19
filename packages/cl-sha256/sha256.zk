@@ -1,0 +1,5 @@
+// cl-sha256: SHA-256 Hashing Engine
+import cl-crypto as crypto
+
+fn hash(input: string) -> string:
+    return crypto::hash(input)

@@ -1,0 +1,25 @@
+// cl-luhn-generate: Luhn Algorithm Check Digit Generator
+
+fn generate_check_digit(payload: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "int sum = 0;"
+        cpp_inject "bool alternate = true;"
+        cpp_inject "for (int i = (int)payload.size() - 1; i >= 0; --i) {"
+        cpp_inject "    char c = payload[i];"
+        cpp_inject "    if (c >= '0' && c <= '9') {"
+        cpp_inject "        int n = c - '0';"
+        cpp_inject "        if (alternate) {"
+        cpp_inject "            n *= 2;"
+        cpp_inject "            if (n > 9) n -= 9;"
+        cpp_inject "        }"
+        cpp_inject "        sum += n;"
+        cpp_inject "        alternate = !alternate;"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = (10 - (sum % 10)) % 10;"
+    return res
+
+fn generate(payload: string) -> string:
+    digit := generate_check_digit(payload)
+    return payload + to_text(digit)

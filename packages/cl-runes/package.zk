@@ -1,0 +1,6 @@
+// cl-runes Package Manifest
+name := "cl-runes"
+version := "0.1.0"
+description := "UTF-8 Rune Count and Validation Engine"
+main := "runes.zk"
+license := "Commercial Control and non copy license"
