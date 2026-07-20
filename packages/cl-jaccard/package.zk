@@ -1,0 +1,6 @@
+// cl-jaccard Package Manifest
+name := "cl-jaccard"
+version := "0.1.0"
+description := "Jaccard Similarity Coefficient Engine"
+main := "jaccard.zk"
+license := "Commercial Control and non copy license"

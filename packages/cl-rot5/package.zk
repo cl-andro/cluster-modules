@@ -1,0 +1,6 @@
+// cl-rot5 Package Manifest
+name := "cl-rot5"
+version := "0.1.0"
+description := "ROT5 Numeric Substitution Cipher Engine"
+main := "rot5.zk"
+license := "Commercial Control and non copy license"

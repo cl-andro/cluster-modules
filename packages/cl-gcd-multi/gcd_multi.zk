@@ -1,20 +1,30 @@
 // cl-gcd-multi: Multi-argument GCD and LCM Math Engine
 import cl-gcd as base_gcd
 
+fn get_element(arr: vector[int], idx: int) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "if (idx >= 0 && idx < (int)arr.size()) res = arr[idx];"
+    return res
+
 fn gcd(arr: vector[int]) -> int:
     res := 0
     n := list_size(arr)
     if n > 0:
-        res = arr[0]
-        for i := 1; i < n; i++:
-            res = base_gcd::gcd(res, arr[i])
+        res = get_element(arr, 0)
+        i := 1
+        while i < n:
+            res = base_gcd::gcd(res, get_element(arr, i))
+            i = i + 1
     return res
 
 fn lcm(arr: vector[int]) -> int:
     res := 0
     n := list_size(arr)
     if n > 0:
-        res = arr[0]
-        for i := 1; i < n; i++:
-            res = base_gcd::lcm(res, arr[i])
+        res = get_element(arr, 0)
+        i := 1
+        while i < n:
+            res = base_gcd::lcm(res, get_element(arr, i))
+            i = i + 1
     return res

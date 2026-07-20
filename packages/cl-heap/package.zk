@@ -1,0 +1,6 @@
+// cl-heap Package Manifest
+name := "cl-heap"
+version := "0.1.0"
+description := "Binary Heap Container Wrapper Engine"
+main := "heap.zk"
+license := "Commercial Control and non copy license"

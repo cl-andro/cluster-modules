@@ -1,0 +1,6 @@
+// cl-cosine-similarity Package Manifest
+name := "cl-cosine-similarity"
+version := "0.1.0"
+description := "Cosine Similarity Metric Engine"
+main := "cosine_similarity.zk"
+license := "Commercial Control and non copy license"

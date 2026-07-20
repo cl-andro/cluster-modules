@@ -1,0 +1,16 @@
+// cl-rot5: ROT5 Numeric Substitution Cipher Engine
+
+fn encode(s: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string out = s;"
+        cpp_inject "for (char &c : out) {"
+        cpp_inject "    if (c >= '0' && c <= '9') {"
+        cpp_inject "        c = (c - '0' + 5) % 10 + '0';"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res
+
+fn decode(s: string) -> string:
+    return encode(s)

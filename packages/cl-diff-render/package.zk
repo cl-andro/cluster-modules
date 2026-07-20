@@ -1,0 +1,6 @@
+// cl-diff-render Package Manifest
+name := "cl-diff-render"
+version := "0.1.0"
+description := "Unified Diff Rendering Engine"
+main := "diff_render.zk"
+license := "Commercial Control and non copy license"

@@ -1,0 +1,14 @@
+// cl-jaccard: Jaccard Similarity Coefficient Engine
+
+fn similarity(s1: string, s2: string) -> float:
+    res := 0.0
+    unsafe:
+        cpp_inject "std::unordered_set<char> set1(s1.begin(), s1.end());"
+        cpp_inject "std::unordered_set<char> set2(s2.begin(), s2.end());"
+        cpp_inject "if (!set1.empty() || !set2.empty()) {"
+        cpp_inject "    size_t intersect_size = 0;"
+        cpp_inject "    for (char c : set1) if (set2.count(c)) intersect_size++;"
+        cpp_inject "    size_t union_size = set1.size() + set2.size() - intersect_size;"
+        cpp_inject "    res = (double)intersect_size / union_size;"
+        cpp_inject "}"
+    return res

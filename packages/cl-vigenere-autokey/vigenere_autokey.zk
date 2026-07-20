@@ -1,0 +1,36 @@
+// cl-vigenere-autokey: Vigenere Autokey Cipher Engine
+
+fn encode(payload: string, key: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string clean_p, clean_k;"
+        cpp_inject "for (char c : payload) if (std::isalpha((unsigned char)c)) clean_p += std::toupper((unsigned char)c);"
+        cpp_inject "for (char c : key) if (std::isalpha((unsigned char)c)) clean_k += std::toupper((unsigned char)c);"
+        cpp_inject "std::string keystream = clean_k + clean_p;"
+        cpp_inject "std::string out;"
+        cpp_inject "for (size_t i = 0; i < clean_p.size(); ++i) {"
+        cpp_inject "    char p_char = clean_p[i];"
+        cpp_inject "    char k_char = keystream[i];"
+        cpp_inject "    char enc = (p_char - 'A' + k_char - 'A') % 26 + 'A';"
+        cpp_inject "    out += enc;"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res
+
+fn decode(payload: string, key: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::string clean_p, clean_k;"
+        cpp_inject "for (char c : payload) if (std::isalpha((unsigned char)c)) clean_p += std::toupper((unsigned char)c);"
+        cpp_inject "for (char c : key) if (std::isalpha((unsigned char)c)) clean_k += std::toupper((unsigned char)c);"
+        cpp_inject "std::string out;"
+        cpp_inject "std::string current_key = clean_k;"
+        cpp_inject "for (size_t i = 0; i < clean_p.size(); ++i) {"
+        cpp_inject "    char p_char = clean_p[i];"
+        cpp_inject "    char k_char = current_key[i];"
+        cpp_inject "    char dec = (p_char - k_char + 26) % 26 + 'A';"
+        cpp_inject "    out += dec;"
+        cpp_inject "    current_key += dec;"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res

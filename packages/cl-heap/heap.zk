@@ -1,0 +1,21 @@
+// cl-heap: Binary Heap Container Wrapper Engine
+cpp_inject "static std::unordered_map<std::string, std::priority_queue<int>> heaps;"
+
+fn push(heap_id: string, val: int):
+    unsafe:
+        cpp_inject "heaps[heap_id].push(val);"
+
+fn pop(heap_id: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "if (!heaps[heap_id].empty()) {"
+        cpp_inject "    res = heaps[heap_id].top();"
+        cpp_inject "    heaps[heap_id].pop();"
+        cpp_inject "}"
+    return res
+
+fn size(heap_id: string) -> int:
+    res := 0
+    unsafe:
+        cpp_inject "res = heaps[heap_id].size();"
+    return res

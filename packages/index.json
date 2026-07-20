@@ -1236,6 +1236,174 @@
       "path": "packages/cl-stats-basic",
       "main": "stats_basic.zk",
       "license": "Commercial Control and non copy license"
+    },
+    "cl-luhn-generate": {
+      "description": "Luhn Algorithm Check Digit Generator",
+      "latest": "0.1.0",
+      "path": "packages/cl-luhn-generate",
+      "main": "luhn_generate.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-isbn-generate": {
+      "description": "ISBN Check Digit Generator Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-isbn-generate",
+      "main": "isbn_generate.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-morse-code": {
+      "description": "Advanced Morse Code Translation Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-morse-code",
+      "main": "morse_code.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-runes-case": {
+      "description": "UTF-8 Runes Unicode Casing Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-runes-case",
+      "main": "runes_case.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-luhn-mod30": {
+      "description": "Luhn Modulo 30 Algorithm Helper",
+      "latest": "0.1.0",
+      "path": "packages/cl-luhn-mod30",
+      "main": "luhn_mod30.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-version-parse": {
+      "description": "Semantic Version Parsing Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-version-parse",
+      "main": "version_parse.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-ansi-cursor": {
+      "description": "ANSI Terminal Cursor Control Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-ansi-cursor",
+      "main": "ansi_cursor.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-stats-advanced": {
+      "description": "Advanced Vector Statistics calculations Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-stats-advanced",
+      "main": "stats_advanced.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-duration-format": {
+      "description": "Human-readable Duration Formatting Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-duration-format",
+      "main": "duration_format.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-fraction-format": {
+      "description": "Float to Rational Fraction String Formatter",
+      "latest": "0.1.0",
+      "path": "packages/cl-fraction-format",
+      "main": "fraction_format.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-bwt-rle": {
+      "description": "BWT and RLE Combined Compression Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-bwt-rle",
+      "main": "bwt_rle.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-hex-dump": {
+      "description": "Hexadecimal Dump Formatter Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-hex-dump",
+      "main": "hex_dump.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-leven-search": {
+      "description": "Levenshtein Fuzzy Search Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-leven-search",
+      "main": "leven_search.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-sort-advanced": {
+      "description": "Advanced Sort Algorithms Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-sort-advanced",
+      "main": "sort_advanced.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-gcd-multi": {
+      "description": "Multi-argument GCD and LCM Math Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-gcd-multi",
+      "main": "gcd_multi.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-runes-width": {
+      "description": "East Asian Unicode character width Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-runes-width",
+      "main": "runes_width.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-diff-render": {
+      "description": "Unified Diff Rendering Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-diff-render",
+      "main": "diff_render.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-rot5": {
+      "description": "ROT5 Numeric Substitution Cipher Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-rot5",
+      "main": "rot5.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-vigenere-autokey": {
+      "description": "Vigenere Autokey Cipher Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-vigenere-autokey",
+      "main": "vigenere_autokey.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-playfair": {
+      "description": "Playfair Cipher Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-playfair",
+      "main": "playfair.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-jaccard": {
+      "description": "Jaccard Similarity Coefficient Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-jaccard",
+      "main": "jaccard.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-cosine-similarity": {
+      "description": "Cosine Similarity Metric Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-cosine-similarity",
+      "main": "cosine_similarity.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-avl-tree": {
+      "description": "Balanced AVL Tree Wrapper Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-avl-tree",
+      "main": "avl_tree.zk",
+      "license": "Commercial Control and non copy license"
+    },
+    "cl-heap": {
+      "description": "Binary Heap Container Wrapper Engine",
+      "latest": "0.1.0",
+      "path": "packages/cl-heap",
+      "main": "heap.zk",
+      "license": "Commercial Control and non copy license"
     }
   }
 }

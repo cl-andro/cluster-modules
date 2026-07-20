@@ -1,0 +1,32 @@
+// cl-diff-render: Unified Diff Rendering Engine
+
+fn render(s1: string, s2: string) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "std::vector<std::string> lines1, lines2;"
+        cpp_inject "std::stringstream ss1(s1), ss2(s2);"
+        cpp_inject "std::string temp;"
+        cpp_inject "while (std::getline(ss1, temp)) lines1.push_back(temp);"
+        cpp_inject "while (std::getline(ss2, temp)) lines2.push_back(temp);"
+        cpp_inject "std::string out;"
+        cpp_inject "size_t i = 0, j = 0;"
+        cpp_inject "while (i < lines1.size() || j < lines2.size()) {"
+        cpp_inject "    if (i < lines1.size() && j < lines2.size()) {"
+        cpp_inject "        if (lines1[i] == lines2[j]) {"
+        cpp_inject "            out += \"  \" + lines1[i] + \"\\n\";"
+        cpp_inject "            i++; j++;"
+        cpp_inject "        } else {"
+        cpp_inject "            out += \"- \" + lines1[i] + \"\\n\";"
+        cpp_inject "            out += \"+ \" + lines2[j] + \"\\n\";"
+        cpp_inject "            i++; j++;"
+        cpp_inject "        }"
+        cpp_inject "    } else if (i < lines1.size()) {"
+        cpp_inject "        out += \"- \" + lines1[i] + \"\\n\";"
+        cpp_inject "        i++;"
+        cpp_inject "    } else {"
+        cpp_inject "        out += \"+ \" + lines2[j] + \"\\n\";"
+        cpp_inject "        j++;"
+        cpp_inject "    }"
+        cpp_inject "}"
+        cpp_inject "res = out;"
+    return res

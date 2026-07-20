@@ -1,0 +1,6 @@
+// cl-vigenere-autokey Package Manifest
+name := "cl-vigenere-autokey"
+version := "0.1.0"
+description := "Vigenere Autokey Cipher Engine"
+main := "vigenere_autokey.zk"
+license := "Commercial Control and non copy license"

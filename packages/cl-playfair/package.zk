@@ -1,0 +1,6 @@
+// cl-playfair Package Manifest
+name := "cl-playfair"
+version := "0.1.0"
+description := "Playfair Cipher Engine"
+main := "playfair.zk"
+license := "Commercial Control and non copy license"

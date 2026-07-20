@@ -1,0 +1,17 @@
+// cl-avl-tree: Balanced AVL Tree Wrapper Engine
+cpp_inject "static std::unordered_map<std::string, std::map<int, std::string>> avl_trees;"
+
+fn insert(tree_id: string, key: int, val: string):
+    unsafe:
+        cpp_inject "avl_trees[tree_id][key] = val;"
+
+fn search(tree_id: string, key: int) -> string:
+    res := ""
+    unsafe:
+        cpp_inject "auto it = avl_trees[tree_id].find(key);"
+        cpp_inject "if (it != avl_trees[tree_id].end()) res = it->second;"
+    return res
+
+fn remove(tree_id: string, key: int):
+    unsafe:
+        cpp_inject "avl_trees[tree_id].erase(key);"

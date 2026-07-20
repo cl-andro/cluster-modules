@@ -1,0 +1,6 @@
+// cl-avl-tree Package Manifest
+name := "cl-avl-tree"
+version := "0.1.0"
+description := "Balanced AVL Tree Wrapper Engine"
+main := "avl_tree.zk"
+license := "Commercial Control and non copy license"
